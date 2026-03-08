@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '../../vendor/autoload.php';
 
 define('ELASTIC_INDEX', 'documents');
 define('CHUNK_SIZE', 800);
