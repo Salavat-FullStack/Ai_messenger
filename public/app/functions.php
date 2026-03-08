@@ -1,6 +1,9 @@
 <?php
 
-require_once __DIR__ . '../../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
+$dotenv->load();
 
 define('ELASTIC_INDEX', 'documents');
 define('CHUNK_SIZE', 800);
@@ -9,9 +12,6 @@ define('TOP_K', 5);
 
 define('ELASTIC_HOST', $_ENV['ELASTIC_HOST']);
 define('OPENAI_API_KEY', $_ENV['OPENAI_API_KEY']);
-
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
-$dotenv->load();
 
 use Elastic\Elasticsearch\ClientBuilder;
 use GuzzleHttp\Client;
