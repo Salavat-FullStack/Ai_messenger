@@ -1,0 +1,59 @@
+<?php
+
+require_once 'functions.php';
+
+$client = generatClient('es');
+
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
+    $input = file_get_contents('php://input');
+
+    $data = json_decode($input, true);
+
+    header("Content-Type: application/json");
+
+    $response = getMessage($client, $data['userData']['email']);
+
+    echo json_encode([
+        'response' => $response
+    ]);
+}
+
+function getMessage($client, $email){
+    $params = [
+        "index" => "message_history",
+        "body" => [
+            "query" => [
+                "match" =>[
+                    "email" =>[
+                        "query" => $email
+                    ]
+                ]
+            ],
+            "sort" =>[
+                ['created_at' => ['order' => 'desc']]
+            ]
+        ]
+    ];
+
+    $response = $client->search($params);
+
+    $hits = $response['hits']['hits'];
+
+    $hits = array_reverse($hits);
+
+    $messages = [];
+
+    foreach($hits as $hit){
+        $messages[] = [
+            "email" => $email,
+            "user_name" => $hit['_source']['name'],
+            "messageUser" => $hit['_source']['messageUser'],
+            "messageAi" => $hit['_source']['messageAi'],
+            "date" => $hit['_source']['created_at']
+        ];
+    }
+
+    return $messages;
+}
+// echo "TEst";
