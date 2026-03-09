@@ -1,6 +1,7 @@
 services:
   nginx:
     image: nginx:latest
+    restart: always
     volumes:
       - ./:/var/www/
       - ./_docker/nginx/conf.d:/etc/nginx/conf.d/
@@ -17,6 +18,7 @@ services:
     volumes:
       - ./:/var/www/
     container_name: app_php
+    restart: always
   elasticsearch:
     image: elasticsearch:8.12.2
     ports:
