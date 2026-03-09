@@ -26,8 +26,9 @@ services:
     container_name: elasticsearch
     environment:
       - discovery.type=single-node
-      - xpack.security.enabled=false
+      - xpack.security.enabled=true
       - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - ELASTIC_PASSWORD=salavat20212509
       # - ES_JAVA_OPTS=-Xms256m -Xmx256m
     volumes:
       - elastic-db:/usr/share/elasticsearch/data
@@ -40,6 +41,8 @@ services:
       - elasticsearch
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=kibana_system
+      - ELASTICSEARCH_PASSWORD=salavat20212509
 
 volumes:
   elastic-db:
