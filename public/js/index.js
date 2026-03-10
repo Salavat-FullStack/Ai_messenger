@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded',()=>{
     let store_messages = '';
     let question = '';
 
+    let messageUser = '';
+
     const USER_DATA = {
         'name' : 'Salavat',
         'surname' : 'Axmetgareev',
@@ -46,6 +48,8 @@ document.addEventListener('DOMContentLoaded',()=>{
     SendBtn.addEventListener('click',()=>{
         question = Ai_request_input.value;
         console.log(question);
+
+        messageUser = question;
         console.log('click');
 
         renderMessage('user', formatDateView(formatDate()), USER_DATA['name'], question);
@@ -100,7 +104,8 @@ document.addEventListener('DOMContentLoaded',()=>{
                     },
                     body: JSON.stringify({
                         userData: USER_DATA,
-                        messageUser: question,
+                        messageUser: messageUser,
+                        messageReview: question,
                         messageAi: data['responseAi'],
                         date: formatDate()
                     })

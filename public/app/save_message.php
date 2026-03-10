@@ -10,14 +10,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     $data = json_decode($input, true);
 
-    $response = saveMessage($client, $data['messageUser'], $data['messageAi'], $data['userData'], $data['date']);
+    $response = saveMessage($client, $data['messageUser'], $data['messageAi'], $data['messageReview'], $data['userData'], $data['date']);
 
     echo json_encode([
         "response" => $response
     ]);
 }
 
-function saveMessage($client, $messageUser, $messageAi, $userData, $date){
+function saveMessage($client, $messageUser, $messageAi, $messageReview, $userData, $date){
 
     $params = [
         'index' => 'message_history',
@@ -26,6 +26,7 @@ function saveMessage($client, $messageUser, $messageAi, $userData, $date){
             "surname" => $userData['surname'],
             "email" => $userData['email'],
             "messageUser" => trim($messageUser),
+            "messageReview" => trim($messageReview),
             "messageAi" => $messageAi,
             "created_at" => $date
         ]
