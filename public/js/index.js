@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     let question = '';
 
     let messageUser = '';
+    let messageReview = '';
 
     const USER_DATA = {
         'name' : 'Salavat',
@@ -72,6 +73,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         .then(data => {
             console.log(data);
             console.log(data['response']);
+            messageReview = data['response'];
             fetch('http://217.12.40.215:8888', {
                 method: 'POST',
                 headers: {
@@ -105,7 +107,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                     body: JSON.stringify({
                         userData: USER_DATA,
                         messageUser: messageUser,
-                        messageReview: question,
+                        messageReview: messageReview,
                         messageAi: data['responseAi'],
                         date: formatDate()
                     })
