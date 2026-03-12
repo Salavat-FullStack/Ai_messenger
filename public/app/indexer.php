@@ -48,7 +48,7 @@ foreach ($files as $file) {
             $bulk[] = ['index' => ['_index' => ELASTIC_INDEX]];
 
             $bulk[] = [
-                'content'   => $text . "ссылка на продукт-товар(исходник) " . "https://akuprof.ru/" . str_replace('.txt', '.html', $file),
+                'content'   => $text . "ссылка на продукт-товар(исходник) " . "https://akuprof.ru/" . str_replace('txt', 'html', $file),  
                 'embedding' => $embeddingResponse[$index]['embedding'],
                 'source'    => $file,
             ];
@@ -73,7 +73,7 @@ foreach ($files as $file) {
                 $bulk[] = ['index' => ['_index' => ELASTIC_INDEX]];
 
                 $bulk[] = [
-                    'content'   => $text . "ссылка на продукт-товар(исходник) " . "https://akuprof.ru/" . str_replace($file, '.html', '.txt'),
+                    'content'   => $text . "ссылка на продукт-товар(исходник) " . "https://akuprof.ru/" . str_replace('txt', 'html', $file),
                     'embedding' => $embeddingResponse[$index]['embedding'],
                     'source'    => $file,
                 ];
