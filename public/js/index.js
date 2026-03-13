@@ -89,10 +89,18 @@ document.addEventListener('DOMContentLoaded',()=>{
                 console.log('Ответ сервера:', data['responseAi']);
                 console.log('контекст', data['docs']);
 
+                // AiResponse = data['responseAi'].replace(
+                //     /(https?:\/\/[^\s)]+)/g, 
+                //     '<a href="$1" target="_blank">$1</a>' 
+                // );
+
                 AiResponse = data['responseAi'].replace(
-                    /(https?:\/\/[^\s)]+)/g, 
-                    '<a href="$1" target="_blank">$1</a>' 
-                );
+                    /(https?:\/\/[^\s)]+)/g,
+                    (url) => {
+                        const cleanUrl = url.replace(/\.$/, ''); // удаляем точку в конце
+                        return `<a href="${cleanUrl}" target="_blank">${cleanUrl}</a>`;
+                    }
+                )
 
                 loadingGenerate('delete');
 
