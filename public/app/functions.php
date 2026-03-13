@@ -6,7 +6,7 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
 $dotenv->load();
 
 define('ELASTIC_INDEX', 'documents');
-define('CHUNK_SIZE', 1000);
+define('CHUNK_SIZE', 1200);
 define('CHUNK_OVERLAP', 200);
 define('TOP_K', 5);
 
