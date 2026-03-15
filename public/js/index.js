@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             renderMessage('Ai', formatDateView(elem['date']), "akuprof.ru", elem['messageAi']);
         });
 
-        let lastMessage = data['response'].slice(-7);
+        let lastMessage = data['response'].slice(-2);
 
         console.log(lastMessage);
 
