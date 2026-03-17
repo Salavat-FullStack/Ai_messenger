@@ -124,7 +124,7 @@ function reviewGpt(Client $client, $prompt, $story, $request){
                 'Content-Type' => 'application/json',
             ],
             'json' => [
-                'model' => 'gpt-5-nano',
+                'model' => 'gpt-5-mini',
                 'input' => [
                     [
                         'role' => 'system',
