@@ -158,7 +158,7 @@ function askGPT(string $prompt, Client $client): string
                 'Content-Type' => 'application/json',
             ],
             'json' => [
-                'model' => 'gpt-5-nano',
+                'model' => 'gpt-5-mini',
                 'input' => $prompt,
             ],
         ]
