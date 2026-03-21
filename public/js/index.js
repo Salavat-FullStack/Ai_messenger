@@ -110,8 +110,6 @@ document.addEventListener('DOMContentLoaded',()=>{
                 Ai_send_message.classList.remove('display_none');
                 Ai_load.classList.add('display_none');
 
-                loadingGenerate('create');
-
                 renderMessage('Ai', formatDateView(formatDate()), USER_DATA['name'], AiResponse);
 
                 fetch('http://217.12.40.215:8888/app/save_message.php',{
