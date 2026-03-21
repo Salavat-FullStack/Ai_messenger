@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded',()=>{
-    const SendBtn = document.getElementById('Ai_send_btn');
+    const SendBtn = document.getElementById('Ai_send_message');
     // const TextContainer = document.querySelector('.Ai_response_cont');
     const Ai_request_input = document.getElementById('Ai_request_input');
 
