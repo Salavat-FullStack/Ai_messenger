@@ -1,13 +1,18 @@
 document.addEventListener('DOMContentLoaded',()=>{
     const SendBtn = document.getElementById('Ai_send_btn');
-    const TextContainer = document.querySelector('.Ai_response_cont');
+    // const TextContainer = document.querySelector('.Ai_response_cont');
     const Ai_request_input = document.getElementById('Ai_request_input');
+
+    const Ai_send_message = document.getElementById('Ai_send_message');
+    const Ai_load = document.getElementById('Ai_load');
 
     let store_messages = '';
     let question = '';
 
     let messageUser = '';
     let messageReview = '';
+
+    let selectedAssistant = '';
 
     const USER_DATA = {
         'name' : 'Salavat',
@@ -50,14 +55,18 @@ document.addEventListener('DOMContentLoaded',()=>{
         question = Ai_request_input.value;
         console.log(question);
 
+        if(question.length < 3){
+            console.log('сообщение слишком короткое!');
+            return;
+        }
+
         messageUser = question;
         console.log('click');
 
-        renderMessage('user', formatDateView(formatDate()), USER_DATA['name'], question);
-
         Ai_request_input.value = '';
 
-        loadingGenerate('create');
+        Ai_send_message.classList.add('display_none');
+        Ai_load.classList.remove('display_none');
 
         fetch('http://217.12.40.215:8888/app/review.php',{
             method: "POST",
@@ -96,8 +105,13 @@ document.addEventListener('DOMContentLoaded',()=>{
 
                 loadingGenerate('delete');
 
-                renderMessage('Ai', formatDateView(formatDate()), USER_DATA['name'], AiResponse);
+                Ai_send_message.classList.remove('display_none');
+                Ai_load.classList.add('display_none');
 
+                loadingGenerate('create');
+
+                renderMessage('user', formatDateView(formatDate()), USER_DATA['name'], question);
+                renderMessage('Ai', formatDateView(formatDate()), USER_DATA['name'], AiResponse);
 
                 fetch('http://217.12.40.215:8888/app/save_message.php',{
                     method: 'POST',
@@ -122,10 +136,18 @@ document.addEventListener('DOMContentLoaded',()=>{
                 })
                 .catch(error => {
                     console.error('Ошибка:', error);
+                    loadingGenerate('delete');
+                    Ai_send_message.classList.remove('display_none');
+                    Ai_load.classList.add('display_none');
+                    alert('Что-то пошло не так :(');
             });
         })
         .catch(error => {
             console.error(error);
+            loadingGenerate('delete');
+            Ai_send_message.classList.remove('display_none');
+            Ai_load.classList.add('display_none');
+            alert('Что-то пошло не так :(');
         })
 
     });
@@ -221,6 +243,19 @@ document.addEventListener('DOMContentLoaded',()=>{
                 behavior: 'smooth'
             });
         }
-    }
+    };
 
+    const assistant_btn = document.querySelectorAll('.assistant_btn');
+
+    assistant_btn.forEach(elem =>{
+
+        elem.addEventListener('click',()=>{
+            assistant_btn.forEach(elem =>{
+                elem.classList.remove('assistant_btn_active');  
+            });
+            elem.classList.add('assistant_btn_active');
+            selectedAssistant = elem.textContent;
+            console.log(selectedAssistant);
+        });
+    });
 });

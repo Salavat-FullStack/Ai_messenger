@@ -29,8 +29,7 @@
     width: 40px;
 }
 .Ai_call_logo{
-    width: 30px;
-    transform: rotate(-80deg);
+    width: 25px;
     cursor: pointer;
 }
 .Ai_manager_name{
@@ -171,4 +170,35 @@
     border-radius: 10px;
     font-weight: 420;
     padding: 15px 13px;
+}
+
+.assistant_penel{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-left: 10px;
+}
+.assistant_btn{
+    color: #dcdcdc;
+    border: 1.5px solid #dcdcdc;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.assistant_btn_active{
+    color: #122538;
+    background-color: #eaeaea;
+    font-weight: 500;
+}
+
+#instructions_icon_Ai{
+    width: 25px;
+    cursor: pointer;
+}
+.assistant_btn:hover{
+    color: #122538;
+    background-color: #eaeaea;
+    font-weight: 500;
+    transition: all .3s;
 }
