@@ -68,6 +68,8 @@ document.addEventListener('DOMContentLoaded',()=>{
         Ai_send_message.classList.add('display_none');
         Ai_load.classList.remove('display_none');
 
+        renderMessage('user', formatDateView(formatDate()), USER_DATA['name'], question);
+
         fetch('http://217.12.40.215:8888/app/review.php',{
             method: "POST",
             headers: {
@@ -110,7 +112,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 
                 loadingGenerate('create');
 
-                renderMessage('user', formatDateView(formatDate()), USER_DATA['name'], question);
                 renderMessage('Ai', formatDateView(formatDate()), USER_DATA['name'], AiResponse);
 
                 fetch('http://217.12.40.215:8888/app/save_message.php',{
