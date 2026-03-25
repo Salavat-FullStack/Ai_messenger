@@ -48,20 +48,9 @@ const bot = new Bot(process.env.BOT_TOKEN);
 
 // endpoint, куда MAX будет слать события
 app.post('/webhook', async (req, res) => {
-    try {
-        const update = req.body;
-
-        // лог чтобы видеть что приходит
-        console.log('🔥 UPDATE:', JSON.stringify(update, null, 2));
-
-        // передаём событие библиотеке
-        await bot.handleUpdate(update);
-
-        res.sendStatus(200);
-    } catch (err) {
-        console.error('Ошибка webhook:', err);
-        res.sendStatus(500);
-    }
+    console.log('🔥 WEBHOOK HIT:', req.body);
+    await bot.handleUpdate(req.body);
+    res.sendStatus(200);
 });
 
 // обработка сообщений
