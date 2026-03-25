@@ -43,6 +43,16 @@ services:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
       - ELASTICSEARCH_USERNAME=kibana_system
       - ELASTICSEARCH_PASSWORD=salavat20212509
-
+  bot:
+    build:
+      context: ./max
+      dockerfile: Dockerfile
+    container_name: max_bot
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./max:/app 
+      - .env:/app/.env
+      - /app/node_modules
 volumes:
   elastic-db:

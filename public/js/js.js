@@ -1,4 +1,19 @@
 document.addEventListener('DOMContentLoaded',()=>{
+
+    // fetch('http://217.12.40.215:3000/webhook', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({
+    //         // chat_id: 123,
+    //         // text: 'Привет'
+    //     })
+    // })
+    // .then(res => res.json())
+    // .then(data => console.log(data))
+    // .catch(err => console.error(err));
+
     const instructions_btn = document.querySelectorAll('.instructions_btn');
     const instructions_block_all = document.querySelectorAll('.instructions_block');
     
