@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         'email' : 'salavat@gmail.com'
     };
 
-    fetch('http://217.12.40.215:8888/app/get_message.php',{
+    fetch('http://159.194.220.3:8888/app/get_message.php',{
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
         renderMessage('user', formatDateView(formatDate()), USER_DATA['name'], question);
 
-        fetch('http://217.12.40.215:8888/app/review.php',{
+        fetch('http://159.194.220.3:8888/app/review.php',{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             console.log(data);
             console.log(data['response']);
             messageReview = data['response'];
-            fetch('http://217.12.40.215:8888', {
+            fetch('http://159.194.220.3:8888', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
                 renderMessage('Ai', formatDateView(formatDate()), USER_DATA['name'], AiResponse);
 
-                fetch('http://217.12.40.215:8888/app/save_message.php',{
+                fetch('http://159.194.220.3:8888/app/save_message.php',{
                     method: 'POST',
                     headers: {
                         "Content-Type" : "application/json"
