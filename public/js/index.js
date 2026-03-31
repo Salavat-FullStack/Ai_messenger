@@ -112,6 +112,12 @@ document.addEventListener('DOMContentLoaded',()=>{
 
                 renderMessage('Ai', formatDateView(formatDate()), USER_DATA['name'], AiResponse);
 
+                console.log(USER_DATA);
+                console.log(messageUser);
+                console.log(messageReview);
+                console.log(data['responseAi']);
+                console.log(formatDate());
+
                 fetch('http://159.194.220.3:8888/app/save_message.php',{
                     method: 'POST',
                     headers: {

@@ -2,19 +2,38 @@
 
 require_once 'functions.php';
 
+header('Content-Type: application/json');
+
 $client = generatClient('es');
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
-    $input = file_get_contents('php://input');
+    try{
+        $input = file_get_contents('php://input');
 
-    $data = json_decode($input, true);
+        $data = json_decode($input, true);
 
-    $response = saveMessage($client, $data['messageUser'], $data['messageAi'], $data['messageReview'], $data['userData'], $data['date']);
+        if (!$data) {
+            throw new Exception("Невалидный JSON");
+        }
 
-    echo json_encode([
-        "response" => $response
-    ]);
+        $response = saveMessage(
+            $client,
+            $data['messageUser'] ?? '',
+            $data['messageAi'] ?? '',
+            $data['messageReview'] ?? '',
+            $data['userData'] ?? [],
+            $data['date'] ?? ''
+        );
+
+        echo json_encode([
+            "response" => $response
+        ]);
+    } catch(Throwable $e){
+        echo json_encode([
+            "error" => $e->getMessage()
+        ]);
+    }
 }
 
 function saveMessage($client, $messageUser, $messageAi, $messageReview, $userData, $date){
