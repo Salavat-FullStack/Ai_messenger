@@ -33,9 +33,9 @@ document.addEventListener('DOMContentLoaded',()=>{
     .then(data => {
         console.log(data);
 
-        messageStore = addTagA(elem['messageAi']);
-
         data['response'].forEach(elem =>{
+            messageStore = addTagA(elem['messageAi']);
+
             renderMessage('user', formatDateView(elem['date']), elem['user_name'], elem['messageUser']);
             renderMessage('Ai', formatDateView(elem['date']), "akuprof.ru", messageStore);
         });
