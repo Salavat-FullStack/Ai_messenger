@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     .then(data => {
         console.log(data);
 
-        messageStore = addTagA(data['responseAi']);
+        messageStore = addTagA(elem['messageAi']);
 
         data['response'].forEach(elem =>{
             renderMessage('user', formatDateView(elem['date']), elem['user_name'], elem['messageUser']);
