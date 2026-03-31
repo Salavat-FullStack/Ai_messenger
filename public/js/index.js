@@ -202,16 +202,13 @@ document.addEventListener('DOMContentLoaded',()=>{
     }
 
     function addTagA(message){
-        message.replace(
+        return message.replace(
             /(https?:\/\/[^\s)]+)/g,
             (url) => {
-                // убираем все повторяющиеся .html в конце
                 let cleanUrl = url.replace(/(\.html)+$/g, '');
-
                 return `<a href="${cleanUrl}" target="_blank">${cleanUrl}</a>`;
             }
         );
-        return message;
     }
 
 
