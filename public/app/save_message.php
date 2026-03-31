@@ -19,11 +19,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
         $response = saveMessage(
             $client,
-            $data['messageUser'] ?? '',
-            $data['messageAi'] ?? '',
-            $data['messageReview'] ?? '',
-            $data['userData'] ?? [],
-            $data['date'] ?? ''
+            $data['messageUser'],
+            $data['messageAi'],
+            $data['messageReview'],
+            $data['userData'],
+            str_replace(' ', 'T', $data['date'])
         );
 
         echo json_encode([
