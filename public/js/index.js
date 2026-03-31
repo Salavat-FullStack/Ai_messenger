@@ -33,9 +33,11 @@ document.addEventListener('DOMContentLoaded',()=>{
     .then(data => {
         console.log(data);
 
+        messageStore = addTagA(data['responseAi']);
+
         data['response'].forEach(elem =>{
             renderMessage('user', formatDateView(elem['date']), elem['user_name'], elem['messageUser']);
-            renderMessage('Ai', formatDateView(elem['date']), "akuprof.ru", elem['messageAi']);
+            renderMessage('Ai', formatDateView(elem['date']), "akuprof.ru", messageStore);
         });
 
         let lastMessage = data['response'].slice(-2);
@@ -105,15 +107,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                 //     '<a href="$1" target="_blank">$1</a>' 
                 // );
 
-                AiResponse = data['responseAi'].replace(
-                    /(https?:\/\/[^\s)]+)/g,
-                    (url) => {
-                        // убираем все повторяющиеся .html в конце
-                        let cleanUrl = url.replace(/(\.html)+$/g, '');
-
-                        return `<a href="${cleanUrl}" target="_blank">${cleanUrl}</a>`;
-                    }
-                );
+                AiResponse = addTagA(data['responseAi']);
 
                 loadingGenerate('delete');
 
@@ -205,6 +199,19 @@ document.addEventListener('DOMContentLoaded',()=>{
             top: Ai_message_storage.scrollHeight,
             behavior: 'smooth'
         });
+    }
+
+    function addTagA(message){
+        message.replace(
+            /(https?:\/\/[^\s)]+)/g,
+            (url) => {
+                // убираем все повторяющиеся .html в конце
+                let cleanUrl = url.replace(/(\.html)+$/g, '');
+
+                return `<a href="${cleanUrl}" target="_blank">${cleanUrl}</a>`;
+            }
+        );
+        return message;
     }
 
 
