@@ -20,8 +20,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $data['messageUser'] . "\n \n";
     $AiResponse = "<b>- Ответ ИИ : \n </b>" . $data['messageAi'];
 
-    $userAiQuestion = "<b>- Переделанный вопрос (ИИ) : </b> \n" .
-                      "<pre>" . $data['messageReview'] . "</pre>" . "\n \n";
+    $userAiQuestion = "<b>- Переделанный вопрос (ИИ) : </b> \n" . $data['messageReview'] . "\n \n";
 
     $message = $userDataText . $userQuestion . $userAiQuestion . $AiResponse;
 
