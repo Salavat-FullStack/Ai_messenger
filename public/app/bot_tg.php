@@ -46,7 +46,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     echo json_encode([
         'status' => 'success',
-        'message' => "сообщение отправлено в telegram",
-        "resultQuery" => $resultQuery
+        'message' => "сообщение отправлено в telegram"
     ]);
 }
