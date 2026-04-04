@@ -40,7 +40,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     curl_setopt($ch, CURLOPT_HEADER, true);
 
     $resultQuery = curl_exec($ch);
-    curl_close($ch);
 
     header('Content-Type: application/json');
 
