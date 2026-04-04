@@ -17,8 +17,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 "<b>Фамилия : </b>" . $userData['surname'] . "\n" .
                 "<b>Email : </b>" . $userData['email'] . "\n \n" ;
 
-    $userQuestion = "<b>- Вопрос пользователя : </b>" . $data['messageUser'] . "\n \n";
+    $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $data['messageUser'] . "\n \n";
     $AiResponse = "<b>- Ответ ИИ : \n </b>" . $data['messageAi'];
+
+    $userAiQuestion = "<b>- Переделанный вопрос (ИИ) : </b> \n" .
+                      "<pre>" . $data['messageReview'] . "</pre>" . "\n \n";
 
     $message = $userDataText . $userQuestion . $AiResponse;
 
