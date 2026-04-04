@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded',()=>{
 
     let selectedAssistant = '';
 
+    let responseAi = '';
+
     const USER_DATA = {
         'name' : 'Salavat',
         'surname' : 'Axmetgareev',
@@ -122,6 +124,8 @@ document.addEventListener('DOMContentLoaded',()=>{
                 console.log(data['responseAi']);
                 console.log(formatDate());
 
+                responseAi = data['responseAi'];
+
                 fetch('https://chat-progress.ru/app/save_message.php',{
                     method: 'POST',
                     headers: {
@@ -147,7 +151,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                                 userData: USER_DATA,
                                 messageUser: messageUser,
                                 messageReview: messageReview,
-                                messageAi: data['responseAi'],
+                                messageAi: responseAi,
                                 date: formatDate()
                             })
                         })
