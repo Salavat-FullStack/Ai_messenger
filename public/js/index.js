@@ -138,6 +138,24 @@ document.addEventListener('DOMContentLoaded',()=>{
                     .then(response => response.json())
                     .then(data =>{
                         console.log(data);
+                        fetch('https://chat-progress.ru/app/bot_tg.php',{
+                            method: 'POST',
+                            headers:{
+                                "Content-Type" : "application/json"
+                            },
+                            body: JSON.stringify({
+                                userData: USER_DATA,
+                                messageUser: messageUser,
+                                messageReview: messageReview,
+                                messageAi: data['responseAi'],
+                                date: formatDate()
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data);
+                                console.log(data.status);
+                            })
+                        })
                     })
                     .catch(error =>{
                         console.error('Ошибка:', error);
