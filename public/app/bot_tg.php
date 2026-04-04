@@ -23,7 +23,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $userAiQuestion = "<b>- Переделанный вопрос (ИИ) : </b> \n" .
                       "<pre>" . $data['messageReview'] . "</pre>" . "\n \n";
 
-    $message = $userDataText . $userQuestion . $AiResponse;
+    $message = $userDataText . $userQuestion . $userAiQuestion . $AiResponse;
 
     $Query = array(
         "chat_id" => TG_USER_ID,
