@@ -12,13 +12,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     $userData = $data['userData'];
 
-    $userDataText = "<b>Данные пользователя </b> \n" . 
+    $userDataText = "<b>- Данные пользователя </b> \n" . 
                 "<b>Имя : </b>" . $userData['name'] . "\n" .
                 "<b>Фамилия : </b>" . $userData['surname'] . "\n" .
-                "<b>Email : </b>" . $userData['email'] . "\n" ;
+                "<b>Email : </b>" . $userData['email'] . "\n \n" ;
 
-    $userQuestion = "<b>Вопрос пользователя : </b>" . $data['messageUser'] . "\n";
-    $AiResponse = "<b>Ответ ИИ : </b>" . $data['messageAi'];
+    $userQuestion = "<b>- Вопрос пользователя : </b>" . $data['messageUser'] . "\n \n";
+    $AiResponse = "<b>- Ответ ИИ : \n </b>" . $data['messageAi'];
 
     $message = $userDataText . $userQuestion . $AiResponse;
 
