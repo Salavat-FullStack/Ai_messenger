@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                                 messageUser: messageUser,
                                 messageReview: messageReview,
                                 messageAi: responseAi,
-                                date: formatDate()
+                                date: formatDateView(formatDate())
                             })
                         })
                         .then(response => response.json())

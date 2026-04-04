@@ -8,8 +8,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     $data = json_decode($input, true);
 
-    // <b></b>
-
     $userData = $data['userData'];
 
     $userDataText = "<b>- Данные пользователя </b> \n" . 
@@ -18,11 +16,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 "<b>Email : </b>" . $userData['email'] . "\n \n" ;
 
     $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $data['messageUser'] . "\n \n";
-    $AiResponse = "<b>- Ответ ИИ : \n </b>" . $data['messageAi'];
+    $AiResponse = "<b>- Ответ ИИ : \n </b>" . $data['messageAi'] . "\n \n";
 
     $userAiQuestion = "<b>- Переделанный вопрос (ИИ) : </b> \n" . $data['messageReview'] . "\n \n";
 
-    $message = $userDataText . $userQuestion . $userAiQuestion . $AiResponse;
+    $date = "<b>- Время : </b>" . $data['date'];
+
+    $message = $userDataText . $userQuestion . $userAiQuestion . $AiResponse . $date;
 
     $Query = array(
         "chat_id" => TG_USER_ID,
