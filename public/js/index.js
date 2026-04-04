@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         'email' : 'salavat@gmail.com'
     };
 
-    fetch('http://159.194.220.3/app/get_message.php',{
+    fetch('http://chat-progress.ru/app/get_message.php',{
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
         renderMessage('user', formatDateView(formatDate()), USER_DATA['name'], question);
 
-        fetch('http://159.194.220.3/app/review.php',{
+        fetch('http://chat-progress.ru/app/review.php',{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             console.log(data);
             console.log(data['response']);
             messageReview = data['response'];
-            fetch('http://159.194.220.3', {
+            fetch('http://chat-progress.ru', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                 console.log(data['responseAi']);
                 console.log(formatDate());
 
-                fetch('http://159.194.220.3/app/save_message.php',{
+                fetch('http://chat-progress.ru/app/save_message.php',{
                     method: 'POST',
                     headers: {
                         "Content-Type" : "application/json"
