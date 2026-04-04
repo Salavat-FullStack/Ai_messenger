@@ -10,26 +10,28 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     // <b></b>
 
-    $userData = "<b>Данные пользователя </b> \n" . 
-                "<b>Имя : </b>" . $data[$userData['name']] . "\n" .
-                "<b>Фамилия : </b>" . $data[$userData['surname']] . "\n" .
-                "<b>Email : </b>" . $data[$userData['email']] . "\n" ;
+    $userData = $data['userData'];
 
-    $userQuestion = "<b>Вопрос пользователя : </b>" . $data['messageUser'] . '\n';
+    $userDataText = "<b>Данные пользователя </b> \n" . 
+                "<b>Имя : </b>" . $userData['name'] . "\n" .
+                "<b>Фамилия : </b>" . $userData['surname'] . "\n" .
+                "<b>Email : </b>" . $userData['email'] . "\n" ;
+
+    $userQuestion = "<b>Вопрос пользователя : </b>" . $data['messageUser'] . "\n";
     $AiResponse = "<b>Ответ ИИ : </b>" . $data['messageAi'];
 
-    $message = $userData . $userQuestion . $AiResponse;
+    $message = $userDataText . $userQuestion . $AiResponse;
 
     $Query = array(
-        "chad_id" => TG_USER_ID,
+        "chat_id" => TG_USER_ID,
         "text" => $message,
         "parse_mode" => "html"
     );
 
-    $ch = curl_init("https://api.telegram.org/bot" . TG_TOKEN . "/sendMessage?" . http_build_query($Query));
+    $ch = curl_init("https://api.telegram.org/bot" . TG_TOKEN . "/sendMessage");
 
     curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $arrayQuery);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($Query));
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);

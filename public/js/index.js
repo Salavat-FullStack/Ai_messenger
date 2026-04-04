@@ -150,12 +150,13 @@ document.addEventListener('DOMContentLoaded',()=>{
                                 messageAi: data['responseAi'],
                                 date: formatDate()
                             })
-                            .then(response => response.json())
-                            .then(data => {
-                                console.log(data);
-                                console.log(data.status);
-                            })
                         })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                            console.log(data.status);
+                        })
+                        .catch(err => console.error(err));
                     })
                     .catch(error =>{
                         console.error('Ошибка:', error);
