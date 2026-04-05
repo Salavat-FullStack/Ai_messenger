@@ -66,7 +66,7 @@ function writeLogFile($string, $clear = false){
 $data = file_get_contents('php://input');
 $data = json_decode($data, true);
 
-writeLogFile($data, true);
+// writeLogFile($data, true);
 
 if(!empty($data["message"]["photo"])){
     if(empty($data["message"]["photo"][3])){
@@ -74,6 +74,9 @@ if(!empty($data["message"]["photo"])){
     }else{
         $file_id = $data["message"]["photo"][2]['file_id'];
     }   
+
+    writeLogFile($data, true);
+    writeLogFile($file_id);
 
     $getQuery = array(
         "file_id" => $file_id,
@@ -87,7 +90,7 @@ if(!empty($data["message"]["photo"])){
 
     $resultQuery = curl_exec($ch);
 
-    writeLogFile($resultQuery, true);
+    writeLogFile($resultQuery);
 }
 
     // ------------------------- сообщение с кнопкой -----------------------------//
