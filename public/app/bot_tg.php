@@ -69,11 +69,9 @@ $data = json_decode($data, true);
 // writeLogFile($data, true);
 
 if(!empty($data["message"]["photo"])){
-    if(empty($data["message"]["photo"][3])){
-        $file_id = $data["message"]["photo"][3]['file_id'];
-    }else{
-        $file_id = $data["message"]["photo"][2]['file_id'];
-    }   
+    $last_photo = end($data["message"]["photo"]);
+
+    $file_id = $last_photo['file_id'];
 
     writeLogFile($data, true);
     writeLogFile($file_id);
