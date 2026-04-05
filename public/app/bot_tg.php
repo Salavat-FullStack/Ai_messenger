@@ -68,10 +68,27 @@ $data = json_decode($data, true);
 
 writeLogFile($data, true);
 
-// if(!empty($data["message"]["photo"])){
+if(!empty($data["message"]["photo"])){
+    if(!empty($data["message"]["photo"][3])){
+        $file_id = $data["message"]["photo"][3]['file_id'];
+    }else{
+        $file_id = $data["message"]["photo"][2]['file_id'];
+    }   
 
-// }
+    $getQuery = array(
+        "file_id" => $file_id,
+    );
 
+    $ch = curl_init("https://api.telegram.org/bot" . TG_TOKEN . "/getFile?" . http_build_query($Query));
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    curl_setopt($ch, CURLOPT_HEADER, true);
+
+    $resultQuery = curl_exec($ch);
+
+    writeLogFile($resultQuery, true);
+}
 
     // ------------------------- сообщение с кнопкой -----------------------------//
 
