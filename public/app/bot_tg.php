@@ -3,48 +3,77 @@
 define("TG_TOKEN", "8477216590:AAEsjTTHuO76KvPi9mDe27dPntIg3nQn-IY");
 define("TG_USER_ID", -1003660883702);
 
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $input = file_get_contents('php://input');
+// if($_SERVER['REQUEST_METHOD'] === 'POST'){
+//     $input = file_get_contents('php://input');
 
-    $data = json_decode($input, true);
+//     $data = json_decode($input, true);
 
-    $userData = $data['userData'];
+//     $userData = $data['userData'];
 
-    $userDataText = "<b>- Данные пользователя </b> \n" . 
-                "<b>Имя : </b>" . $userData['name'] . "\n" .
-                "<b>Фамилия : </b>" . $userData['surname'] . "\n" .
-                "<b>Email : </b>" . $userData['email'] . "\n \n" ;
+//     $selectedAssistant = $data['selectedAssistant'];
 
-    $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $data['messageUser'] . "\n \n";
-    $AiResponse = "<b>- Ответ ИИ : \n </b>" . $data['messageAi'] . "\n \n";
+//     $userDataText = "<b>- Данные пользователя </b> \n" . 
+//                 "<b>Имя : </b>" . $userData['name'] . "\n" .
+//                 "<b>Фамилия : </b>" . $userData['surname'] . "\n" .
+//                 "<b>Email : </b>" . $userData['email'] . "\n \n" ;
 
-    $userAiQuestion = "<b>- Переделанный вопрос (ИИ) : </b> \n" . $data['messageReview'] . "\n \n";
+//     $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $data['messageUser'] . "\n \n";
+//     $AiResponse = "<b>- Ответ ИИ : \n </b>" . $data['messageAi'] . "\n \n";
 
-    $date = "<b>- Время : </b>" . $data['date'];
+//     $userAiQuestion = "<b>- Переделанный вопрос (ИИ) : </b> \n" . $data['messageReview'] . "\n \n";
 
-    $message = $userDataText . $userQuestion . $userAiQuestion . $AiResponse . $date;
+//     $date = "<b>- Дата : </b>" . $data['date'];
 
-    $Query = array(
-        "chat_id" => TG_USER_ID,
-        "text" => $message,
-        "parse_mode" => "html"
-    );
+//     $message = $userDataText . $userQuestion . $userAiQuestion . $AiResponse . $date;
 
-    $ch = curl_init("https://api.telegram.org/bot" . TG_TOKEN . "/sendMessage");
+//     $Query = array(
+//         "chat_id" => TG_USER_ID,
+//         "text" => $message,
+//         "parse_mode" => "html"
+//     );
 
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($Query));
+//     $ch = curl_init("https://api.telegram.org/bot" . TG_TOKEN . "/sendMessage");
 
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-    curl_setopt($ch, CURLOPT_HEADER, true);
+//     curl_setopt($ch, CURLOPT_POST, 1);
+//     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($Query));
 
-    $resultQuery = curl_exec($ch);
+//     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+//     curl_setopt($ch, CURLOPT_HEADER, true);
 
-    header('Content-Type: application/json');
+//     $resultQuery = curl_exec($ch);
 
-    echo json_encode([
-        'status' => 'success',
-        'message' => "сообщение отправлено в telegram"
-    ]);
+//     header('Content-Type: application/json');
+
+//     echo json_encode([
+//         'status' => 'success',
+//         'message' => "сообщение отправлено в telegram"
+//     ]);
+// }
+
+// $getQuery = array(
+//     "url" => "https://chat-progress.ru/app/bot_tg.php",
+// );
+// $ch = curl_init("https://api.telegram.org/bot". TG_TOKEN ."/setWebhook?" . http_build_query($getQuery));
+// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+// curl_setopt($ch, CURLOPT_HEADER, false);
+
+// $resultQuery = curl_exec($ch);
+
+// echo $resultQuery;
+
+function writeLogFile($string, $clear = false){
+    $log_file_name = __DIR__."/message.txt";
+    $now = date("Y-m-d H:i:s");
+    if($clear == false) {
+        file_put_contents($log_file_name, $now." ".print_r($string, true)."\r\n", FILE_APPEND);
+    } else {
+        file_put_contents($log_file_name, $now." ".print_r($string, true)."\r\n");
+    }
 }
+
+$data = file_get_contents('php://input');
+$data = json_decode($data, true);
+
+writeLogFile($data, true);
