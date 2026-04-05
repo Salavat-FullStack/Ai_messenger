@@ -73,9 +73,6 @@ if(!empty($data["message"]["photo"])){
 
     $file_id = $last_photo['file_id'];
 
-    writeLogFile($data, true);
-    writeLogFile($file_id);
-
     $getQuery = array(
         "file_id" => $file_id,
     );
@@ -88,7 +85,21 @@ if(!empty($data["message"]["photo"])){
 
     $resultQuery = curl_exec($ch);
 
-    writeLogFile($resultQuery);
+    /* записываем ответ в формате PHP массива */
+    $arrDataResult = json_decode($resultQuery, true);
+
+    /* записываем URL необходимого изображения */
+    $fileUrl = $arrDataResult["result"]["file_path"];
+
+    /* формируем полный URL до файла */
+    $photoPathTG = "https://api.telegram.org/file/bot". TG_TOKEN . "/" . $fileUrl;
+
+    /* забираем название файла */
+    $arrFilePath = explode("/", $fileUrl);
+    $newFilerPath = __DIR__ . "/img/" . $arrFilePath[1];
+
+    /* сохраняем файл на сервер */
+    file_put_contents($newFilerPath , file_get_contents($photoPathTG));
 }
 
     // ------------------------- сообщение с кнопкой -----------------------------//
