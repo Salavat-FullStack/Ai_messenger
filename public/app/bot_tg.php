@@ -51,18 +51,6 @@ define("TG_USER_ID", -1003660883702);
 //     ]);
 // }
 
-// $getQuery = array(
-//     "url" => "https://chat-progress.ru/app/bot_tg.php",
-// );
-// $ch = curl_init("https://api.telegram.org/bot". TG_TOKEN ."/setWebhook?" . http_build_query($getQuery));
-// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-// curl_setopt($ch, CURLOPT_HEADER, false);
-
-// $resultQuery = curl_exec($ch);
-
-// echo $resultQuery;
-
 
 
 function writeLogFile($string, $clear = false){
@@ -80,8 +68,38 @@ $data = json_decode($data, true);
 
 writeLogFile($data, true);
 
+// if(!empty($data["message"]["photo"])){
 
-// file_put_contents(__DIR__ . "/test.txt", "HIT\n", FILE_APPEND);
+// }
 
-// $input = file_get_contents('php://input');
-// file_put_contents(__DIR__ . "/raw.txt", $input . "\n\n", FILE_APPEND);
+
+    // ------------------------- сообщение с кнопкой -----------------------------//
+
+// $Query = array(
+//     "chat_id" => TG_USER_ID,
+//     "text" => "Test сообщения с кнопкой!",
+//     "reply_markup" => json_encode(
+//         array(
+//             "inline_keyboard" => array(
+//                 array(
+//                     array(
+//                         "text" => "Button 1",
+//                         "callback_data" => "test_1"
+//                     ),
+//                     array(
+//                         "text" => "Buttom 2",
+//                         "callback_data" => "test_2"
+//                     ),
+//                 )
+//             )
+//         )
+//     )
+// );
+
+// $ch = curl_init("https://api.telegram.org/bot" . TG_TOKEN . "/sendMessage?" . http_build_query($Query));
+
+// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+// curl_setopt($ch, CURLOPT_HEADER, true);
+
+// $resultQuery = curl_exec($ch);
