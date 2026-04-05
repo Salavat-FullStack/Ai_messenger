@@ -152,7 +152,8 @@ document.addEventListener('DOMContentLoaded',()=>{
                                 messageUser: messageUser,
                                 messageReview: messageReview,
                                 messageAi: responseAi,
-                                date: formatDateView(formatDate())
+                                date: formatDateView(formatDate()),
+                                selectedAssistant: selectedAssistant
                             })
                         })
                         .then(response => response.json())
