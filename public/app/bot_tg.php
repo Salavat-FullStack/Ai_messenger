@@ -80,7 +80,7 @@ if(!empty($data["message"]["photo"])){
         "file_id" => $file_id,
     );
 
-    $ch = curl_init("https://api.telegram.org/bot" . TG_TOKEN . "/getFile?" . http_build_query($Query));
+    $ch = curl_init("https://api.telegram.org/bot" . TG_TOKEN . "/getFile?" . http_build_query($getQuery));
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
