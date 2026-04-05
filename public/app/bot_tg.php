@@ -84,7 +84,7 @@ if(!empty($data["message"]["photo"])){
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-    curl_setopt($ch, CURLOPT_HEADER, true);
+    curl_setopt($ch, CURLOPT_HEADER, false);
 
     $resultQuery = curl_exec($ch);
 
