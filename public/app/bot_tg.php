@@ -69,7 +69,7 @@ $data = json_decode($data, true);
 writeLogFile($data, true);
 
 if(!empty($data["message"]["photo"])){
-    if(!empty($data["message"]["photo"][3])){
+    if(empty($data["message"]["photo"][3])){
         $file_id = $data["message"]["photo"][3]['file_id'];
     }else{
         $file_id = $data["message"]["photo"][2]['file_id'];
