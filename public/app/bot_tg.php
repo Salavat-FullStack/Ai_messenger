@@ -63,17 +63,25 @@ define("TG_USER_ID", -1003660883702);
 
 // echo $resultQuery;
 
-function writeLogFile($string, $clear = false){
-    $log_file_name = __DIR__."/message.txt";
-    $now = date("Y-m-d H:i:s");
-    if($clear == false) {
-        file_put_contents($log_file_name, $now." ".print_r($string, true)."\r\n", FILE_APPEND);
-    } else {
-        file_put_contents($log_file_name, $now." ".print_r($string, true)."\r\n");
-    }
-}
 
-$data = file_get_contents('php://input');
-$data = json_decode($data, true);
 
-writeLogFile($data, true);
+// function writeLogFile($string, $clear = false){
+//     $log_file_name = __DIR__."/message.txt";
+//     $now = date("Y-m-d H:i:s");
+//     if($clear == false) {
+//         file_put_contents($log_file_name, $now." ".print_r($string, true)."\r\n", FILE_APPEND);
+//     } else {
+//         file_put_contents($log_file_name, $now." ".print_r($string, true)."\r\n");
+//     }
+// }
+
+// $data = file_get_contents('php://input');
+// $data = json_decode($data, true);
+
+// writeLogFile($data, true);
+
+
+file_put_contents(__DIR__ . "/test.txt", "HIT\n", FILE_APPEND);
+
+$input = file_get_contents('php://input');
+file_put_contents(__DIR__ . "/raw.txt", $input . "\n\n", FILE_APPEND);
