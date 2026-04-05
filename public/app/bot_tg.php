@@ -88,18 +88,33 @@ if(!empty($data["message"]["photo"])){
     /* записываем ответ в формате PHP массива */
     $arrDataResult = json_decode($resultQuery, true);
 
+    if(empty($arrDataResult["result"]["file_path"])) {
+        exit("Ошибка: нет file_path");
+    }
+
     /* записываем URL необходимого изображения */
     $fileUrl = $arrDataResult["result"]["file_path"];
 
     /* формируем полный URL до файла */
     $photoPathTG = "https://api.telegram.org/file/bot". TG_TOKEN . "/" . $fileUrl;
 
+    $dir = __DIR__ . "/img";
+    if(!is_dir($dir)) {
+        mkdir($dir, 0755, true);
+    }
+
     /* забираем название файла */
     $arrFilePath = explode("/", $fileUrl);
-    $newFilerPath = __DIR__ . "/img/" . $arrFilePath[1];
+    $filename = end($arrFilePath);
 
-    /* сохраняем файл на сервер */
-    file_put_contents($newFilerPath , file_get_contents($photoPathTG));
+    $newFilePath = $dir . "/" . $filename;
+
+    $ch = curl_init($photoPathTG);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $imgData = curl_exec($ch);
+
+    // 8. Сохраняем
+    file_put_contents($newFilePath, $imgData);
 }
 
     // ------------------------- сообщение с кнопкой -----------------------------//
