@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                     .then(response => response.json())
                     .then(data =>{
                         console.log(data);
-                        fetch('https://chat-progress.ru/app/bot_tg.php',{
+                        fetch('https://chat-progress.ru/app/bot_max.php',{
                             method: 'POST',
                             headers:{
                                 "Content-Type" : "application/json"
