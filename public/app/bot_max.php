@@ -1,78 +1,86 @@
 <?php
 
-$token = "f9LHodD0cOLwjuOGWlt5_5r_fk-nUKWe-e3hL5-f_Mg3JcT_L9d7gt1dqg8lbDBJJxPKQx6UEHnpoqND01Iy";
-
-$url = "https://platform-api.max.ru/subscriptions";
-
-$data = [
-    "url" => "https://chat-progress.ru/app/webhook.php",
-    "update_types" => ["message_created", "bot_started"],
-    "secret" => "salavat20212509"
-];
-
-$ch = curl_init($url);
-
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_POST, true);
-
-curl_setopt($ch, CURLOPT_HTTPHEADER, [
-    "Authorization: $token",
-    "Content-Type: application/json"
-]);
-
-curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-
-$result = curl_exec($ch);
-    
 // $token = "f9LHodD0cOLwjuOGWlt5_5r_fk-nUKWe-e3hL5-f_Mg3JcT_L9d7gt1dqg8lbDBJJxPKQx6UEHnpoqND01Iy";
-// $chat_id = "-73144948768060";
 
-// if($_SERVER['REQUEST_METHOD'] === "POST"){
-//     $input = file_get_contents("php://input");
+// $url = "https://platform-api.max.ru/subscriptions";
 
-//     $data = json_decode($input, true);
+// $data = [
+//     "url" => "https://chat-progress.ru/app/webhook.php",
+//     "update_types" => ["message_created", "bot_started"],
+//     "secret" => "salavat20212509"
+// ];
 
-//     $userData = $data['userData'];
+// $ch = curl_init($url);
 
-//     $selectedAssistant = $data['selectedAssistant'];
+// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+// curl_setopt($ch, CURLOPT_POST, true);
 
-//     $userDataText = "<b>- Данные пользователя </b> \n" . 
-//                 "<b>Имя : </b>" . $userData['name'] . "\n" .
-//                 "<b>Фамилия : </b>" . $userData['surname'] . "\n" .
-//                 "<b>Email : </b>" . $userData['email'] . "\n \n" ;
+// curl_setopt($ch, CURLOPT_HTTPHEADER, [
+//     "Authorization: $token",
+//     "Content-Type: application/json"
+// ]);
 
-//     $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $data['messageUser'] . "\n \n";
-//     $AiResponse = "<b>- Ответ ИИ : \n </b>" . $data['messageAi'] . "\n \n";
+// curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
 
-//     $userAiQuestion = "<b>- Переделанный вопрос (ИИ) : </b> \n" . $data['messageReview'] . "\n \n";
+// $result = curl_exec($ch);
+    
+$token = "f9LHodD0cOLwjuOGWlt5_5r_fk-nUKWe-e3hL5-f_Mg3JcT_L9d7gt1dqg8lbDBJJxPKQx6UEHnpoqND01Iy";
+$chat_id = "-73144948768060";
 
-//     $date = "<b>- Дата : </b>" . $data['date'];
+if($_SERVER['REQUEST_METHOD'] === "POST"){
+    $input = file_get_contents("php://input");
 
-//     $message = $userDataText . $userQuestion . $userAiQuestion . $AiResponse . $date;
+    $data = json_decode($input, true);
+
+    $userData = $data['userData'];
+
+    $selectedAssistant = $data['selectedAssistant'];
+
+    $userDataText = "<b>- Данные пользователя </b> \n" . 
+                "<b>Имя : </b>" . $userData['name'] . "\n" .
+                "<b>Фамилия : </b>" . $userData['surname'] . "\n" .
+                "<b>Email : </b>" . $userData['email'] . "\n \n" ;
+
+    $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $data['messageUser'] . "\n \n";
+    $AiResponse = "<b>- Ответ ИИ : \n </b>" . $data['messageAi'] . "\n \n";
+
+    $userAiQuestion = "<b>- Переделанный вопрос (ИИ) : </b> \n" . $data['messageReview'] . "\n \n";
+
+    $date = "<b>- Дата : </b>" . $data['date'];
+
+    $message = $userDataText . $userQuestion . $userAiQuestion . $AiResponse . $date;
+
+    $result = sendMessage($message);
+
+    echo json_encode([
+        'status' => 'success',
+        'message' => "сообщение отправлено в max"
+    ]);
+}
 
 
-//     $url = "https://platform-api.max.ru/messages?chat_id=" . $chat_id;
+function sendMessage($message){
+    global $token;
+    global $chat_id;
 
-//     $data = [
-//         "text" => $message,
-//         "format" => "html"
-//     ];
+    $url = "https://platform-api.max.ru/messages?chat_id=" . $chat_id;
 
-//     $ch = curl_init($url);
+    $data = [
+        "text" => $message,
+        "format" => "html"
+    ];
 
-//     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//     curl_setopt($ch, CURLOPT_POST, true);
-//     curl_setopt($ch, CURLOPT_HTTPHEADER, [
-//         "Authorization: $token",
-//         "Content-Type: application/json"
-//     ]);
+    $ch = curl_init($url);
 
-//     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "Authorization: $token",
+        "Content-Type: application/json"
+    ]);
 
-//     $result = curl_exec($ch);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
 
-//     echo json_encode([
-//         'status' => 'success',
-//         'message' => "сообщение отправлено в max"
-//     ]);
-// }
+    $result = curl_exec($ch);
+    return $result;
+}
