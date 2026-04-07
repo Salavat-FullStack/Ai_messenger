@@ -31,6 +31,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
     $data = [
         "text" => $message,
+        "format" => "html"
     ];
 
     $ch = curl_init($url);
