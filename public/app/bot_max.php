@@ -25,7 +25,7 @@
 // $result = curl_exec($ch);
     
 $token = "f9LHodD0cOLwjuOGWlt5_5r_fk-nUKWe-e3hL5-f_Mg3JcT_L9d7gt1dqg8lbDBJJxPKQx6UEHnpoqND01Iy";
-$chat_id = "-73144948768060";
+$user_id = "user_id";
 
 if($_SERVER['REQUEST_METHOD'] === "POST"){
     $input = file_get_contents("php://input");
@@ -61,9 +61,9 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
 function sendMessage($message){
     global $token;
-    global $chat_id;
+    global $user_id;
 
-    $url = "https://platform-api.max.ru/messages?chat_id=" . $chat_id;
+    $url = "https://platform-api.max.ru/messages?user_id=" . $user_id;
 
     $data = [
         "text" => $message,
