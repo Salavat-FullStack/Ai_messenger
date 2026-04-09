@@ -40,8 +40,15 @@ if (!isset($headers['X-Max-Bot-Api-Secret']) || $headers['X-Max-Bot-Api-Secret']
 $input = file_get_contents("php://input");
 $json = json_decode($input, true);
 
-// логируем (для отладки)
-file_put_contents(__DIR__ . "/webhook_log.txt", date('Y-m-d H:i:s') . " " . $input . PHP_EOL, FILE_APPEND);
+$pretty = json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+// добавляем дату сверху
+$line = date("Y-m-d H:i:s") . " " . $pretty . "\n";
+
+// записываем в файл
+file_put_contents('log.txt', $line, FILE_APPEND);
+
+// file_put_contents(__DIR__ . "/webhook_log.txt", date('Y-m-d H:i:s') . " " . $input . PHP_EOL, FILE_APPEND);
 
 // если пришло сообщение, вызываем функцию из bot_max.php
 if (!empty($json['message'])) {
