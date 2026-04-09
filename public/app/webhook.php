@@ -3,6 +3,35 @@
 $headers = getallheaders();
 $secret = 'salavat20212509';
 
+$token = "f9LHodD0cOLwjuOGWlt5_5r_fk-nUKWe-e3hL5-f_Mg3JcT_L9d7gt1dqg8lbDBJJxPKQx6UEHnpoqND01Iy";
+$user_id = "230853692";
+
+function sendMessage($message){
+    global $token;
+    global $user_id;
+
+    $url = "https://platform-api.max.ru/messages?user_id=" . $user_id;
+
+    $data = [
+        "text" => $message,
+        "format" => "html"
+    ];
+
+    $ch = curl_init($url);
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "Authorization: $token",
+        "Content-Type: application/json"
+    ]);
+
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+    $result = curl_exec($ch);
+    return $result;
+}
+
 if (!isset($headers['X-Max-Bot-Api-Secret']) || $headers['X-Max-Bot-Api-Secret'] !== $secret) {
     http_response_code(403);
     exit;
@@ -20,7 +49,7 @@ if (!empty($json['message'])) {
     $text = "Привет, это авто-ответ!"; // можно парсить текст менеджера и формировать ответ
 
     // подключаем bot_max.php
-    include __DIR__ . '/bot_max.php';
+    // include __DIR__ . '/bot_max.php';
 
     // отправляем ответ
     sendMessage($text);
