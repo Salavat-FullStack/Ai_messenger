@@ -52,4 +52,26 @@ document.addEventListener("DOMContentLoaded",()=>{
                 });
             }
         });
+
+    function formatDate() {
+        const now = new Date();
+
+        const pad = (n) => n.toString().padStart(2, '0');
+
+        return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ` +
+                `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    }
+    
+    function formatDateView(input) {
+        const date = new Date(input.replace(' ', 'T'));
+
+        return new Intl.DateTimeFormat('ru-RU', {
+            day: 'numeric',
+            month: 'short',
+            hour: '2-digit',
+            minute: '2-digit'
+        })
+        .format(date)
+        .replace(',', '');
+    }
 });
