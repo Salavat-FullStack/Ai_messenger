@@ -34,21 +34,35 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
     $userData = $data['userData'];
 
-    $selectedAssistant = $data['selectedAssistant'];
+    if($data['selectedAssistant'] == 'ИИ ассистент'){
+        $userDataText = "<b>- Данные пользователя </b> \n" . 
+                    "<b>Имя : </b>" . $userData['name'] . "\n" .
+                    "<b>Фамилия : </b>" . $userData['surname'] . "\n" .
+                    "<b>Email : </b>" . $userData['email'] . "\n \n" ;
 
-    $userDataText = "<b>- Данные пользователя </b> \n" . 
-                "<b>Имя : </b>" . $userData['name'] . "\n" .
-                "<b>Фамилия : </b>" . $userData['surname'] . "\n" .
-                "<b>Email : </b>" . $userData['email'] . "\n \n" ;
+        $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $data['messageUser'] . "\n \n";
+        $AiResponse = "<b>- Ответ ИИ : \n </b>" . $data['messageAi'] . "\n \n";
 
-    $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $data['messageUser'] . "\n \n";
-    $AiResponse = "<b>- Ответ ИИ : \n </b>" . $data['messageAi'] . "\n \n";
+        $userAiQuestion = "<b>- Переделанный вопрос (ИИ) : </b> \n" . $data['messageReview'] . "\n \n";
 
-    $userAiQuestion = "<b>- Переделанный вопрос (ИИ) : </b> \n" . $data['messageReview'] . "\n \n";
+        $date = "<b>- Дата : </b>" . $data['date'];
 
-    $date = "<b>- Дата : </b>" . $data['date'];
+        $message = $userDataText . $userQuestion . $userAiQuestion . $AiResponse . $date;
+    }else if($data['selectedAssistant'] == 'Менеджер'){
 
-    $message = $userDataText . $userQuestion . $userAiQuestion . $AiResponse . $date;
+        $title = "<b>- Вопрос менеджеру! </b> \n \n";
+
+        $userDataText = "<b>- Данные пользователя </b> \n" . 
+                    "<b>Имя : </b>" . $userData['name'] . "\n" .
+                    "<b>Фамилия : </b>" . $userData['surname'] . "\n" .
+                    "<b>Email : </b>" . $userData['email'] . "\n \n" ;
+
+        $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $data['messageUser'] . "\n \n";
+
+        $date = "<b>- Дата : </b>" . $data['date'];
+
+        $message = $title . $userDataText . $userQuestion . $date;
+    }
 
     $result = sendMessage($message);
 
