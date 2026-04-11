@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     let messageUser = '';
     let messageReview = '';
 
-    let selectedAssistant = '';
+    let selectedAssistant = 'ИИ ассистент';
 
     let responseAi = '';
 
@@ -56,6 +56,9 @@ document.addEventListener('DOMContentLoaded',()=>{
     let AiResponse; 
 
     SendBtn.addEventListener('click',()=>{
+
+    if(selectedAssistant == 'ИИ ассистент'){
+
         question = Ai_request_input.value;
         console.log(question);
 
@@ -136,7 +139,8 @@ document.addEventListener('DOMContentLoaded',()=>{
                         messageUser: messageUser,
                         messageReview: messageReview,
                         messageAi: data['responseAi'],
-                        date: formatDate()
+                        date: formatDate(),
+                        selectedAssistant: selectedAssistant
                     })
                     })
                     .then(response => response.json())
@@ -182,9 +186,8 @@ document.addEventListener('DOMContentLoaded',()=>{
             Ai_load.classList.add('display_none');
             alert('Что-то пошло не так :(');
         })
-
+        }
     });
-
 
     function renderMessage(messageRole, date, user, question){
         const Ai_message_storage = document.querySelector('.Ai_message_storage');
