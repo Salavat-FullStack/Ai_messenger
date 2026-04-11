@@ -9,14 +9,14 @@ document.addEventListener('DOMContentLoaded',()=>{
     let store_messages = '';
     let question = '';
 
-    let messageUser = '';
-    let messageReview = '';
+    window.messageUser = '';
+    window.messageReview = '';
 
-    let selectedAssistant = 'ИИ ассистент';
+    window.selectedAssistant = 'ИИ ассистент';
 
     let responseAi = '';
 
-    const USER_DATA = {
+    window.USER_DATA = {
         'name' : 'Salavat',
         'surname' : 'Axmetgareev',
         'email' : 'salavat@gmail.com'
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            userData: USER_DATA,
+            userData: window.USER_DATA,
         })
     })
     .then(response => response.json())
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
     SendBtn.addEventListener('click',()=>{
 
-    if(selectedAssistant == 'ИИ ассистент'){
+    if(window.selectedAssistant == 'ИИ ассистент'){
 
         question = Ai_request_input.value;
         console.log(question);
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             return;
         }
 
-        messageUser = question;
+        window.messageUser = question;
         console.log('click');
 
         Ai_request_input.value = '';
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         Ai_send_message.classList.add('display_none');
         Ai_load.classList.remove('display_none');
 
-        renderMessage('user', formatDateView(formatDate()), USER_DATA['name'], question);
+        renderMessage('user', formatDateView(formatDate()), window.USER_DATA['name'], question);
 
         fetch('https://chat-progress.ru/app/review.php',{
             method: "POST",
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    user: USER_DATA,
+                    user: window.USER_DATA,
                     question: data['response']
                 })
             })
@@ -119,11 +119,11 @@ document.addEventListener('DOMContentLoaded',()=>{
                 Ai_send_message.classList.remove('display_none');
                 Ai_load.classList.add('display_none');
 
-                renderMessage('Ai', formatDateView(formatDate()), USER_DATA['name'], AiResponse);
+                renderMessage('Ai', formatDateView(formatDate()), window.USER_DATA['name'], AiResponse);
 
-                console.log(USER_DATA);
-                console.log(messageUser);
-                console.log(messageReview);
+                console.log(window.USER_DATA);
+                console.log(window.messageUser);
+                console.log(window.messageReview);
                 console.log(data['responseAi']);
                 console.log(formatDate());
 
@@ -135,12 +135,12 @@ document.addEventListener('DOMContentLoaded',()=>{
                         "Content-Type" : "application/json"
                     },
                     body: JSON.stringify({
-                        userData: USER_DATA,
-                        messageUser: messageUser,
-                        messageReview: messageReview,
+                        userData: window.USER_DATA,
+                        messageUser: window.messageUser,
+                        messageReview: window.messageReview,
                         messageAi: data['responseAi'],
                         date: formatDate(),
-                        selectedAssistant: selectedAssistant
+                        selectedAssistant: window.selectedAssistant
                     })
                     })
                     .then(response => response.json())
@@ -152,12 +152,12 @@ document.addEventListener('DOMContentLoaded',()=>{
                                 "Content-Type" : "application/json"
                             },
                             body: JSON.stringify({
-                                userData: USER_DATA,
-                                messageUser: messageUser,
-                                messageReview: messageReview,
+                                userData: window.USER_DATA,
+                                messageUser: window.messageUser,
+                                messageReview: window.messageReview,
                                 messageAi: responseAi,
                                 date: formatDateView(formatDate()),
-                                selectedAssistant: selectedAssistant
+                                selectedAssistant: window.selectedAssistant
                             })
                         })
                         .then(response => response.json())
@@ -300,8 +300,8 @@ document.addEventListener('DOMContentLoaded',()=>{
                 elem.classList.remove('assistant_btn_active');  
             });
             elem.classList.add('assistant_btn_active');
-            selectedAssistant = elem.textContent;
-            console.log(selectedAssistant);
+            window.selectedAssistant = elem.textContent;
+            console.log(window.selectedAssistant);
         });
     });
 });

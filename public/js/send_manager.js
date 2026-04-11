@@ -5,11 +5,11 @@ document.addEventListener("DOMContentLoaded",()=>{
 
         SendBtn.addEventListener('click',()=>{
 
-            if(selectedAssistant == 'Менеджер'){
+            if(window.selectedAssistant == 'Менеджер'){
 
-                console.log(messageUser);
-                console.log(selectedAssistant);
-                console.log(USER_DATA);
+                console.log(window.messageUser);
+                console.log(window.selectedAssistant);
+                console.log(window.USER_DATA);
 
                 fetch('https://chat-progress.ru/app/save_message.php',{
                     method: 'POST',
@@ -17,11 +17,11 @@ document.addEventListener("DOMContentLoaded",()=>{
                         "Content-Type" : "application/json"
                     },
                     body: JSON.stringify({
-                        userData: USER_DATA,
-                        messageUser: messageUser,
+                        userData: window.USER_DATA,
+                        messageUser: window.messageUser,
                         managerResponse: '',
                         date: formatDate(),
-                        selectedAssistant: selectedAssistant
+                        selectedAssistant: window.selectedAssistant
                 })
                 })
                 .then(response => response.json())
@@ -33,11 +33,11 @@ document.addEventListener("DOMContentLoaded",()=>{
                             "Content-Type" : "application/json"
                         },
                         body: JSON.stringify({
-                            userData: USER_DATA,
-                            messageUser: messageUser,
+                            userData: window.USER_DATA,
+                            messageUser: window.messageUser,
                             managerResponse: '',
                             date: formatDateView(formatDate()),
-                            selectedAssistant: selectedAssistant
+                            selectedAssistant: window.selectedAssistant
                         })
                     })
                     .then(response => response.json())
