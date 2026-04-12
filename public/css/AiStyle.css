@@ -202,3 +202,11 @@
     font-weight: 500;
     transition: all .3s;
 }
+
+.Ai_message_storage_manager{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+    overflow-y: auto;
+}

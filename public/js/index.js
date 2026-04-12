@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         .replace(',', '');
     }
 
-    function loadingGenerate(action){
+    window.loadingGenerate = function(action){
         const Ai_message_storage = document.querySelector('.Ai_message_storage');
         if(action == "delete"){
 
@@ -293,6 +293,8 @@ document.addEventListener('DOMContentLoaded',()=>{
     };
 
     const assistant_btn = document.querySelectorAll('.assistant_btn');
+    const Ai_message_storage_manager = document.querySelector('.Ai_message_storage_manager');
+    const Ai_message_storage = document.querySelector('.Ai_message_storage');
 
     assistant_btn.forEach(elem =>{
 
@@ -303,6 +305,14 @@ document.addEventListener('DOMContentLoaded',()=>{
             elem.classList.add('assistant_btn_active');
             window.selectedAssistant = elem.textContent;
             console.log(window.selectedAssistant);
+
+            if(selectedAssistant == 'Менеджер'){
+                Ai_message_storage_manager.classList.remove('display_none');
+                Ai_message_storage.classList.add('display_none');   
+            }else if(selectedAssistant == 'ИИ ассистент'){
+                Ai_message_storage_manager.classList.add('display_none');
+                Ai_message_storage.classList.remove('display_none');
+            }
         });
     });
 });

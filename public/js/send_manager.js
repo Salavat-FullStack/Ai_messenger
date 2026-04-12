@@ -8,71 +8,72 @@ document.addEventListener("DOMContentLoaded",()=>{
 
     const SendBtn = document.getElementById('Ai_send_message');
 
-        SendBtn.addEventListener('click',()=>{
+    SendBtn.addEventListener('click',()=>{
 
-            if(window.selectedAssistant == 'Менеджер'){
+        if(window.selectedAssistant == 'Менеджер'){
 
-                let question = Ai_request_input.value;
-                console.log(question);
+            let question = Ai_request_input.value;
+            console.log(question);
 
-                if(question.length < 3){
-                    console.log('сообщение слишком короткое!');
-                    return;
-                }
+            if(question.length < 3){
+                console.log('сообщение слишком короткое!');
+                return;
+            }
 
-                window.messageUser = question;
-                console.log('click');
+            window.messageUser = question;
+            console.log('click');
 
-                Ai_request_input.value = '';
+            Ai_request_input.value = '';
 
-                Ai_send_message.classList.add('display_none');
-                Ai_load.classList.remove('display_none');
+            Ai_send_message.classList.add('display_none');
+            Ai_load.classList.remove('display_none');
 
-                renderMessage('user', formatDateView(formatDate()), window.USER_DATA['name'], question);
+            renderMessage('user', formatDateView(formatDate()), window.USER_DATA['name'], question);
 
-                console.log(window.messageUser);
-                console.log(window.selectedAssistant);
-                console.log(window.USER_DATA);
+            console.log(window.messageUser);
+            console.log(window.selectedAssistant);
+            console.log(window.USER_DATA);
 
-                fetch('https://chat-progress.ru/app/save_message.php',{
+            fetch('https://chat-progress.ru/app/save_message.php',{
+                method: 'POST',
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                body: JSON.stringify({
+                    userData: window.USER_DATA,
+                    messageUser: window.messageUser,
+                    managerResponse: '',
+                    date: formatDate(),
+                    selectedAssistant: window.selectedAssistant
+            })
+            })
+            .then(response => response.json())
+            .then(data =>{
+                console.log(data);
+                fetch('https://chat-progress.ru/app/bot_max.php',{
                     method: 'POST',
-                    headers: {
+                    headers:{
                         "Content-Type" : "application/json"
                     },
                     body: JSON.stringify({
                         userData: window.USER_DATA,
                         messageUser: window.messageUser,
                         managerResponse: '',
-                        date: formatDate(),
+                        date: formatDateView(formatDate()),
                         selectedAssistant: window.selectedAssistant
-                })
+                    })
                 })
                 .then(response => response.json())
-                .then(data =>{
+                .then(data => {
                     console.log(data);
-                    fetch('https://chat-progress.ru/app/bot_max.php',{
-                        method: 'POST',
-                        headers:{
-                            "Content-Type" : "application/json"
-                        },
-                        body: JSON.stringify({
-                            userData: window.USER_DATA,
-                            messageUser: window.messageUser,
-                            managerResponse: '',
-                            date: formatDateView(formatDate()),
-                            selectedAssistant: window.selectedAssistant
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-                        console.log(data.status);
-                    })
-                    .catch(err => console.error(err));
+                    console.log(data.status);
+                    loadingGenerate('delete');
                 })
-                .catch(error =>{
-                    console.error('Ошибка:', error);
-                });
-            }
-        });
+                .catch(err => console.error(err));
+            })
+            .catch(error =>{
+                console.error('Ошибка:', error);
+            });
+        }
+    });
 });
