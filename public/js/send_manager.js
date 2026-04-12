@@ -1,11 +1,34 @@
 document.addEventListener("DOMContentLoaded",()=>{
     console.log("Загруска send_message.js");
 
-        const SendBtn = document.getElementById('Ai_send_message');
+    const Ai_request_input = document.getElementById('Ai_request_input');
+
+    const Ai_send_message = document.getElementById('Ai_send_message');
+    const Ai_load = document.getElementById('Ai_load');
+
+    const SendBtn = document.getElementById('Ai_send_message');
 
         SendBtn.addEventListener('click',()=>{
 
             if(window.selectedAssistant == 'Менеджер'){
+
+                let question = Ai_request_input.value;
+                console.log(question);
+
+                if(question.length < 3){
+                    console.log('сообщение слишком короткое!');
+                    return;
+                }
+
+                window.messageUser = question;
+                console.log('click');
+
+                Ai_request_input.value = '';
+
+                Ai_send_message.classList.add('display_none');
+                Ai_load.classList.remove('display_none');
+
+                renderMessage('user', formatDateView(formatDate()), window.USER_DATA['name'], question);
 
                 console.log(window.messageUser);
                 console.log(window.selectedAssistant);
@@ -52,26 +75,4 @@ document.addEventListener("DOMContentLoaded",()=>{
                 });
             }
         });
-
-    function formatDate() {
-        const now = new Date();
-
-        const pad = (n) => n.toString().padStart(2, '0');
-
-        return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ` +
-                `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
-    }
-    
-    function formatDateView(input) {
-        const date = new Date(input.replace(' ', 'T'));
-
-        return new Intl.DateTimeFormat('ru-RU', {
-            day: 'numeric',
-            month: 'short',
-            hour: '2-digit',
-            minute: '2-digit'
-        })
-        .format(date)
-        .replace(',', '');
-    }
 });

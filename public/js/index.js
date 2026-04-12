@@ -57,8 +57,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 
     SendBtn.addEventListener('click',()=>{
 
-    if(window.selectedAssistant == 'ИИ ассистент'){
-
         question = Ai_request_input.value;
         console.log(question);
 
@@ -69,6 +67,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 
         window.messageUser = question;
         console.log('click');
+
+    if(window.selectedAssistant == 'ИИ ассистент'){
+
 
         Ai_request_input.value = '';
 
@@ -189,7 +190,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         }
     });
 
-    function renderMessage(messageRole, date, user, question){
+    window.renderMessage = function(messageRole, date, user, question){
         const Ai_message_storage = document.querySelector('.Ai_message_storage');
 
         let messageContainer = document.createElement('div');
@@ -239,7 +240,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     }
 
 
-    function formatDate() {
+    window.formatDate = function() {
         const now = new Date();
 
         const pad = (n) => n.toString().padStart(2, '0');
@@ -248,7 +249,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                 `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
     }
 
-    function formatDateView(input) {
+    window.formatDateView = function (input) {
         const date = new Date(input.replace(' ', 'T'));
 
         return new Intl.DateTimeFormat('ru-RU', {
