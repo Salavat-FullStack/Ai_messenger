@@ -34,6 +34,8 @@ document.addEventListener("DOMContentLoaded",()=>{
             console.log(window.selectedAssistant);
             console.log(window.USER_DATA);
 
+            loadingGenerateManager('create');
+
             fetch('https://chat-progress.ru/app/save_message.php',{
                 method: 'POST',
                 headers: {
@@ -81,7 +83,9 @@ document.addEventListener("DOMContentLoaded",()=>{
         const Ai_message_storage = document.querySelector('.Ai_message_storage_manager');
         if(action == "delete"){
 
-            document.getElementById('Ai_loading')?.remove();
+            console.log(document.getElementById('Ai_loading_manager'));
+
+            document.getElementById('Ai_loading_manager')?.remove();
 
             Ai_message_storage.scrollTo({
                 top: Ai_message_storage.scrollHeight,
@@ -93,7 +97,7 @@ document.addEventListener("DOMContentLoaded",()=>{
             const chat = document.querySelector('.Ai_message_storage_manager');
 
             chat.insertAdjacentHTML('beforeend', `
-                <div class="Ai_typing Ai_message_loading" id="Ai_loading">
+                <div class="Ai_typing Ai_message_loading" id="Ai_loading_manager">
                     <span></span>
                     <span></span>
                     <span></span>
