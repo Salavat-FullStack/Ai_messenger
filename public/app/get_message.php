@@ -49,14 +49,26 @@ function getMessage($client, $email, $assistant){
 
     $messages = [];
 
-    foreach($hits as $hit){
-        $messages[] = [
-            "email" => $email,
-            "user_name" => $hit['_source']['name'],
-            "messageUser" => $hit['_source']['messageUser'],
-            "messageAi" => $hit['_source']['messageAi'],
-            "date" => $hit['_source']['created_at']
-        ];
+    if($assistant == "Менеджер"){
+        foreach($hits as $hit){
+            $messages[] = [
+                "email" => $email,
+                "user_name" => $hit['_source']['name'],
+                "messageUser" => $hit['_source']['messageUser'],
+                "managerResponse" => $hit['_source']['managerResponse'],
+                "date" => $hit['_source']['created_at']
+            ];
+        }
+    }else{
+        foreach($hits as $hit){
+            $messages[] = [
+                "email" => $email,
+                "user_name" => $hit['_source']['name'],
+                "messageUser" => $hit['_source']['messageUser'],
+                "messageAi" => $hit['_source']['messageAi'],
+                "date" => $hit['_source']['created_at']
+            ];
+        }
     }
 
     return $messages;
