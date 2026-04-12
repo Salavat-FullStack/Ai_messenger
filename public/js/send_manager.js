@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded",()=>{
 
             Ai_send_message.classList.add('display_none');
             Ai_load.classList.remove('display_none');
-            console.log(Ai_load);
 
             renderMessage('user', formatDateView(formatDate()), window.USER_DATA['name'], question, '.Ai_message_storage_manager');
 
@@ -69,6 +68,8 @@ document.addEventListener("DOMContentLoaded",()=>{
                     console.log(data);
                     console.log(data.status);
                     loadingGenerateManager('delete');
+                    Ai_send_message.classList.remove('display_none');
+                    Ai_load.classList.add('display_none');
                 })
                 .catch(err => console.error(err));
             })
@@ -81,8 +82,6 @@ document.addEventListener("DOMContentLoaded",()=>{
     function loadingGenerateManager(action){
         const Ai_message_storage = document.querySelector('.Ai_message_storage_manager');
         if(action == "delete"){
-
-            console.log(document.getElementById('Ai_loading_manager'));
 
             document.getElementById('Ai_loading_manager')?.remove();
 
