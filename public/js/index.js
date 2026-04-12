@@ -263,8 +263,8 @@ document.addEventListener('DOMContentLoaded',()=>{
         .replace(',', '');
     }
 
-    window.loadingGenerate = function(action, block = '.Ai_message_storage'){
-        const Ai_message_storage = document.querySelector(block);
+    function loadingGenerate(action){
+        const Ai_message_storage = document.querySelector('.Ai_message_storage');
         if(action == "delete"){
 
             document.getElementById('Ai_loading')?.remove();
@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
         }else if(action == "create"){
 
-            const chat = document.querySelector(block);
+            const chat = document.querySelector('.Ai_message_storage');
 
             chat.insertAdjacentHTML('beforeend', `
                 <div class="Ai_typing Ai_message_loading" id="Ai_loading">

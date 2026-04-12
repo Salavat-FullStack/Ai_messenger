@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded",()=>{
                 .then(data => {
                     console.log(data);
                     console.log(data.status);
-                    loadingGenerate('delete', '.Ai_message_storage_manager');
+                    loadingGenerateManager('delete');
                 })
                 .catch(err => console.error(err));
             })
@@ -76,4 +76,34 @@ document.addEventListener("DOMContentLoaded",()=>{
             });
         }
     });
+
+    function loadingGenerateManager(action){
+        const Ai_message_storage = document.querySelector('.Ai_message_storage_manager');
+        if(action == "delete"){
+
+            document.getElementById('Ai_loading')?.remove();
+
+            Ai_message_storage.scrollTo({
+                top: Ai_message_storage.scrollHeight,
+                behavior: 'smooth'
+            });
+
+        }else if(action == "create"){
+
+            const chat = document.querySelector('.Ai_message_storage_manager');
+
+            chat.insertAdjacentHTML('beforeend', `
+                <div class="Ai_typing Ai_message_loading" id="Ai_loading">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            `);
+
+            Ai_message_storage.scrollTo({
+                top: Ai_message_storage.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+    };
 });
