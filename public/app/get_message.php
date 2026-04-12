@@ -12,16 +12,21 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     header("Content-Type: application/json");
 
-    $response = getMessage($client, $data['userData']['email']);
+    $response = getMessage($client, $data['userData']['email'], $data['assistant']);
 
     echo json_encode([
         'response' => $response
     ]);
 }
 
-function getMessage($client, $email){
+function getMessage($client, $email, $assistant){
+    if($assistant == "ИИ ассистент"){
+        $index = "message_history";
+    }else if($assistant == "Менеджер"){
+        $index = "message_history_manager";
+    }
     $params = [
-        "index" => "message_history",
+        "index" => $index,
         "body" => [
             "query" => [
                 "match" =>[
