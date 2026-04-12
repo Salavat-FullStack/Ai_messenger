@@ -190,8 +190,8 @@ document.addEventListener('DOMContentLoaded',()=>{
         }
     });
 
-    window.renderMessage = function(messageRole, date, user, question){
-        const Ai_message_storage = document.querySelector('.Ai_message_storage');
+    window.renderMessage = function(messageRole, date, user, question, block = '.Ai_message_storage'){
+        const Ai_message_storage = document.querySelector(block);
 
         let messageContainer = document.createElement('div');
 
@@ -262,8 +262,8 @@ document.addEventListener('DOMContentLoaded',()=>{
         .replace(',', '');
     }
 
-    window.loadingGenerate = function(action){
-        const Ai_message_storage = document.querySelector('.Ai_message_storage');
+    window.loadingGenerate = function(action, block = '.Ai_message_storage'){
+        const Ai_message_storage = document.querySelector(block);
         if(action == "delete"){
 
             document.getElementById('Ai_loading')?.remove();
@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
         }else if(action == "create"){
 
-            const chat = document.querySelector('.Ai_message_storage');
+            const chat = document.querySelector(block);
 
             chat.insertAdjacentHTML('beforeend', `
                 <div class="Ai_typing Ai_message_loading" id="Ai_loading">
