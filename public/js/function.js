@@ -76,21 +76,23 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
         .then(data => {
             console.log(data);
 
-            // data['response'].forEach(elem =>{
-            //     messageStore = addTagA(elem['messageAi']);
-
-            //     renderMessage('user', formatDateView(elem['date']), elem['user_name'], elem['messageUser']);
-            //     renderMessage('Ai', formatDateView(elem['date']), "akuprof.ru", messageStore);
-            // });
-
-            // let lastMessage = data['response'].slice(-2);
-
-            // console.log(lastMessage);
-
-            // lastMessage.forEach(element => {
-            //     console.log(element);
-            //     store_messages += `вопрос пользователя: "${element['messageUser']}" \n ответ асистента: "${element['messageAi']}" \n`;
-            // });
-            // console.log(store_messages);
+            data.forEach(elem => {
+                renderMessage("user", formatDateView(elem['date']), elem['user_name'],elem['messageUser'], ".Ai_message_storage_manager");
+                if(elem['managerResponse'].length > 0){
+                    messageStore = addTagA(elem['managerResponse']);
+                    
+                    renderMessage("Ai", formatDateView(elem['date']), "akuprof.ru", messageStore, ".Ai_message_storage_manager");
+                }
+            });
         });
+    }
+
+    window.addTagA = function(message){
+        return message.replace(
+            /(https?:\/\/[^\s)]+)/g,
+            (url) => {
+                let cleanUrl = url.replace(/(\.html)+$/g, '');
+                return `<a href="${cleanUrl}" target="_blank">${cleanUrl}</a>`;
+            }
+        );
     }

@@ -191,16 +191,6 @@ document.addEventListener('DOMContentLoaded',()=>{
         }
     });
 
-    function addTagA(message){
-        return message.replace(
-            /(https?:\/\/[^\s)]+)/g,
-            (url) => {
-                let cleanUrl = url.replace(/(\.html)+$/g, '');
-                return `<a href="${cleanUrl}" target="_blank">${cleanUrl}</a>`;
-            }
-        );
-    }
-
     function loadingGenerate(action){
         const Ai_message_storage = document.querySelector('.Ai_message_storage');
         if(action == "delete"){
