@@ -78,7 +78,7 @@ if (!empty($json['message']) && !empty($json['message']['link'])) {
     // include __DIR__ . '/bot_max.php';
 
     // отправляем ответ
-    sendMessage($matches, $userId);
+    sendMessage($matches[1], $userId);
 }
 
 // обязательно возвращаем 200 OK
