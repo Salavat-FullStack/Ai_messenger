@@ -64,12 +64,12 @@ if (!empty($json['message']) && !empty($json['message']['link'])) {
     preg_match('/Id документа\s*:\s*(\S+)/u', $text, $matches);
     $id = $matches[1] ?? 'null';
 
-    // $params = [
-    //     'index' => "message_history_manager",
-    //     'id' => $documentId
-    // ];
+    $params = [
+        'index' => "message_history_manager",
+        'id' => $id
+    ];
 
-    // $response = $client->get($params);
+    $response = $client->get($params);
 
     // $text = $json['message']['body']['text']; // можно парсить текст менеджера и формировать ответ
 
@@ -79,7 +79,7 @@ if (!empty($json['message']) && !empty($json['message']['link'])) {
     // include __DIR__ . '/bot_max.php';
 
     // отправляем ответ
-    sendMessage($id , $userId);
+    sendMessage($response['_source']['email'], $userId);
 }
 
 // обязательно возвращаем 200 OK
