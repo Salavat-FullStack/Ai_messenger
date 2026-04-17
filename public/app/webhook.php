@@ -51,7 +51,7 @@ file_put_contents('log.txt', $line, FILE_APPEND);
 
 // если пришло сообщение, вызываем функцию из bot_max.php
 if (!empty($json['message'])) {
-    $userId = $json['message']['user_id'];
+    $userId = $json['message']['sender']['user_id'];
     $text = "Привет, это авто-ответ!"; // можно парсить текст менеджера и формировать ответ
 
     // подключаем bot_max.php
