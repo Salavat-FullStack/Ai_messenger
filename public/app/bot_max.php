@@ -35,7 +35,9 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
     $userData = $data['userData'];
 
     if($data['selectedAssistant'] == 'ИИ ассистент'){
-        $userDataText = "<b>- Данные пользователя </b> \n" . 
+        $title = "<b>- Данные пользователя 🟢 </b> \n \n";
+
+        $userDataText = "<b>- Данные пользователя 🟢 </b> \n" . 
                     "<b>Имя : </b>" . $userData['name'] . "\n" .
                     "<b>Фамилия : </b>" . $userData['surname'] . "\n" .
                     "<b>Email : </b>" . $userData['email'] . "\n \n" ;
@@ -47,10 +49,10 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
         $date = "<b>- Дата : </b>" . $data['date'];
 
-        $message = $userDataText . $userQuestion . $userAiQuestion . $AiResponse . $date;
+        $message = $title . $userDataText . $userQuestion . $userAiQuestion . $AiResponse . $date;
     }else if($data['selectedAssistant'] == 'Менеджер'){
 
-        $title = "<b>- Вопрос менеджеру! </b> \n \n";
+        $title = "<b>- Вопрос менеджеру! 🔴 </b> \n \n";
 
         $userDataText = "<b>- Данные пользователя </b> \n" . 
                     "<b>Имя : </b>" . $userData['name'] . "\n" .
