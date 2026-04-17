@@ -50,9 +50,12 @@ file_put_contents('log.txt', $line, FILE_APPEND);
 // file_put_contents(__DIR__ . "/webhook_log.txt", date('Y-m-d H:i:s') . " " . $input . PHP_EOL, FILE_APPEND);
 
 // если пришло сообщение, вызываем функцию из bot_max.php
-if (!empty($json['message'])) {
+if (!empty($json['message']) && !empty($json['message']['link'])) {
     $userId = $json['message']['sender']['user_id'];
-    $text = "Привет, это авто-ответ!"; // можно парсить текст менеджера и формировать ответ
+
+    $text = $json['message']['body']['text']; // можно парсить текст менеджера и формировать ответ
+
+    $text = "Ответ от менеджера : " . $text;
 
     // подключаем bot_max.php
     // include __DIR__ . '/bot_max.php';
