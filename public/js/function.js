@@ -1,6 +1,5 @@
 window.renderMessage = function(messageRole, date, user, question, block = '.Ai_message_storage'){
         const Ai_message_storage = document.querySelector(block);
-        console.log(Ai_message_storage);
 
         let messageContainer = document.createElement('div');
 

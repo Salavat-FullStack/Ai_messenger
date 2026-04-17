@@ -4,7 +4,7 @@ $headers = getallheaders();
 $secret = 'salavat20212509';
 
 $token = "f9LHodD0cOLwjuOGWlt5_5r_fk-nUKWe-e3hL5-f_Mg3JcT_L9d7gt1dqg8lbDBJJxPKQx6UEHnpoqND01Iy";
-$user_id = "230853692";
+$user_id = "216673677";
 
 function sendMessage($message){
     global $token;
