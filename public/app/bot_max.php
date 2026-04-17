@@ -35,7 +35,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
     $userData = $data['userData'];
 
     if($data['selectedAssistant'] == 'ИИ ассистент'){
-        $title = "<b>- Данные пользователя 🟢 </b> \n \n";
+        $title = "<b>- Вопрос для ИИ! 🟢 </b> \n \n";
 
         $userDataText = "<b>- Данные пользователя 🟢 </b> \n" . 
                     "<b>Имя : </b>" . $userData['name'] . "\n" .
