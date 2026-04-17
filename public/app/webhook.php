@@ -53,15 +53,19 @@ file_put_contents('log.txt', $line, FILE_APPEND);
 if (!empty($json['message']) && !empty($json['message']['link'])) {
     $userId = $json['message']['sender']['user_id'];
 
-    $text = $json['message']['body']['text']; // можно парсить текст менеджера и формировать ответ
+    $text = $json['message']['link']['message']['text'];
 
-    $text = "Ответ от менеджера : " . $text;
+    $menagerResponse = $json['message']['body']['text'];
+
+    // $text = $json['message']['body']['text']; // можно парсить текст менеджера и формировать ответ
+
+    // $text = "Ответ от менеджера : " . $text;
 
     // подключаем bot_max.php
     // include __DIR__ . '/bot_max.php';
 
     // отправляем ответ
-    sendMessage($text, $userId);
+    sendMessage($menagerResponse, $userId);
 }
 
 // обязательно возвращаем 200 OK
