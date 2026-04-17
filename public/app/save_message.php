@@ -64,7 +64,7 @@ function saveMessage($client, $messageUser, $messageAi, $messageReview, $userDat
     $response = $client->index($params);
 
     if($response['_shards']['failed'] === 0){
-        return "Документ сохранен"; 
+        return $response;
     }else{
         return "Что-то пошло не так!";
     }
@@ -88,7 +88,7 @@ function saveMessageManager($client, $messageUser, $managerResponse, $userData, 
     $response = $client->index($params);
 
     if($response['_shards']['failed'] === 0){
-        return "Документ сохранен"; 
+        return $response;
     }else{
         return "Что-то пошло не так!";
     }
