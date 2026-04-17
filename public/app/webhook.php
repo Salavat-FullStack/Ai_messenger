@@ -1,5 +1,9 @@
 <?php
 
+require_once 'functions.php';
+
+$client = generatClient('es');
+
 $headers = getallheaders();
 $secret = 'salavat20212509';
 
@@ -57,6 +61,15 @@ if (!empty($json['message']) && !empty($json['message']['link'])) {
 
     $menagerResponse = $json['message']['body']['text'];
 
+    $test = preg_match('/Id документа\s*:\s*(\S+)/u', $text, $matches);
+
+    // $params = [
+    //     'index' => "message_history_manager",
+    //     'id' => $documentId
+    // ];
+
+    // $response = $client->get($params);
+
     // $text = $json['message']['body']['text']; // можно парсить текст менеджера и формировать ответ
 
     // $text = "Ответ от менеджера : " . $text;
@@ -65,7 +78,7 @@ if (!empty($json['message']) && !empty($json['message']['link'])) {
     // include __DIR__ . '/bot_max.php';
 
     // отправляем ответ
-    sendMessage($menagerResponse, $userId);
+    sendMessage($test, $userId);
 }
 
 // обязательно возвращаем 200 OK
