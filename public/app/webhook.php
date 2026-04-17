@@ -61,7 +61,7 @@ if (!empty($json['message']) && !empty($json['message']['link'])) {
 
     $menagerResponse = $json['message']['body']['text'];
 
-    $test = preg_match('/Id документа\s*:\s*(\S+)/u', $text, $matches);
+    preg_match('/Id документа\s*:\s*(\S+)/u', $text, $matches);
 
     // $params = [
     //     'index' => "message_history_manager",
@@ -78,7 +78,7 @@ if (!empty($json['message']) && !empty($json['message']['link'])) {
     // include __DIR__ . '/bot_max.php';
 
     // отправляем ответ
-    sendMessage($test, $userId);
+    sendMessage($matches, $userId);
 }
 
 // обязательно возвращаем 200 OK
