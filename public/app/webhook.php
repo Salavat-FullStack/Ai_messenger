@@ -62,32 +62,38 @@ if (!empty($json['message']) && !empty($json['message']['link'])) {
     $menagerResponse = $json['message']['body']['text'];
 
     preg_match('/Id документа\s*:\s*(\S+)/u', $text, $matches);
-    $id = $matches[1] ?? 'null';
 
-    $params = [
-        'index' => 'message_history_manager',
-        'id'    => $id,
-        'body'  => [
-            'doc' => [
-                'managerResponse' => $menagerResponse
+    $id = $matches[1] ?? null;
+
+    if(!empty($id)){
+        $params = [
+            'index' => 'message_history_manager',
+            'id'    => $id,
+            'body'  => [
+                'doc' => [
+                    'managerResponse' => $menagerResponse
+                ]
             ]
-        ]
-    ];
+        ];
 
-    $response = $client->update($params);
-    // $params = [
-    //     'index' => "message_history_manager",
-    //     'id' => $id
-    // ];
+        $response = $client->update($params);
+        // $params = [
+        //     'index' => "message_history_manager",
+        //     'id' => $id
+        // ];
 
-    // $response = $client->get($params);
+        // $response = $client->get($params);
 
-    // if(!empty($response['_source']['email'])){
-    //     sendMessage("Этот вопрос не содержит id документа!", $userId);
-    // }
+        // if(!empty($response['_source']['email'])){
+        //     sendMessage("Этот вопрос не содержит id документа!", $userId);
+        // }
 
-    // отправляем ответ
-    sendMessage($response['result'], $userId);
+        // отправляем ответ
+        sendMessage("ответ отправлен клиенту!", $userId);
+    }else if(empty($id)){
+        sendMessage('сообщение не имеет id документа', $userId);
+    }
+
 }
 
 // обязательно возвращаем 200 OK
