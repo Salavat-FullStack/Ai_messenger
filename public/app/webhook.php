@@ -65,21 +65,29 @@ if (!empty($json['message']) && !empty($json['message']['link'])) {
     $id = $matches[1] ?? 'null';
 
     $params = [
-        'index' => "message_history_manager",
-        'id' => $id
+        'index' => 'message_history_manager',
+        'id'    => $id,
+        'body'  => [
+            'doc' => [
+                'managerResponse' => $menagerResponse
+            ]
+        ]
     ];
 
-    $response = $client->get($params);
+    $response = $client->update($params);
+    // $params = [
+    //     'index' => "message_history_manager",
+    //     'id' => $id
+    // ];
 
-    // $text = $json['message']['body']['text']; // можно парсить текст менеджера и формировать ответ
+    // $response = $client->get($params);
 
-    // $text = "Ответ от менеджера : " . $text;
-
-    // подключаем bot_max.php
-    // include __DIR__ . '/bot_max.php';
+    // if(!empty($response['_source']['email'])){
+    //     sendMessage("Этот вопрос не содержит id документа!", $userId);
+    // }
 
     // отправляем ответ
-    sendMessage($response['_source']['email'], $userId);
+    sendMessage($response['result'], $userId);
 }
 
 // обязательно возвращаем 200 OK
