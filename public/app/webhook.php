@@ -4,13 +4,12 @@ $headers = getallheaders();
 $secret = 'salavat20212509';
 
 $token = "f9LHodD0cOLwjuOGWlt5_5r_fk-nUKWe-e3hL5-f_Mg3JcT_L9d7gt1dqg8lbDBJJxPKQx6UEHnpoqND01Iy";
-$user_id = "216673677";
+// $user_id = "216673677";
 
-function sendMessage($message){
+function sendMessage($message, $userId){
     global $token;
-    global $user_id;
 
-    $url = "https://platform-api.max.ru/messages?user_id=" . $user_id;
+    $url = "https://platform-api.max.ru/messages?user_id=" . $userId;
 
     $data = [
         "text" => $message,
@@ -59,7 +58,7 @@ if (!empty($json['message'])) {
     // include __DIR__ . '/bot_max.php';
 
     // отправляем ответ
-    sendMessage($text);
+    sendMessage($text, $userId);
 }
 
 // обязательно возвращаем 200 OK
