@@ -59,9 +59,11 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
         $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $data['messageUser'] . "\n \n";
 
-        $date = "<b>- Дата : </b>" . $data['date'];
+        $date = "<b>- Дата : </b>" . $data['date'] . "\n \n";
 
-        $message = $title . $userDataText . $userQuestion . $date;
+        $userId = "<b>- Id документа : </b>" . $data['UserId'];
+
+        $message = $title . $userDataText . $userQuestion . $date . $userId;
     }
 
     $result = sendMessage($message);

@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded",()=>{
             })
             .then(response => response.json())
             .then(data =>{
-                console.log(data);
+                console.log(data['response']);
                 fetch('https://chat-progress.ru/app/bot_max.php',{
                     method: 'POST',
                     headers:{
@@ -60,7 +60,8 @@ document.addEventListener("DOMContentLoaded",()=>{
                         messageUser: window.messageUser,
                         managerResponse: '',
                         date: formatDateView(formatDate()),
-                        selectedAssistant: window.selectedAssistant
+                        selectedAssistant: window.selectedAssistant,
+                        UserId: data['response']
                     })
                 })
                 .then(response => response.json())
