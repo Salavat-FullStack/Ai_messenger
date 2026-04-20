@@ -55,6 +55,7 @@ file_put_contents('log.txt', $line, FILE_APPEND);
 
 // если пришло сообщение, вызываем функцию из bot_max.php
 if (!empty($json['message']) && !empty($json['message']['link'])) {
+    $userIdArr = [137759013, 230853692];
     $userId = $json['message']['sender']['user_id'];
 
     $text = $json['message']['link']['message']['text'];
@@ -89,7 +90,9 @@ if (!empty($json['message']) && !empty($json['message']['link'])) {
         // }
 
         // отправляем ответ
-        sendMessage("ответ отправлен клиенту!", $userId);
+        foreach($userIdArr as $elem){
+            sendMessage("менеджер - " . $json['message']['sender']['name'] . ", ответил(а) пользователю " . $json['message']['link']['sender']['name'], $elem);
+        }
     }else if(empty($id)){
         sendMessage('сообщение не имеет id документа', $userId);
     }
