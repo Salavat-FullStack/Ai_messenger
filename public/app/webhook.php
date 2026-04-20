@@ -93,7 +93,8 @@ if (!empty($json['message']) && !empty($json['message']['link'])) {
     }else if(empty($id)){
         sendMessage('сообщение не имеет id документа', $userId);
     }
-
+}else{
+    sendMessage($json['message']['body']['text'], $json['message']['sender']['user_id']);
 }
 
 // обязательно возвращаем 200 OK
