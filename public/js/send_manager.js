@@ -34,6 +34,15 @@ document.addEventListener("DOMContentLoaded",()=>{
             console.log(window.selectedAssistant);
             console.log(window.USER_DATA);
 
+            fetch("https://site-b.com/api/cookie.php", {
+                method: "GET",
+                credentials: "include"
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log("login ok");
+            });
+
             fetch('https://chat-progress.ru/app/save_message.php',{
                 method: 'POST',
                 headers: {

@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
 $dotenv->load();
 
-header("Access-Control-Allow-Origin: https://site-a.com");
+header("Access-Control-Allow-Origin: https://localhost.akuprof.ru");
 header("Access-Control-Allow-Credentials: true");
 header("Content-Type: application/json");
 
@@ -34,3 +34,21 @@ function createUserCookie($secret, $cookie_name) {
 
     return $id;
 }
+
+if (!isset($_COOKIE[$cookie_name])) {
+    createUserCookie(COOKIE_GENERATE_KEY, $cookie_name);
+}
+
+list($userId, $token) = explode(":", $_COOKIE[COOKIE_GENERATE_KEY]);
+
+$expected = hash_hmac('sha256', $userId, COOKIE_GENERATE_KEY);
+
+if (!hash_equals($expected, $token)) {
+    http_response_code(403);
+    exit("Invalid token");
+}
+
+echo json_encode([
+    "status" => "authorized",
+    "user_id" => $userId
+]);
