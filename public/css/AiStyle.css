@@ -6,7 +6,7 @@
     border-radius: 15px 15px 0px 0;
     display: grid;
     grid-template-rows: 65px auto 70px;
-    position: absolute;
+    position: fixed;
     bottom: 1px;
     right: 20px;
     z-index: 9999999999;
