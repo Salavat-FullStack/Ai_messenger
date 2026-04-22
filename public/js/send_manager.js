@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded",()=>{
             console.log(window.selectedAssistant);
             console.log(window.USER_DATA);
 
-            fetch("https://chat-progress.ru/api/cookie.php", {
+            fetch("https://chat-progress.ru/app/cookie.php", {
                 method: "GET",
                 credentials: "include"
             })
