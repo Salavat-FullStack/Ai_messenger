@@ -3,15 +3,15 @@ document.addEventListener('DOMContentLoaded',()=>{
     <div class="Ai_modal">
         <div class="Ai_nav">
             <div class="Ai_manager">
-                <img src="image/icons/Ai_akuprof_logo.png" alt="manager" class="Ai_manager_logo">
+                <img src="https://chat-progress.ru/image/icons/Ai_akuprof_logo.png" alt="manager" class="Ai_manager_logo">
                 <div class="assistant_penel">
                     <div class="assistant_btn assistant_btn_active" id="assist_Ai">ИИ ассистент</div>
                     <div class="assistant_btn" id="assist_manager">Менеджер</div>
                 </div>
-                <img src="image/icons/question_icon.png" id="instructions_icon_Ai" alt="instructions">
+                <img src="https://chat-progress.ru/image/icons/question_icon.png" id="instructions_icon_Ai" alt="instructions">
             </div>
             <div class="Ai_manager_call">
-                <img src="image/icons/close_icon.png" alt="call" class="Ai_call_logo">
+                <img src="https://chat-progress.ru/image/icons/close_icon.png" alt="call" class="Ai_call_logo">
             </div>
         </div>
         <div class="Ai_message_storage">
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             <textarea id="Ai_request_input"></textarea>
 
             <div id="Ai_send_btn">
-                <img src="image/icons/send_logo_2.png" id="Ai_send_message" alt="send">
+                <img src="https://chat-progress.ru/image/icons/send_logo_2.png" id="Ai_send_message" alt="send">
                 <div class="loader display_none" id="Ai_load"></div>
 
             </div>
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                     <div class="instructions_btn" id="instructions_about_btn">Общее</div>
                 </div>
             </div>
-            <img src="image/icons/close_icon.png" id="icon_close_modal_instructions" alt="close">
+            <img src="https://chat-progress.ru/image/icons/close_icon.png" id="icon_close_modal_instructions" alt="close">
 
             <div class="instructions_block assist_Ai_instruc" id="instructions_Ai">
                 <h2>ИИ ассистент</h2>
