@@ -4,6 +4,10 @@ require_once 'functions.php';
 
 $client = generatClient('es');
 
+header("Access-Control-Allow-Origin: https://localhost.akuprof.ru");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     $input = file_get_contents('php://input');
