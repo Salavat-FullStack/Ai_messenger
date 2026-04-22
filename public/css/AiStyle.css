@@ -9,6 +9,8 @@
     position: absolute;
     bottom: 1px;
     right: 20px;
+    z-index: 9999999999;
+    background: white;
 }
 .Ai_nav{
     height: 45px;
@@ -45,6 +47,7 @@
     padding: 10px;
     gap: 10px;
     overflow-y: auto;
+    background: white;
 }
 .Ai_message{
     max-width: 70%;
