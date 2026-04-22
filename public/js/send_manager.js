@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded",()=>{
                 headers: {
                     "Content-Type" : "application/json"
                 },
+                credentials: "include",
                 body: JSON.stringify({
                     userData: window.USER_DATA,
                     messageUser: window.messageUser,
