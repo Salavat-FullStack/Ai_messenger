@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             console.log(data);
             console.log(data['response']);
             messageReview = data['response'];
-            fetch('https://chat-progress.ru', {
+            fetch('https://chat-progress.ru/app/index.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
