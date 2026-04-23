@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded",()=>{
                 method: "GET",
                 credentials: "include",
             })
-            .then(res => res.json())
+            .then(res => res.text())
             .then(data => {
                 console.log("login ok");
                 console.log(data);
