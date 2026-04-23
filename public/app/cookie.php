@@ -12,6 +12,10 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 define('COOKIE_GENERATE_KEY', $_ENV['COOKIE_GENERATE_KEY']);
 
+echo json_encode([
+    "token" => COOKIE_GENERATE_KEY
+]);
+
 $cookie_name = "ai_chat_cookie";
 
 function createUserCookie($secret, $cookie_name) {
