@@ -41,13 +41,16 @@ function createUserCookie($secret, $cookie_name) {
 
     echo json_encode([
         "status" => "authorized",
-        $_COOKIE[$cookie_name]
+        "value" => $value,
+        "comment" => "Кука создана!"
     ]);
+
+    exit;
 }
 
-if (!isset($_COOKIE[$cookie_name])) {
-    createUserCookie(COOKIE_GENERATE_KEY, $cookie_name);
-}
+// if (!isset($_COOKIE[$cookie_name])) {
+//     createUserCookie(COOKIE_GENERATE_KEY, $cookie_name);
+// }
 
 // list($userId, $token) = explode(":", $_COOKIE[$cookie_name]);
 
@@ -60,6 +63,5 @@ if (!isset($_COOKIE[$cookie_name])) {
 
 echo json_encode([
     "status" => "authorized",
-    "user_id" => $userId,
-    "token" => $token
+    "comment" => "Кука была создана!"
 ]);
