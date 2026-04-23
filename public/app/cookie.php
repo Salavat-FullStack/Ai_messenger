@@ -35,8 +35,8 @@ function createUserCookie($secret, $cookie_name) {
         'expires' => time() + (86400 * 30), // 30 дней
         'path' => '/',
         'httponly' => true,
-        'secure' => false, // true если HTTPS
-        'samesite' => 'Strict'
+        'secure' => true, // true если HTTPS
+        'samesite' => 'None'
     ]);
 
     echo json_encode([
