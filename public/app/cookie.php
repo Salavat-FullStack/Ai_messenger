@@ -48,18 +48,18 @@ function createUserCookie($secret, $cookie_name) {
     exit;
 }
 
-// if (!isset($_COOKIE[$cookie_name])) {
-//     createUserCookie(COOKIE_GENERATE_KEY, $cookie_name);
-// }
+if (!isset($_COOKIE[$cookie_name])) {
+    createUserCookie(COOKIE_GENERATE_KEY, $cookie_name);
+}
 
-// list($userId, $token) = explode(":", $_COOKIE[$cookie_name]);
+list($userId, $token) = explode(":", $_COOKIE[$cookie_name]);
 
-// $expected = hash_hmac('sha256', $userId, COOKIE_GENERATE_KEY);
+$expected = hash_hmac('sha256', $userId, COOKIE_GENERATE_KEY);
 
-// if (!hash_equals($expected, $token)) {
-//     http_response_code(403);
-//     exit("Invalid token");
-// }
+if (!hash_equals($expected, $token)) {
+    http_response_code(403);
+    exit("Invalid token");
+}
 
 echo json_encode([
     "status" => "authorized",
