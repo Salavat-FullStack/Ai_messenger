@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded",()=>{
             .then(res => res.json())
             .then(data => {
                 console.log("login ok");
+                console.log(data);
             });
 
             fetch('https://chat-progress.ru/app/save_message.php',{

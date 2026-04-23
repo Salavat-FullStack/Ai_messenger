@@ -51,5 +51,6 @@ if (!hash_equals($expected, $token)) {
 
 echo json_encode([
     "status" => "authorized",
-    "user_id" => $userId
+    "user_id" => $userId,
+    "token" => $token
 ]);
