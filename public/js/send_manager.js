@@ -36,7 +36,10 @@ document.addEventListener("DOMContentLoaded",()=>{
 
             fetch("https://chat-progress.ru/app/cookie.php", {
                 method: "GET",
-                credentials: "include"
+                credentials: "include",
+                headers: {
+                    "Content-Type" : "application/json"
+                },
             })
             .then(res => res.json())
             .then(data => {
