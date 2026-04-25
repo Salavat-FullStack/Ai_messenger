@@ -141,19 +141,19 @@ document.addEventListener('DOMContentLoaded',()=>{
 
                 responseAi = data['responseAi'];
 
-                fetch('https://chat-progress.ru/app/save_message.php',{
-                    method: 'POST',
-                    headers: {
-                        "Content-Type" : "application/json"
-                    },
-                    credentials: "include",
-                    body: JSON.stringify({
-                        messageUser: window.messageUser,
-                        messageReview: window.messageReview,
-                        messageAi: data['responseAi'],
-                        date: formatDate(),
-                        selectedAssistant: window.selectedAssistant
-                    })
+                    fetch('https://chat-progress.ru/app/save_message.php',{
+                        method: 'POST',
+                        headers: {
+                            "Content-Type" : "application/json"
+                        },
+                        credentials: "include",
+                        body: JSON.stringify({
+                            messageUser: window.messageUser,
+                            messageReview: window.messageReview,
+                            messageAi: data['responseAi'],
+                            date: formatDate(),
+                            selectedAssistant: window.selectedAssistant
+                        })
                     })
                     .then(response => response.json())
                     .then(data =>{
