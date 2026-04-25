@@ -66,8 +66,8 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
             headers: {
                 'Content-Type': 'application/json'
             },
+            credentials: "include",
             body: JSON.stringify({
-                userData: window.USER_DATA,
                 assistant: assistant
             })
         })
