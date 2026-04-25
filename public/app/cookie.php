@@ -41,7 +41,6 @@ function createUserCookie($secret, $cookie_name) {
 
     echo json_encode([
         "status" => "authorized",
-        "value" => $value,
         "comment" => "Кука создана!"
     ]);
 
@@ -63,5 +62,5 @@ if (!hash_equals($expected, $token)) {
 
 echo json_encode([
     "status" => "authorized",
-    "comment" => "Кука была создана!"
+    "comment" => "Кука ранее была создана!"
 ]);

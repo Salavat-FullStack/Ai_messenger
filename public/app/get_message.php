@@ -10,7 +10,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
+require_once __DIR__ . '/../../vendor/autoload.php';
 require_once 'functions.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
+$dotenv->load();
+
+define('COOKIE_GENERATE_KEY', $_ENV['COOKIE_GENERATE_KEY']);
 
 $client = generatClient('es');
 
@@ -21,15 +27,25 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $data = json_decode($input, true);
 
     header("Content-Type: application/json");
+        
+        //получение куки
+    list($userId, $token) = explode(":", $_COOKIE["ai_chat_cookie"]);
 
-    $response = getMessage($client, $data['userData']['email'], $data['assistant']);
+    $expected = hash_hmac('sha256', $userId, COOKIE_GENERATE_KEY);
+
+    if (!hash_equals($expected, $token)) {
+        http_response_code(403);
+        exit("Invalid token");
+    }
+
+    $response = getMessage($client, $userId, $data['assistant']);
 
     echo json_encode([
         'response' => $response
     ]);
 }
 
-function getMessage($client, $email, $assistant){
+function getMessage($client, $token, $assistant){
     if($assistant == "ИИ ассистент"){
         $index = "message_history";
     }else if($assistant == "Менеджер"){
@@ -40,8 +56,8 @@ function getMessage($client, $email, $assistant){
         "body" => [
             "query" => [
                 "match" =>[
-                    "email" =>[
-                        "query" => $email
+                    "user_token" =>[
+                        "query" => $token
                     ]
                 ]
             ],
@@ -62,8 +78,7 @@ function getMessage($client, $email, $assistant){
     if($assistant == "Менеджер"){
         foreach($hits as $hit){
             $messages[] = [
-                "email" => $email,
-                "user_name" => $hit['_source']['name'],
+                "user_token" => $token,
                 "messageUser" => $hit['_source']['messageUser'],
                 "managerResponse" => $hit['_source']['managerResponse'],
                 "date" => $hit['_source']['created_at']
@@ -72,8 +87,7 @@ function getMessage($client, $email, $assistant){
     }else{
         foreach($hits as $hit){
             $messages[] = [
-                "email" => $email,
-                "user_name" => $hit['_source']['name'],
+                "user_token" => $token,
                 "messageUser" => $hit['_source']['messageUser'],
                 "messageAi" => $hit['_source']['messageAi'],
                 "date" => $hit['_source']['created_at']

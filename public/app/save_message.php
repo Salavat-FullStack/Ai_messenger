@@ -10,7 +10,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
+require_once __DIR__ . '/../../vendor/autoload.php';
 require_once 'functions.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
+$dotenv->load();
+
+define('COOKIE_GENERATE_KEY', $_ENV['COOKIE_GENERATE_KEY']);
 
 $client = generatClient('es');
 
@@ -24,13 +30,23 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         if (!$data) {
             throw new Exception("Невалидный JSON");
         }
+
+        list($userId, $token) = explode(":", $_COOKIE["ai_chat_cookie"]);
+
+        $expected = hash_hmac('sha256', $userId, COOKIE_GENERATE_KEY);
+
+        if (!hash_equals($expected, $token)) {
+            http_response_code(403);
+            exit("Invalid token");
+        }
+
         if($data['selectedAssistant'] == 'ИИ ассистент'){
             $response = saveMessage(
                 $client,
                 $data['messageUser'],
                 $data['messageAi'],
                 $data['messageReview'],
-                $data['userData'],
+                $userId,
                 str_replace(' ', 'T', $data['date'])
             );
         }
@@ -39,7 +55,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 $client,
                 $data['messageUser'],
                 $data['managerResponse'],
-                $data['userData'],
+                $userId,
                 str_replace(' ', 'T', $data['date'])
             );
         }
@@ -59,9 +75,7 @@ function saveMessage($client, $messageUser, $messageAi, $messageReview, $userDat
     $params = [
         'index' => 'message_history',
         'body' => [
-            "name" => $userData['name'],
-            "surname" => $userData['surname'],
-            "email" => $userData['email'],
+            "token_user" => $userData,
             "messageUser" => trim($messageUser),
             "messageReview" => trim($messageReview),
             "messageAi" => $messageAi,
@@ -84,9 +98,7 @@ function saveMessageManager($client, $messageUser, $managerResponse, $userData, 
     $params = [
         'index' => 'message_history_manager',
         'body' => [
-            "name" => $userData['name'],
-            "surname" => $userData['surname'],
-            "email" => $userData['email'],
+            "token_user" => $userData,
             "messageUser" => trim($messageUser),
             "managerResponse" => $managerResponse,
             "created_at" => $date

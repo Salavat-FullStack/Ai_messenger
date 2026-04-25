@@ -22,39 +22,49 @@ document.addEventListener('DOMContentLoaded',()=>{
         'email' : 'salavat@gmail.com'
     };
 
-    fetch('https://chat-progress.ru/app/get_message.php',{
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
+    fetch("https://chat-progress.ru/app/cookie.php",{
+        method: "GET",
         credentials: "include",
-        body: JSON.stringify({
-            userData: window.USER_DATA,
-            assistant: window.selectedAssistant
-        })
     })
-    .then(response => response.json())
+    .then(res => res.json())
     .then(data => {
         console.log(data);
 
-        data['response'].forEach(elem =>{
-            messageStore = addTagA(elem['messageAi']);
+        fetch('https://chat-progress.ru/app/get_message.php',{
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: "include",
+            body: JSON.stringify({
+                assistant: window.selectedAssistant
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
 
-            renderMessage('user', formatDateView(elem['date']), elem['user_name'], elem['messageUser']);
-            renderMessage('Ai', formatDateView(elem['date']), "akuprof.ru", messageStore);
+            data['response'].forEach(elem =>{
+                messageStore = addTagA(elem['messageAi']);
+
+                renderMessage('user', formatDateView(elem['date']), elem['user_name'], elem['messageUser']);
+                renderMessage('Ai', formatDateView(elem['date']), "akuprof.ru", messageStore);
+            });
+
+            let lastMessage = data['response'].slice(-2);
+
+            console.log(lastMessage);
+
+            lastMessage.forEach(element => {
+                console.log(element);
+                store_messages += `вопрос пользователя: "${element['messageUser']}" \n ответ асистента: "${element['messageAi']}" \n`;
+            });
+            console.log(store_messages);
         });
 
-        let lastMessage = data['response'].slice(-2);
-
-        console.log(lastMessage);
-
-        lastMessage.forEach(element => {
-            console.log(element);
-            store_messages += `вопрос пользователя: "${element['messageUser']}" \n ответ асистента: "${element['messageAi']}" \n`;
-        });
-        console.log(store_messages);
     });
 
+    
     let AiResponse; 
 
     SendBtn.addEventListener('click',()=>{
@@ -101,7 +111,6 @@ document.addEventListener('DOMContentLoaded',()=>{
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    user: window.USER_DATA,
                     question: data['response']
                 })
             })
@@ -139,7 +148,6 @@ document.addEventListener('DOMContentLoaded',()=>{
                     },
                     credentials: "include",
                     body: JSON.stringify({
-                        userData: window.USER_DATA,
                         messageUser: window.messageUser,
                         messageReview: window.messageReview,
                         messageAi: data['responseAi'],
