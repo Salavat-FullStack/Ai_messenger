@@ -75,7 +75,7 @@ function saveMessage($client, $messageUser, $messageAi, $messageReview, $userDat
     $params = [
         'index' => 'message_history',
         'body' => [
-            "token_user" => $userData,
+            "user_token" => $userData,
             "messageUser" => trim($messageUser),
             "messageReview" => trim($messageReview),
             "messageAi" => $messageAi,
@@ -98,7 +98,7 @@ function saveMessageManager($client, $messageUser, $managerResponse, $userData, 
     $params = [
         'index' => 'message_history_manager',
         'body' => [
-            "token_user" => $userData,
+            "user_token" => $userData,
             "messageUser" => trim($messageUser),
             "managerResponse" => $managerResponse,
             "created_at" => $date
