@@ -6,16 +6,17 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
         let message = document.createElement('div');
 
         let timeContainer = document.createElement('div');
-        let user_name = document.createElement('div');
+        // let user_name = document.createElement('div');
         let message_date = document.createElement('div');
 
-        user_name.textContent = user;
+        // user_name.textContent = user;
         message_date.textContent = date;
 
-        user_name.classList.add('message_user_name');
+        // user_name.classList.add('message_user_name');
         message_date.classList.add('message_date');
 
-        timeContainer.append(user_name, message_date);
+        timeContainer.append(message_date);
+        // timeContainer.append(user_name, message_date);
         timeContainer.classList.add('Ai_message_date');
 
         message.innerHTML = question;   

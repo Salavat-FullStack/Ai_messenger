@@ -10,6 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
+$dotenv->load();
+
+define('COOKIE_GENERATE_KEY', $_ENV['COOKIE_GENERATE_KEY']);
 // $token = "f9LHodD0cOLwjuOGWlt5_5r_fk-nUKWe-e3hL5-f_Mg3JcT_L9d7gt1dqg8lbDBJJxPKQx6UEHnpoqND01Iy";
 
 // $url = "https://platform-api.max.ru/subscriptions";
@@ -39,6 +45,15 @@ $user_id = "230853692";
 
 if($_SERVER['REQUEST_METHOD'] === "POST"){
     $input = file_get_contents("php://input");
+
+    list($userId, $token) = explode(":", $_COOKIE["ai_chat_cookie"]);
+
+    $expected = hash_hmac('sha256', $userId, COOKIE_GENERATE_KEY);
+
+    if (!hash_equals($expected, $token)) {
+        http_response_code(403);
+        exit("Invalid token");
+    }
 
     $data = json_decode($input, true);
 
@@ -73,9 +88,12 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
         $date = "<b>- Дата : </b>" . $data['date'] . "\n \n";
 
-        $userId = "<b>- Id документа : </b>" . $data['UserId'];
+        $documentId = "<b>- Id документа : </b>" . $data['UserId'] . "\n \n";
 
-        $message = $title . $userDataText . $userQuestion . $date . $userId;
+        $userIdText = "<b>- Id пользователя : </b>" . $userId . "\n \n";
+
+
+        $message = $title . $userDataText . $userQuestion . $date . $documentId . $userIdText;
     }
 
     $result = sendMessage($message);

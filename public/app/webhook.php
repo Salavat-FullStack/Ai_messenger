@@ -66,6 +66,10 @@ if (!empty($json['message']) && !empty($json['message']['link'])) {
 
     $id = $matches[1] ?? null;
 
+    preg_match('/Id пользователя\s*:\s*(\S+)/u', $text, $array);
+
+    $userId = $array[1] ?? null;
+
     if(!empty($id)){
         $params = [
             'index' => 'message_history_manager',
@@ -91,7 +95,7 @@ if (!empty($json['message']) && !empty($json['message']['link'])) {
 
         // отправляем ответ
         foreach($userIdArr as $elem){
-            sendMessage("менеджер - " . $json['message']['sender']['name'] . ", ответил(а) пользователю " . $json['message']['link']['sender']['name'], $elem);
+            sendMessage("менеджер - " . $json['message']['sender']['name'] . ", ответил(а) пользователю с id = " . $userId, $elem);
         }
     }else if(empty($id)){
         sendMessage('сообщение не имеет id документа', $userId);
