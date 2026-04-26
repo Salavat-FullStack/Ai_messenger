@@ -28,6 +28,10 @@ document.addEventListener("DOMContentLoaded",()=>{
             Ai_send_message.classList.add('display_none');
             Ai_load.classList.remove('display_none');
 
+            const Ai_message_storage_manager = document.querySelector('.Ai_message_storage_manager');
+
+            Ai_message_storage_manager.innerHTML = "";
+
             renderMessage('user', formatDateView(formatDate()), window.USER_DATA['name'], question, '.Ai_message_storage_manager');
 
             console.log(window.messageUser);
