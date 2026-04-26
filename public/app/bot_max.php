@@ -16,31 +16,8 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
 $dotenv->load();
 
 define('COOKIE_GENERATE_KEY', $_ENV['COOKIE_GENERATE_KEY']);
-// $token = "f9LHodD0cOLwjuOGWlt5_5r_fk-nUKWe-e3hL5-f_Mg3JcT_L9d7gt1dqg8lbDBJJxPKQx6UEHnpoqND01Iy";
 
-// $url = "https://platform-api.max.ru/subscriptions";
-
-// $data = [
-//     "url" => "https://chat-progress.ru/app/webhook.php",
-//     "update_types" => ["message_created", "bot_started"],
-//     "secret" => "salavat20212509"
-// ];
-
-// $ch = curl_init($url);
-
-// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-// curl_setopt($ch, CURLOPT_POST, true);
-
-// curl_setopt($ch, CURLOPT_HTTPHEADER, [
-//     "Authorization: $token",
-//     "Content-Type: application/json"
-// ]);
-
-// curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-
-// $result = curl_exec($ch);
-    
-$token = "f9LHodD0cOLwjuOGWlt5_5r_fk-nUKWe-e3hL5-f_Mg3JcT_L9d7gt1dqg8lbDBJJxPKQx6UEHnpoqND01Iy";
+$tokenMax = "f9LHodD0cOLwjuOGWlt5_5r_fk-nUKWe-e3hL5-f_Mg3JcT_L9d7gt1dqg8lbDBJJxPKQx6UEHnpoqND01Iy";
 $user_id = "230853692";
 
 if($_SERVER['REQUEST_METHOD'] === "POST"){
@@ -107,7 +84,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
 
 function sendMessage($message){
-    global $token;
+    global $tokenMax;
     global $user_id;
 
     $url = "https://platform-api.max.ru/messages?user_id=" . $user_id;
@@ -122,7 +99,7 @@ function sendMessage($message){
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        "Authorization: $token",
+        "Authorization: $tokenMax",
         "Content-Type: application/json"
     ]);
 
