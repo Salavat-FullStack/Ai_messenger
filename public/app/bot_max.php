@@ -57,15 +57,15 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
     $data = json_decode($input, true);
 
-    $userData = $data['userData'];
+    // $userData = $data['userData'];
 
     if($data['selectedAssistant'] == 'ИИ ассистент'){
         $title = "<b>- Вопрос для ИИ! 🟢 </b> \n \n";
 
-        $userDataText = "<b>- Данные пользователя 🟢 </b> \n" . 
-                    "<b>Имя : </b>" . $userData['name'] . "\n" .
-                    "<b>Фамилия : </b>" . $userData['surname'] . "\n" .
-                    "<b>Email : </b>" . $userData['email'] . "\n \n" ;
+        // $userDataText = "<b>- Данные пользователя 🟢 </b> \n" . 
+        //             "<b>Имя : </b>" . $userData['name'] . "\n" .
+        //             "<b>Фамилия : </b>" . $userData['surname'] . "\n" .
+        //             "<b>Email : </b>" . $userData['email'] . "\n \n" ;
 
         $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $data['messageUser'] . "\n \n";
         $AiResponse = "<b>- Ответ ИИ : \n </b>" . $data['messageAi'] . "\n \n";
@@ -74,15 +74,16 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
         $date = "<b>- Дата : </b>" . $data['date'];
 
-        $message = $title . $userDataText . $userQuestion . $userAiQuestion . $AiResponse . $date;
+        $message = $title . $userQuestion . $userAiQuestion . $AiResponse . $date;
+        // $message = $title . $userDataText . $userQuestion . $userAiQuestion . $AiResponse . $date;
     }else if($data['selectedAssistant'] == 'Менеджер'){
 
         $title = "<b>- Вопрос менеджеру! 🔴 </b> \n \n";
 
-        $userDataText = "<b>- Данные пользователя </b> \n" . 
-                    "<b>Имя : </b>" . $userData['name'] . "\n" .
-                    "<b>Фамилия : </b>" . $userData['surname'] . "\n" .
-                    "<b>Email : </b>" . $userData['email'] . "\n \n" ;
+        // $userDataText = "<b>- Данные пользователя </b> \n" . 
+        //             "<b>Имя : </b>" . $userData['name'] . "\n" .
+        //             "<b>Фамилия : </b>" . $userData['surname'] . "\n" .
+        //             "<b>Email : </b>" . $userData['email'] . "\n \n" ;
 
         $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $data['messageUser'] . "\n \n";
 
@@ -93,7 +94,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         $userIdText = "<b>- Id пользователя : </b>" . $userId . "\n \n";
 
 
-        $message = $title . $userDataText . $userQuestion . $date . $documentId . $userIdText;
+        $message = $title . $userQuestion . $date . $documentId . $userIdText;
     }
 
     $result = sendMessage($message);
