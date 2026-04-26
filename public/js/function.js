@@ -76,6 +76,12 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
         .then(data => {
             console.log(data);
 
+            const Ai_message_storage_manager = document.querySelector('.Ai_message_storage_manager');
+
+            Ai_message_storage_manager.innerHTML = "";
+
+            console.log(Ai_message_storage_manager);
+
             data['response'].forEach(elem => {
                 renderMessage("user", formatDateView(elem['date']), elem['user_name'],elem['messageUser'], ".Ai_message_storage_manager");
                 if(elem['managerResponse'].length > 0){
