@@ -18,7 +18,7 @@ $dotenv->load();
 define('COOKIE_GENERATE_KEY', $_ENV['COOKIE_GENERATE_KEY']);
 
 $tokenMax = "f9LHodD0cOLwjuOGWlt5_5r_fk-nUKWe-e3hL5-f_Mg3JcT_L9d7gt1dqg8lbDBJJxPKQx6UEHnpoqND01Iy";
-$user_id = "230853692";
+$userIdArr = [137759013, 230853692];
 
 if($_SERVER['REQUEST_METHOD'] === "POST"){
     $input = file_get_contents("php://input");
@@ -74,7 +74,9 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         $message = $title . $userQuestion . $date . $documentId . $userIdText;
     }
 
-    $result = sendMessage($message);
+    foreach($userIdArr as $elem){
+        sendMessage($message, $elem);
+    }
 
     echo json_encode([
         'status' => 'success',
@@ -83,9 +85,8 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 }
 
 
-function sendMessage($message){
+function sendMessage($message, $user_id){
     global $tokenMax;
-    global $user_id;
 
     $url = "https://platform-api.max.ru/messages?user_id=" . $user_id;
 
