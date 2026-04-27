@@ -37,11 +37,12 @@ window.showNotification = function(message) {
 window.onNewMessage = function({ text, fromUserId, myId }) {
 
     // ❗ не уведомляем если это наше сообщение
-    if (fromUserId === myId) return;
+    // if (fromUserId === myId) return;
 
-    // ❗ если вкладка активна — можно не шуметь
-    if (!document.hidden) return;
+    // // ❗ если вкладка активна — можно не шуметь
+    // if (!document.hidden) return;
 
+    console.log('click onNewMessage');
     playNotificationSound();
     showNotification(text);
 }
