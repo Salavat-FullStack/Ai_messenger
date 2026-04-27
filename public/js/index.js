@@ -237,13 +237,12 @@ document.addEventListener('DOMContentLoaded',()=>{
 
     assistant_btn.forEach(elem =>{
 
-        onNewMessage({
-            text: "test",
-            fromUserId: "test",
-            myId: "test2"
-        });
-
         elem.addEventListener('click',()=>{
+            onNewMessage({
+                text: "test",
+                fromUserId: "test",
+                myId: "test2"
+            });
             assistant_btn.forEach(elem =>{
                 elem.classList.remove('assistant_btn_active');  
             });
