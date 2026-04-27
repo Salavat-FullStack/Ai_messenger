@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         onNewMessage({
             text: "test",
             fromUserId: "test",
-            myId: "test"
+            myId: "test2"
         });
 
         elem.addEventListener('click',()=>{
