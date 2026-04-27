@@ -61,9 +61,9 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
         .replace(',', '');
     }
 
-    window.renderMessageManager = function(assistant){
-        let dataGlobal;
-        fetch('https://chat-progress.ru/app/get_message.php',{
+    window.renderMessageManager = async function(assistant){
+
+        const response = await fetch('https://chat-progress.ru/app/get_message.php',{
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -72,29 +72,24 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
             body: JSON.stringify({
                 assistant: assistant
             })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-
-            const Ai_message_storage_manager = document.querySelector('.Ai_message_storage_manager');
-
-            Ai_message_storage_manager.innerHTML = "";
-
-            console.log(Ai_message_storage_manager);
-
-            data['response'].forEach(elem => {
-                renderMessage("user", formatDateView(elem['date']), elem['user_name'],elem['messageUser'], ".Ai_message_storage_manager");
-                if(elem['managerResponse'].length > 0){
-                    messageStore = addTagA(elem['managerResponse']);
-                    
-                    renderMessage("Ai", formatDateView(elem['date']), "akuprof.ru", messageStore, ".Ai_message_storage_manager");
-                }
-            });
-
-            dataGlobal = data;
         });
-        return dataGlobal;
+
+        const data = await response.json();
+
+        const container = document.querySelector('.Ai_message_storage_manager');
+        container.innerHTML = "";
+
+        data['response'].forEach(elem => {
+            renderMessage("user", formatDateView(elem['date']), elem['user_name'], elem['messageUser'], ".Ai_message_storage_manager");
+
+            if(elem['managerResponse'].length > 0){
+                const messageStore = addTagA(elem['managerResponse']);
+
+                renderMessage("Ai", formatDateView(elem['date']), "akuprof.ru", messageStore, ".Ai_message_storage_manager");
+            }
+        });
+
+        return data; 
     }
 
     window.addTagA = function(message){
