@@ -54,6 +54,7 @@ function getMessage($client, $token, $assistant){
     $params = [
         "index" => $index,
         "body" => [
+            "size" => 50,
             "query" => [
                 "match" =>[
                     "user_token" =>[
