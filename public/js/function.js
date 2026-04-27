@@ -62,6 +62,7 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
     }
 
     window.renderMessageManager = function(assistant){
+        let dataGlobal;
         fetch('https://chat-progress.ru/app/get_message.php',{
             method: "POST",
             headers: {
@@ -91,8 +92,9 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
                 }
             });
 
-            return data;
+            dataGlobal = data;
         });
+        return dataGlobal;
     }
 
     window.addTagA = function(message){
