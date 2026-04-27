@@ -48,25 +48,64 @@ window.onNewMessage = function({ text, fromUserId, myId }) {
 }
 
 
-// let messageQuantityGlobal;
+let messageQuantityGlobal = {
+    response: []
+};
 
-// (async () => {
-//     messageQuantityGlobal = await renderMessageManager("Менеджер");
-// })();
+(async () => {
+    messageQuantityGlobal = await renderMessageManager("Менеджер");
 
-// setInterval(async () => {
-//     const data = await renderMessageManager("Менеджер");
+    startPolling(); // 👈 запускаем только после загрузки
+})();
 
-//     console.log(messageQuantityGlobal['response'].length);
-//     console.log(data['response'].length);
+function startPolling() {
 
-//     // if(messageQuantityGlobal['response'].length < data['response'].length){
-//     //     console.log("новое сообщение");
-//     // }
+    setInterval(async () => {
 
-//     messageQuantityGlobal = data;
-// }, 60000);
+        const data = await renderMessageManager("Менеджер");
 
-// function 
+        console.log(messageQuantityGlobal.response.length);
+        console.log(data.response.length);
+
+        const changes = detectChanges(
+            messageQuantityGlobal.response,
+            data.response
+        );
+
+        if (changes.length > 0) {
+            console.log("новые изменения:", changes);
+        }
+
+        messageQuantityGlobal = data;
+
+    }, 60000);
+}
+
+function detectChanges(oldArr, newArr) {
+
+    const changes = [];
+
+    const oldMap = new Map();
+
+    oldArr.forEach(item => {
+        const key = item.user_token + "_" + item.date;
+        oldMap.set(key, item);
+    });
+
+    newArr.forEach(item => {
+
+        const key = item.user_token + "_" + item.date;
+        const oldItem = oldMap.get(key);
+
+        if (oldItem && oldItem.managerResponse !== item.managerResponse) {
+            changes.push({
+                old: oldItem,
+                new: item
+            });
+        }
+    });
+
+    return changes;
+}
 
 });
