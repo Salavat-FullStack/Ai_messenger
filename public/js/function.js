@@ -76,6 +76,8 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
 
         const data = await response.json();
 
+        console.log(data);
+
         const container = document.querySelector('.Ai_message_storage_manager');
         container.innerHTML = "";
 

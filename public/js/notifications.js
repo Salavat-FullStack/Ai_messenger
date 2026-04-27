@@ -48,8 +48,6 @@ window.onNewMessage = function({ text, fromUserId, myId }) {
 }
 
 
-// setInterval(renderMessageManager("Менеджер"), 60000);
-
 // let messageQuantityGlobal;
 
 // (async () => {
