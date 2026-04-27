@@ -90,6 +90,8 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
                     renderMessage("Ai", formatDateView(elem['date']), "akuprof.ru", messageStore, ".Ai_message_storage_manager");
                 }
             });
+
+            return data;
         });
     }
 

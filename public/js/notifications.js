@@ -46,4 +46,24 @@ window.onNewMessage = function({ text, fromUserId, myId }) {
     playNotificationSound();
     showNotification(text);
 }
+
+
+// setInterval(renderMessageManager("Менеджер"), 60000);
+
+let messageQuantityGlobal = renderMessageManager("Менеджер");
+
+setInterval(async ()=>{
+    const data = await renderMessageManager("Менеджер");
+    console.log(data);
+
+    console.log(messageQuantityGlobal['response'].length);
+    console.log(data['response'].length);
+
+    if(messageQuantityGlobal['response'].length < data['response'].length){
+        console.log("новое сообщение");
+    }
+
+    messageQuantityGlobal = data;
+}, 60000);  
+
 });

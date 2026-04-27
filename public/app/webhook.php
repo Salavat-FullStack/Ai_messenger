@@ -82,17 +82,6 @@ if (!empty($json['message']) && !empty($json['message']['link'])) {
         ];
 
         $response = $client->update($params);
-        // $params = [
-        //     'index' => "message_history_manager",
-        //     'id' => $id
-        // ];
-
-        // $response = $client->get($params);
-
-        // if(!empty($response['_source']['email'])){
-        //     sendMessage("Этот вопрос не содержит id документа!", $userId);
-        // }
-
         // отправляем ответ
         foreach($userIdArr as $elem){
             sendMessage("менеджер - " . $json['message']['sender']['name'] . ", ответил(а) пользователю с id = " . $userId, $elem);
