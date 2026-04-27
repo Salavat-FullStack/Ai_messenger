@@ -15,7 +15,7 @@ if ('Notification' in window) {
 }
 
 // 3. Функция звука
-function playNotificationSound() {
+window.playNotificationSound = function() {
     if (!soundEnabled) return;
 
     const audio = new Audio('/sounds/notification.mp3');
@@ -24,7 +24,7 @@ function playNotificationSound() {
 }
 
 // 4. Функция уведомления
-function showNotification(message) {
+window.showNotification = function(message) {
     if (!notificationPermission) return;
 
     new Notification('Новое сообщение', {
@@ -34,7 +34,7 @@ function showNotification(message) {
 }
 
 // 5. ГЛАВНАЯ функция (вызываешь при новом сообщении)
-function onNewMessage({ text, fromUserId, myId }) {
+window.onNewMessage = function({ text, fromUserId, myId }) {
 
     // ❗ не уведомляем если это наше сообщение
     if (fromUserId === myId) return;
