@@ -50,23 +50,25 @@ window.onNewMessage = function({ text, fromUserId, myId }) {
 
 // setInterval(renderMessageManager("Менеджер"), 60000);
 
-let messageQuantityGlobal;
+// let messageQuantityGlobal;
 
-(async () => {
-    messageQuantityGlobal = await renderMessageManager("Менеджер");
-})();
+// (async () => {
+//     messageQuantityGlobal = await renderMessageManager("Менеджер");
+// })();
 
-setInterval(async () => {
-    const data = await renderMessageManager("Менеджер");
+// setInterval(async () => {
+//     const data = await renderMessageManager("Менеджер");
 
-    console.log(messageQuantityGlobal['response'].length);
-    console.log(data['response'].length);
+//     console.log(messageQuantityGlobal['response'].length);
+//     console.log(data['response'].length);
 
-    if(messageQuantityGlobal['response'].length < data['response'].length){
-        console.log("новое сообщение");
-    }
+//     // if(messageQuantityGlobal['response'].length < data['response'].length){
+//     //     console.log("новое сообщение");
+//     // }
 
-    messageQuantityGlobal = data;
-}, 60000);
+//     messageQuantityGlobal = data;
+// }, 60000);
+
+// function 
 
 });
