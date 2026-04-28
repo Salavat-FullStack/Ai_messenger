@@ -72,7 +72,7 @@ function startPolling() {
             data.response
         );
 
-        if (changes.length > 0) {
+        if (changes.length > 0 || messageQuantityGlobal.response.length < data.response.length) {
             console.log("новые изменения:", changes);
 
             onNewMessage({
