@@ -24,13 +24,10 @@ window.playNotificationSound = function() {
 }
 
 // 4. Функция уведомления
-window.showNotification = function(message) {
+window.showNotification = function() {
     if (!notificationPermission) return;
 
-    new Notification('Новое сообщение', {
-        body: message,
-        icon: '/icon.png'
-    });
+    new Notification('Новое сообщение от менеджера!');
 }
 
 // 5. ГЛАВНАЯ функция (вызываешь при новом сообщении)
@@ -44,7 +41,7 @@ window.onNewMessage = function({ text, fromUserId, myId }) {
 
     console.log('click onNewMessage');
     playNotificationSound();
-    showNotification(text);
+    showNotification();
 }
 
 
