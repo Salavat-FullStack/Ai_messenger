@@ -75,7 +75,7 @@ function startPolling() {
         changes.forEach(item => {
 
             if (item.type === 'new') {
-                if(item.new.managerResponse){
+                if(item.new.managerResponse.length > 1){
                     console.log("новое сообщение");
                     onNewMessage({
                         text: "Новое сообщение от менеджера!"
