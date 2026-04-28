@@ -72,15 +72,34 @@ function startPolling() {
             data.response
         );
 
-        if (changes.length > 0 || messageQuantityGlobal.response.length < data.response.length) {
-            console.log("новые изменения:", changes);
+        changes.forEach(item => {
 
-            onNewMessage({
-                text: "Новое сообщение от менеджера!",
-                fromUserId: "test",
-                myId: "test2"
-            });
-        }
+            if (item.type === 'new') {
+                if(item.new.managerResponse){
+                    console.log("новое сообщение");
+                    onNewMessage({
+                        text: "Новое сообщение от менеджера!"
+                    });
+                }
+            }
+
+            if (item.type === 'updated') {
+                console.log("менеджер ответил:", item.new.managerResponse);
+                onNewMessage({
+                    text: "Новое сообщение от менеджера!"
+                });
+            }
+        });
+
+        // if (changes.length > 0 || messageQuantityGlobal.response.length < data.response.length) {
+        //     console.log("новые изменения:", changes);
+
+        //     onNewMessage({
+        //         text: "Новое сообщение от менеджера!",
+        //         fromUserId: "test",
+        //         myId: "test2"
+        //     });
+        // }
 
         messageQuantityGlobal = data;
 
@@ -103,13 +122,21 @@ function detectChanges(oldArr, newArr) {
         const key = item.user_token + "_" + item.date;
         const oldItem = oldMap.get(key);
 
-        if (oldItem && oldItem.managerResponse !== item.managerResponse) {
-            console.log('if old and new == true');
+        if (!oldItem) {
             changes.push({
+                type: 'new',
+                new: item
+            });
+        }
+
+        else if (oldItem.managerResponse !== item.managerResponse) {
+            changes.push({
+                type: 'updated',
                 old: oldItem,
                 new: item
             });
         }
+
     });
     console.log(changes);
 
