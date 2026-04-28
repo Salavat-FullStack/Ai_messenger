@@ -101,12 +101,14 @@ function detectChanges(oldArr, newArr) {
         const oldItem = oldMap.get(key);
 
         if (oldItem && oldItem.managerResponse !== item.managerResponse) {
+            console.log('if old and new == true');
             changes.push({
                 old: oldItem,
                 new: item
             });
         }
     });
+    console.log(changes);
 
     return changes;
 }
