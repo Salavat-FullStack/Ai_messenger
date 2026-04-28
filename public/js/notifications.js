@@ -61,6 +61,9 @@ function startPolling() {
 
         const data = await renderMessageManager("Менеджер");
 
+        console.log(messageQuantityGlobal);
+        console.log(data);
+
         console.log(messageQuantityGlobal.response.length);
         console.log(data.response.length);
 
