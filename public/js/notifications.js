@@ -81,6 +81,7 @@ function startPolling() {
                         text: "Новое сообщение от менеджера!"
                     });
                 }
+                return;
             }
 
             if (item.type === 'updated') {
@@ -90,16 +91,6 @@ function startPolling() {
                 });
             }
         });
-
-        // if (changes.length > 0 || messageQuantityGlobal.response.length < data.response.length) {
-        //     console.log("новые изменения:", changes);
-
-        //     onNewMessage({
-        //         text: "Новое сообщение от менеджера!",
-        //         fromUserId: "test",
-        //         myId: "test2"
-        //     });
-        // }
 
         messageQuantityGlobal = data;
 
