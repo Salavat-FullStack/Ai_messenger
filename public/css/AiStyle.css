@@ -189,19 +189,15 @@
     cursor: pointer;
     position: relative;
 }
-.assistant_btn::after {
+.message_notification::after {
     content: "";
     position: absolute;
-    top: 4px;
-    right: 4px;
-
-    width: 10px;
-    height: 10px;
-
-    background-color: #4CAF50; /* зелёный */
-    border-radius: 50%;
-
-    border: 2px solid white; /* обводка, чтобы красиво смотрелось */
+    top: -7px;
+    right: -7px;
+    width: 15px;
+    height: 15px;
+    background-color: #3dc643;
+    border-radius: 50%; /* обводка, чтобы красиво смотрелось */
 }
 .assistant_btn_active{
     color: #122538;

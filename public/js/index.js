@@ -253,6 +253,9 @@ document.addEventListener('DOMContentLoaded',()=>{
             if(selectedAssistant == 'Менеджер'){
                 Ai_message_storage_manager.classList.remove('display_none');
                 Ai_message_storage.classList.add('display_none');   
+                
+                const btn = document.querySelector('#assist_manager');
+                btn.classList.remove('message_notification');
 
                 renderMessageManager("Менеджер");
             }else if(selectedAssistant == 'ИИ ассистент'){
