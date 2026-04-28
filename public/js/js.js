@@ -4,6 +4,10 @@ document.addEventListener('DOMContentLoaded',()=>{
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Pacifico&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     
+    <div id="Ai_modal_open_btn">
+        <img src="https://chat-progress.ru/image/icons/roll_up_icon.png" alt="open_modal">
+    </div>
+
     <div class="Ai_modal">
         <div class="Ai_nav">
             <div class="Ai_manager">
@@ -15,7 +19,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                 <img src="https://chat-progress.ru/image/icons/question_icon.png" id="instructions_icon_Ai" alt="instructions">
             </div>
             <div class="Ai_manager_call">
-                <img src="https://chat-progress.ru/image/icons/roll_up_icon.png" alt="call" class="Ai_call_logo">
+                <img src="https://chat-progress.ru/image/icons/roll_up_icon.png" alt="call" class="Ai_call_logo" id="Ai_modal_close_img">
             </div>
         </div>
         <div class="Ai_message_storage">
@@ -115,5 +119,20 @@ document.addEventListener('DOMContentLoaded',()=>{
     instructions_open_icon.addEventListener('click',()=>{
         Ai_modal_instructions.classList.remove('display_none');
     });
+
+    const Ai_modal = document.querySelector('.Ai_modal');
+    const closeBtn = document.querySelector('#Ai_modal_close_img');
+    const Ai_modal_open_btn = document.querySelector("#Ai_modal_open_btn");
+
+    closeBtn.addEventListener('click', ()=>{
+        Ai_modal.classList.add('display_none');
+        Ai_modal_open_btn.classList.remove('display_none');
+    });
+
+    Ai_modal_open_btn.addEventListener('click', ()=>{
+        Ai_modal.classList.remove('display_none');
+        Ai_modal_open_btn.classList.add('display_none');
+    })
+
 
 });
