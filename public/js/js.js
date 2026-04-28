@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Pacifico&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     
     <div id="Ai_modal_open_btn">
-        <img src="https://chat-progress.ru/image/icons/roll_up_icon.png" alt="open_modal">
+        <img src="https://chat-progress.ru/image/icons/chat_icon.png" alt="open_modal">
     </div>
 
     <div class="Ai_modal">
