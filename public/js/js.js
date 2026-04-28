@@ -125,13 +125,13 @@ document.addEventListener('DOMContentLoaded',()=>{
     const Ai_modal_open_btn = document.querySelector("#Ai_modal_open_btn");
 
     closeBtn.addEventListener('click', ()=>{
-        Ai_modal.classList.add('display_none');
-        Ai_modal_open_btn.classList.remove('display_none');
+        Ai_modal.classList.add('Ai_modal_active');
+        Ai_modal_open_btn.classList.remove('Ai_modal_active');
     });
 
     Ai_modal_open_btn.addEventListener('click', ()=>{
-        Ai_modal.classList.remove('display_none');
-        Ai_modal_open_btn.classList.add('display_none');
+        Ai_modal.classList.remove('Ai_modal_active');
+        Ai_modal_open_btn.classList.add('Ai_modal_active');
     })
 
 

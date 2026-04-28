@@ -94,12 +94,16 @@
     right: 35px;
     position: fixed;
     bottom: 80px;
-    display: flex;
     background: #111;
     z-index: 99999999999;
     border-radius: 10px;
     padding: 12px;
     cursor: pointer;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.3s ease;
 }
 
 #Ai_modal_open_btn:before{
@@ -132,4 +136,9 @@
     0% { background-position: 0 0; }
     50% { background-position: 400% 0; }
     100% { background-position: 0 0; }
+}
+
+.Ai_modal_active{
+    opacity: 1;
+    pointer-events: all;
 }
