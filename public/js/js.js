@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         <img src="https://chat-progress.ru/image/icons/chat_icon.png" alt="open_modal">
     </div>
 
-    <div class="Ai_modal">
+    <div class="Ai_modal display_none">
         <div class="Ai_nav">
             <div class="Ai_manager">
                 <img src="https://chat-progress.ru/image/icons/Ai_akuprof_logo.png" alt="manager" class="Ai_manager_logo">
