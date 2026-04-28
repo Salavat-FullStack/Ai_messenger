@@ -11,6 +11,12 @@
     right: 20px;
     z-index: 9999999999;
     background: white;
+
+    
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.3s ease;
 }
 .Ai_nav{
     display: flex;

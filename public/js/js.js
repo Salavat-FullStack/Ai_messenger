@@ -124,15 +124,13 @@ document.addEventListener('DOMContentLoaded',()=>{
     const closeBtn = document.querySelector('#Ai_modal_close_img');
     const Ai_modal_open_btn = document.querySelector("#Ai_modal_open_btn");
 
-    closeBtn.addEventListener('click', ()=>{
-        Ai_modal.classList.add('Ai_modal_active');
-        Ai_modal_open_btn.classList.remove('Ai_modal_active');
+    Ai_modal_open_btn.addEventListener('click', () => {
+        Ai_modal.classList.add('Ai_modal_active'); // открыть
     });
 
-    Ai_modal_open_btn.addEventListener('click', ()=>{
-        Ai_modal.classList.remove('Ai_modal_active');
-        Ai_modal_open_btn.classList.add('Ai_modal_active');
-    })
+    closeBtn.addEventListener('click', () => {
+        Ai_modal.classList.remove('Ai_modal_active'); // закрыть
+    });
 
 
 });
