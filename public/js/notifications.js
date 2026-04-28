@@ -74,6 +74,12 @@ function startPolling() {
 
         if (changes.length > 0) {
             console.log("новые изменения:", changes);
+
+            onNewMessage({
+                text: "Новое сообщение от менеджера!",
+                fromUserId: "test",
+                myId: "test2"
+            });
         }
 
         messageQuantityGlobal = data;
