@@ -89,7 +89,14 @@
 }
 
 #Ai_modal_open_btn{
+    width: 60px;
+    height: 60px;
+    right: 35px;
     position: fixed;
-    top: 50px;
+    bottom: 80px;
+    display: flex;
     background: #122538 url(../image/nav_bg.png);
+    z-index: 99999999999;
+    border-radius: 10px;
+    padding: 12px;
 }
