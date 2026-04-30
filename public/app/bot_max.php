@@ -74,8 +74,14 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         $message = $title . $userQuestion . $date . $documentId . $userIdText;
     }
 
+    $filePath = null;
+
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
+        $filePath = $_FILES['image']['tmp_name'];
+    }
+
     foreach($userIdArr as $elem){
-        sendMessage($message, $elem);
+        sendMessage($message, $elem, $filePath);
     }
 
     echo json_encode([
@@ -84,16 +90,51 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
     ]);
 }
 
-
-function sendMessage($message, $user_id){
+function sendMessage($message, $user_id, $filePath = null){
     global $tokenMax;
 
     $url = "https://platform-api.max.ru/messages?user_id=" . $user_id;
 
-    $data = [
-        "text" => $message,
-        "format" => "html"
-    ];
+    // 👉 если есть файл
+    if ($filePath && file_exists($filePath)) {
+
+        // 1. получаем upload URL
+        $uploadData = getUploadUrl($tokenMax);
+        $uploadUrl = $uploadData['url'];
+
+        // 2. загружаем файл
+        $uploadResult = uploadFileToMax($uploadUrl, $filePath, $tokenMax);
+
+        $fileToken = $uploadResult['token'] ?? null;
+
+        // если вдруг что-то пошло не так
+        if (!$fileToken) {
+            return false;
+        }
+
+        // ❗ пауза (важно)
+        sleep(1);
+
+        $data = [
+            "text" => $message,
+            "format" => "html",
+            "attachments" => [
+                [
+                    "type" => "image",
+                    "payload" => [
+                        "token" => $fileToken
+                    ]
+                ]
+            ]
+        ];
+
+    } else {
+        // 👉 обычное сообщение
+        $data = [
+            "text" => $message,
+            "format" => "html"
+        ];
+    }
 
     $ch = curl_init($url);
 
@@ -107,5 +148,41 @@ function sendMessage($message, $user_id){
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
 
     $result = curl_exec($ch);
+
     return $result;
+}
+
+function getUploadUrl($token) {
+
+    $ch = curl_init("https://platform-api.max.ru/uploads?type=image");
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "Authorization: $token"
+    ]);
+
+    $response = curl_exec($ch);
+
+    return json_decode($response, true);
+}
+
+
+function uploadFileToMax($uploadUrl, $filePath, $token) {
+
+    $ch = curl_init($uploadUrl);
+
+    $postData = [
+        'data' => new CURLFile($filePath)
+    ];
+
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "Authorization: $token"
+    ]);
+
+    $response = curl_exec($ch);
+
+    return json_decode($response, true);
 }

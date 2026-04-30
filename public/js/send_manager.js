@@ -44,18 +44,24 @@ document.addEventListener("DOMContentLoaded",()=>{
                 console.log(data);
             });
 
+            const input = document.getElementById('imageInput');
+            const file = input.files[0];
+
+            const formData = new FormData();
+
+            formData.append('messageUser', window.messageUser);
+            formData.append('managerResponse', '');
+            formData.append('date', formatDate());
+            formData.append('selectedAssistant', window.selectedAssistant);
+
+            if (file) {
+                formData.append('image', file);
+            }
+
             fetch('https://chat-progress.ru/app/save_message.php',{
                 method: 'POST',
-                headers: {
-                    "Content-Type" : "application/json"
-                },
                 credentials: "include",
-                body: JSON.stringify({
-                    messageUser: window.messageUser,
-                    managerResponse: '',
-                    date: formatDate(),
-                    selectedAssistant: window.selectedAssistant
-            })
+                body: formData
             })
             .then(response => response.json())
             .then(data =>{

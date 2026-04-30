@@ -25,11 +25,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     try{
         $input = file_get_contents('php://input');
 
-        $data = json_decode($input, true);
+        // $data = json_decode($input, true);
 
-        if (!$data) {
-            throw new Exception("Невалидный JSON");
-        }
+        // if (!$data) {
+        //     throw new Exception("Невалидный JSON");
+        // }
 
         list($userId, $token) = explode(":", $_COOKIE["ai_chat_cookie"]);
 
@@ -40,7 +40,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             exit("Invalid token");
         }
 
-        if (isset($_FILES['image'])) {
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
             $file = $_FILES['image'];
 
             if ($file['error'] !== 0) {
@@ -109,24 +109,24 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
         }
 
-        if($data['selectedAssistant'] == 'ИИ ассистент'){
+        if($_POST['selectedAssistant'] == 'ИИ ассистент'){
             $response = saveMessage(
                 $client,
-                $data['messageUser'],
-                $data['messageAi'],
-                $data['messageReview'],
+                $_POST['messageUser'],
+                $_POST['messageAi'],
+                $_POST['messageReview'],
                 $userId,
-                str_replace(' ', 'T', $data['date'])
+                str_replace(' ', 'T', $_POST['date'])
             );
         }
-        if($data['selectedAssistant'] == 'Менеджер'){
+        if($_POST['selectedAssistant'] == 'Менеджер'){
             $response = saveMessageManager(
                 $client,
-                $data['messageUser'],
-                $data['managerResponse'],
+                $_POST['messageUser'],
+                $_POST['managerResponse'],
                 $userId,
                 $fileUrl,
-                str_replace(' ', 'T', $data['date'])
+                str_replace(' ', 'T', $_POST['date'])
             );
         }
 
