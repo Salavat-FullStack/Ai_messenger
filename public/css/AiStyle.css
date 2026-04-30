@@ -234,6 +234,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 .Ai_file_btn img{
     width: 28px;

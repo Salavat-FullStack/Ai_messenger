@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             <textarea id="Ai_request_input"></textarea>
 
             <div class="Ai_file_btn">
-                <img src="https://chat-progress.ru/image/icons/file_icon.png" alt="file">
+                <img src="https://chat-progress.ru/image/icons/clip.svg" alt="file">
                 <input 
                     type="file" 
                     id="fileInputAiModal" 
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             </div>
             
             <div id="Ai_send_btn">
-                <img src="https://chat-progress.ru/image/icons/send_logo_2.png" id="Ai_send_message" alt="send">
+                <img src="https://chat-progress.ru/image/icons/send.svg" id="Ai_send_message" alt="send">
                 <div class="loader display_none" id="Ai_load"></div>
 
             </div>

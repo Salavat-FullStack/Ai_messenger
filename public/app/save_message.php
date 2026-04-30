@@ -40,6 +40,75 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             exit("Invalid token");
         }
 
+        if (isset($_FILES['image'])) {
+            $file = $_FILES['image'];
+
+            if ($file['error'] !== 0) {
+                echo json_encode(['error' => 'Ошибка при загрузке картинки!']);
+                exit;
+            }
+
+            $allowedExtensions = [
+                'txt',
+                'png',
+                'jpeg',
+                'jpg',
+                'gif',
+                'webp',
+                'doc',
+                'pdf'
+            ];
+
+            $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+            if (!in_array($extension, $allowedExtensions)) {
+                echo json_encode(['error' => 'Неверный формат файла']);
+                exit;
+            }
+
+            $allowedMimeTypes = [
+                'text/plain',
+                'image/png',
+                'image/jpeg',
+                'image/gif',
+                'image/webp',
+                'application/pdf',
+                'application/msword'
+            ];
+
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mimeType = finfo_file($finfo, $file['tmp_name']);
+            finfo_close($finfo);
+
+            if (!in_array($mimeType, $allowedMimeTypes)) {
+                echo json_encode(['error' => 'Неверный MIME-тип']);
+                exit;
+            }
+
+            $uploadDir = __DIR__ . '/uploads/' . $userId . '/';
+
+            // === 9. Создаём папку если нет
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+            }
+
+            // === 10. Генерация имени файла
+            $fileName = uniqid() . '.' . $extension;
+
+            // === 11. Полный путь
+            $fullPath = $uploadDir . $fileName;
+
+            // === 12. Сохранение
+            if (!move_uploaded_file($file['tmp_name'], $fullPath)) {
+                echo json_encode(['error' => 'Не удалось сохранить файл']);
+                exit;
+            }
+
+            // === 13. URL
+            $fileUrl = '/uploads/' . $userId . '/' . $fileName;
+
+        }
+
         if($data['selectedAssistant'] == 'ИИ ассистент'){
             $response = saveMessage(
                 $client,
@@ -56,6 +125,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 $data['messageUser'],
                 $data['managerResponse'],
                 $userId,
+                $fileUrl,
                 str_replace(' ', 'T', $data['date'])
             );
         }
@@ -93,7 +163,7 @@ function saveMessage($client, $messageUser, $messageAi, $messageReview, $userDat
 }
 
 
-function saveMessageManager($client, $messageUser, $managerResponse, $userData, $date){
+function saveMessageManager($client, $messageUser, $managerResponse, $userData, $file, $date){
 
     $params = [
         'index' => 'message_history_manager',
@@ -101,6 +171,7 @@ function saveMessageManager($client, $messageUser, $managerResponse, $userData, 
             "user_token" => $userData,
             "messageUser" => trim($messageUser),
             "managerResponse" => $managerResponse,
+            "file" => $file,
             "created_at" => $date
         ]
     ];
