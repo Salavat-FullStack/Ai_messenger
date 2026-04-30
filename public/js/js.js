@@ -45,11 +45,11 @@ document.addEventListener('DOMContentLoaded',()=>{
         <div class="Ai_panel">
             <textarea id="Ai_request_input"></textarea>
 
-            <div class="Ai_file_btn" onclick="openFilePicker()">
+            <div class="Ai_file_btn">
                 <img src="https://chat-progress.ru/image/icons/file_icon.png" alt="file">
                 <input 
                     type="file" 
-                    id="imageInput" 
+                    id="fileInputAiModal" 
                     accept="image/png, image/jpeg, image/webp" 
                     style="display: none;"
                 >
@@ -142,9 +142,10 @@ document.addEventListener('DOMContentLoaded',()=>{
         Ai_modal.classList.remove('Ai_modal_active'); // закрыть
     });
 
+    const Ai_file_btn = document.querySelector('.Ai_file_btn');
 
-    function openFilePicker() {
-        document.getElementById('imageInput').click();
-    }
+    Ai_file_btn.addEventListener('click',()=>{
+        document.getElementById('fileInputAiModal').click();
+    });
 
 });
