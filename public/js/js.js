@@ -47,6 +47,12 @@ document.addEventListener('DOMContentLoaded',()=>{
 
             <div class="Ai_file_btn">
                 <img src="https://chat-progress.ru/image/icons/file_icon.png" alt="file">
+                <input 
+                    type="file" 
+                    id="imageInput" 
+                    accept="image/png, image/jpeg, image/webp" 
+                    style="display: none;"
+                >
             </div>
             
             <div id="Ai_send_btn">

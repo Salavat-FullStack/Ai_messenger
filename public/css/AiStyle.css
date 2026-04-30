@@ -229,3 +229,12 @@
     gap: 10px;
     overflow-y: auto;
 }
+
+.Ai_file_btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Ai_file_btn img{
+    width: 28px;
+}
