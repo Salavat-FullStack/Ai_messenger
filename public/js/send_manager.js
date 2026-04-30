@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded",()=>{
                 console.log(data);
             });
 
-            const input = document.getElementById('imageInput');
+            const input = document.getElementById('fileInputAiModal');
             const file = input.files[0];
 
             const formData = new FormData();
