@@ -45,6 +45,10 @@ document.addEventListener('DOMContentLoaded',()=>{
         <div class="Ai_panel">
             <textarea id="Ai_request_input"></textarea>
 
+            <div class="Ai_file_btn">
+                <img src="https://chat-progress.ru/image/icons/file_icon.png" alt="file">
+            </div>
+            
             <div id="Ai_send_btn">
                 <img src="https://chat-progress.ru/image/icons/send_logo_2.png" id="Ai_send_message" alt="send">
                 <div class="loader display_none" id="Ai_load"></div>
