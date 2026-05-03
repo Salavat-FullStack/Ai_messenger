@@ -161,7 +161,7 @@ function getUploadUrl($token) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        "Authorization: Bearer $token"
+        "Authorization: $token"
     ]);
 
     $response = curl_exec($ch);
