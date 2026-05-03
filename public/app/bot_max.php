@@ -21,7 +21,7 @@ $tokenMax = "f9LHodD0cOLwjuOGWlt5_5r_fk-nUKWe-e3hL5-f_Mg3JcT_L9d7gt1dqg8lbDBJJxP
 $userIdArr = [137759013, 230853692];
 
 if($_SERVER['REQUEST_METHOD'] === "POST"){
-    $input = file_get_contents("php://input");
+    // $input = file_get_contents("php://input");
 
     list($userId, $token) = explode(":", $_COOKIE["ai_chat_cookie"]);
 
@@ -32,11 +32,11 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         exit("Invalid token");
     }
 
-    $data = json_decode($input, true);
+    // $data = json_decode($input, true);
 
     // $userData = $data['userData'];
 
-    if($data['selectedAssistant'] == 'ИИ ассистент'){
+    if($_POST['selectedAssistant'] == 'ИИ ассистент'){
         $title = "<b>- Вопрос для ИИ! 🟢 </b> \n \n";
 
         // $userDataText = "<b>- Данные пользователя 🟢 </b> \n" . 
@@ -44,16 +44,16 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         //             "<b>Фамилия : </b>" . $userData['surname'] . "\n" .
         //             "<b>Email : </b>" . $userData['email'] . "\n \n" ;
 
-        $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $data['messageUser'] . "\n \n";
-        $AiResponse = "<b>- Ответ ИИ : \n </b>" . $data['messageAi'] . "\n \n";
+        $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $_POST['messageUser'] . "\n \n";
+        $AiResponse = "<b>- Ответ ИИ : \n </b>" . $_POST['messageAi'] . "\n \n";
 
-        $userAiQuestion = "<b>- Переделанный вопрос (ИИ) : </b> \n" . $data['messageReview'] . "\n \n";
+        $userAiQuestion = "<b>- Переделанный вопрос (ИИ) : </b> \n" . $_POST['messageReview'] . "\n \n";
 
-        $date = "<b>- Дата : </b>" . $data['date'];
+        $date = "<b>- Дата : </b>" . $_POST['date'];
 
         $message = $title . $userQuestion . $userAiQuestion . $AiResponse . $date;
         // $message = $title . $userDataText . $userQuestion . $userAiQuestion . $AiResponse . $date;
-    }else if($data['selectedAssistant'] == 'Менеджер'){
+    }else if($_POST['selectedAssistant'] == 'Менеджер'){
 
         $title = "<b>- Вопрос менеджеру! 🔴 </b> \n \n";
 
@@ -62,11 +62,11 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         //             "<b>Фамилия : </b>" . $userData['surname'] . "\n" .
         //             "<b>Email : </b>" . $userData['email'] . "\n \n" ;
 
-        $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $data['messageUser'] . "\n \n";
+        $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $_POST['messageUser'] . "\n \n";
 
-        $date = "<b>- Дата : </b>" . $data['date'] . "\n \n";
+        $date = "<b>- Дата : </b>" . $_POST['date'] . "\n \n";
 
-        $documentId = "<b>- Id документа : </b>" . $data['UserId'] . "\n \n";
+        $documentId = "<b>- Id документа : </b>" . $_POST['UserId'] . "\n \n";
 
         $userIdText = "<b>- Id пользователя : </b>" . $userId . "\n \n";
 

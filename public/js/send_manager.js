@@ -68,19 +68,19 @@ document.addEventListener("DOMContentLoaded",()=>{
             .then(response => response.json())
             .then(data =>{
                 console.log(data);
+
+                const formDataMaxBot = new FormData();
+
+                formDataMaxBot.append('messageUser', window.messageUser);
+                formDataMaxBot.append('managerResponse', '');
+                formDataMaxBot.append('date', formatDateView(formatDate()));
+                formDataMaxBot.append('selectedAssistant', window.selectedAssistant);
+                formDataMaxBot.append('UserId', data['response']);
+
                 fetch('https://chat-progress.ru/app/bot_max.php',{
                     method: 'POST',
-                    headers:{
-                        "Content-Type" : "application/json"
-                    },
                     credentials: "include",
-                    body: JSON.stringify({
-                        messageUser: window.messageUser,
-                        managerResponse: '',
-                        date: formatDateView(formatDate()),
-                        selectedAssistant: window.selectedAssistant,
-                        UserId: data['response']
-                    })
+                    body: formDataMaxBot
                 })
                 .then(response => response.json())
                 .then(data => {
