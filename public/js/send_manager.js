@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded",()=>{
                 credentials: "include",
                 body: formData
             })
-            .then(response => response.json())
+            .then(response => response.text())
             .then(data =>{
                 console.log(data);
                 // fetch('https://chat-progress.ru/app/bot_max.php',{
