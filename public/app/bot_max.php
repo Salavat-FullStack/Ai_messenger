@@ -78,6 +78,8 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
     if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
         $filePath = $_FILES['image']['tmp_name'];
+    }else{
+        $message .= "Не удалось загрузить путь фото!";
     }
 
     foreach($userIdArr as $elem){
