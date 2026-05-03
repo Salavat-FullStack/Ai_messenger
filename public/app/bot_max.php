@@ -159,6 +159,7 @@ function getUploadUrl($token) {
     $ch = curl_init("https://platform-api.max.ru/uploads?type=image");
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         "Authorization: Bearer $token"
     ]);
