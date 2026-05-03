@@ -160,12 +160,22 @@ function getUploadUrl($token) {
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        "Authorization: $token"
+        "Authorization: Bearer $token"
     ]);
 
     $response = curl_exec($ch);
 
-    return json_decode($response, true);
+    if ($response === false) {
+        die('Curl error: ' . curl_error($ch));
+    }
+    $data = json_decode($response, true);
+
+    // 👇 защита от ошибки
+    if (!isset($data['url'])) {
+        die('Ошибка получения upload URL: ' . $response);
+    }
+
+    return $data;
 }
 
 
