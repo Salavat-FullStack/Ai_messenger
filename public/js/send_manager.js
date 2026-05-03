@@ -76,6 +76,10 @@ document.addEventListener("DOMContentLoaded",()=>{
                 formDataMaxBot.append('date', formatDateView(formatDate()));
                 formDataMaxBot.append('selectedAssistant', window.selectedAssistant);
                 formDataMaxBot.append('UserId', data['response']);
+                formDataMaxBot.append('image', file);
+
+                console.log(file);
+                console.log(formDataMaxBot);
 
                 fetch('https://chat-progress.ru/app/bot_max.php',{
                     method: 'POST',
