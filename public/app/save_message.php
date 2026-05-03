@@ -107,11 +107,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             // === 13. URL
             $fileUrl = '/uploads/' . $userId . '/' . $fileName;
 
-        }else{
-            echo json_encode([
-                "response" => "файл не найден"
-            ]);
         }
+        // else{
+        //     echo json_encode([
+        //         "response" => "файл не найден"
+        //     ]);
+        // }
 
         if($_POST['selectedAssistant'] == 'ИИ ассистент'){
             $response = saveMessage(
