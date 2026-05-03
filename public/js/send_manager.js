@@ -58,6 +58,8 @@ document.addEventListener("DOMContentLoaded",()=>{
                 formData.append('image', file);
             }
 
+            console.log(formData);
+
             fetch('https://chat-progress.ru/app/save_message.php',{
                 method: 'POST',
                 credentials: "include",
@@ -65,30 +67,30 @@ document.addEventListener("DOMContentLoaded",()=>{
             })
             .then(response => response.json())
             .then(data =>{
-                console.log(data['response']);
-                fetch('https://chat-progress.ru/app/bot_max.php',{
-                    method: 'POST',
-                    headers:{
-                        "Content-Type" : "application/json"
-                    },
-                    credentials: "include",
-                    body: JSON.stringify({
-                        messageUser: window.messageUser,
-                        managerResponse: '',
-                        date: formatDateView(formatDate()),
-                        selectedAssistant: window.selectedAssistant,
-                        UserId: data['response']
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    console.log(data.status);
-                    loadingGenerateManager('delete');
-                    Ai_send_message.classList.remove('display_none');
-                    Ai_load.classList.add('display_none');
-                })
-                .catch(err => console.error(err));
+                console.log(data);
+                // fetch('https://chat-progress.ru/app/bot_max.php',{
+                //     method: 'POST',
+                //     headers:{
+                //         "Content-Type" : "application/json"
+                //     },
+                //     credentials: "include",
+                //     body: JSON.stringify({
+                //         messageUser: window.messageUser,
+                //         managerResponse: '',
+                //         date: formatDateView(formatDate()),
+                //         selectedAssistant: window.selectedAssistant,
+                //         UserId: data['response']
+                //     })
+                // })
+                // .then(response => response.json())
+                // .then(data => {
+                //     console.log(data);
+                //     console.log(data.status);
+                //     loadingGenerateManager('delete');
+                //     Ai_send_message.classList.remove('display_none');
+                //     Ai_load.classList.add('display_none');
+                // })
+                // .catch(err => console.error(err));
             })
             .catch(error =>{
                 console.error('Ошибка:', error);
