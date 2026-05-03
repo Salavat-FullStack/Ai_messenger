@@ -93,11 +93,17 @@ document.addEventListener("DOMContentLoaded",()=>{
                     loadingGenerateManager('delete');
                     Ai_send_message.classList.remove('display_none');
                     Ai_load.classList.add('display_none');
+                    input.value = '';
                 })
-                .catch(err => console.error(err));
+                .catch(err => {
+                    console.error(err);
+                    input.value = '';
+                });
+
             })
             .catch(error =>{
                 console.error('Ошибка:', error);
+                input.value = '';
             });
         }
     });
