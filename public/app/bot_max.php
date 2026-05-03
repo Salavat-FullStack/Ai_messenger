@@ -117,15 +117,8 @@ function sendMessage($message, $user_id, $filePath = null){
 
         $data = [
             "text" => $message,
-            "format" => "html",
-            "attachments" => [
-                [
-                    "type" => "image",
-                    "payload" => [
-                        "token" => $fileToken
-                    ]
-                ]
-            ]
+            "file" => $fileToken,
+            "format" => "html"
         ];
 
     } else {

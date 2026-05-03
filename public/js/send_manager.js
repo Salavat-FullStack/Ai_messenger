@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded",()=>{
                         UserId: data['response']
                     })
                 })
-                .then(response => response.json())
+                .then(response => response.text())
                 .then(data => {
                     console.log(data);
                     console.log(data.status);
