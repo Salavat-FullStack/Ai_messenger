@@ -104,20 +104,24 @@ function sendMessage($message, $user_id, $filePath = null){
         $uploadData = getUploadUrl($tokenMax);
         $uploadUrl = $uploadData['url'];
 
-        echo "<pre>";
-        print_r($uploadData);
-        echo "</pre>";
+        // echo "<pre>";
+        // print_r($uploadData);
+        // echo "</pre>";
 
         // 2. загружаем файл
         $uploadResult = uploadFileToMax($uploadUrl, $filePath, $tokenMax);
 
 
-        echo "----------------------------вывод uploadResult----------------------";
-        echo "<pre>";
-        print_r($uploadResult);
-        echo "</pre>";
+        // echo "----------------------------вывод uploadResult----------------------";
+        // echo "<pre>";
+        // print_r($uploadResult);
+        // echo "</pre>";
 
-        $fileToken = $uploadResult['token'] ?? null;
+        $fileToken = array_values($uploadResult['photos'])[0]['token'];
+
+        echo "<pre>";
+        print_r($fileToken);
+        echo "</pre>";
 
         // если вдруг что-то пошло не так
         if (!$fileToken) {
