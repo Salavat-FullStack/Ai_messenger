@@ -111,6 +111,8 @@ function sendMessage($message, $user_id, $filePath = null){
         // 2. загружаем файл
         $uploadResult = uploadFileToMax($uploadUrl, $filePath, $tokenMax);
 
+
+        echo "----------------------------вывод uploadResult----------------------";
         echo "<pre>";
         print_r($uploadResult);
         echo "</pre>";
