@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                         credentials: "include",
                         body: formData
                     })
-                    .then(response => response.text())
+                    .then(response => response.json())
                     .then(data =>{
                         console.log(data);
 
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                             credentials: "include",
                             body: formDataMaxBot
                         })
-                        .then(response => response.text())
+                        .then(response => response.json())
                         .then(data => {
                             console.log(data);
                             console.log(data.status);
