@@ -82,6 +82,7 @@ function getMessage($client, $token, $assistant){
                 "user_token" => $token,
                 "messageUser" => $hit['_source']['messageUser'],
                 "managerResponse" => $hit['_source']['managerResponse'],
+                "file" => $hit['_source']['file'],
                 "date" => $hit['_source']['created_at']
             ];
         }
