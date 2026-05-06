@@ -34,6 +34,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             exit("Invalid token");
         }
 
+        $fileUrl = 'не передан!';
+
         if (isset($_FILES['image']) && $_FILES['image']['error'] === 0 && $_POST['selectedAssistant'] == 'Менеджер') {
             $file = $_FILES['image'];
 
