@@ -168,7 +168,6 @@ document.addEventListener('DOMContentLoaded',()=>{
                         formDataMaxBot.append('messageAi', responseAi);
                         formDataMaxBot.append('date', formatDateView(formatDate()));
                         formDataMaxBot.append('selectedAssistant', window.selectedAssistant);
-                        formDataMaxBot.append('UserId', data['response']);
 
                         fetch('https://chat-progress.ru/app/bot_max.php',{
                             method: 'POST',
