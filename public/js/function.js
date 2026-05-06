@@ -4,7 +4,7 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
         let messageMainContainer = document.createElement('div');
         messageMainContainer.classList.add('messageMainContainer');
 
-        if(file){
+        if(file && file !== "не передан!"){
             let userImageChatContainer = document.createElement('div');
             userImageChatContainer.classList.add('userImageChatContainer');
 

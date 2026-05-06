@@ -138,3 +138,12 @@
     opacity: 1;
     pointer-events: all;
 }
+
+.userImageChatContainer img{
+    width: 100px;
+}
+.userImageChatContainer {
+    display: flex;
+    justify-content: end;
+    margin-bottom: 5px;
+}
