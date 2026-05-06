@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         <div class="Ai_panel">
             <textarea id="Ai_request_input"></textarea>
 
-            <div class="Ai_file_btn">
+            <div class="Ai_file_btn display_none">
                 <img src="https://chat-progress.ru/image/icons/clip.svg" alt="file">
                 <input 
                     type="file" 

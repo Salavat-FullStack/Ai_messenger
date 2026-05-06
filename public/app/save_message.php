@@ -40,7 +40,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             exit("Invalid token");
         }
 
-        if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === 0 && $_POST['selectedAssistant'] == 'Менеджер') {
             $file = $_FILES['image'];
 
             if ($file['error'] !== 0) {
