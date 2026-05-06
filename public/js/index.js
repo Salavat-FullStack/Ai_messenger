@@ -169,13 +169,10 @@ document.addEventListener('DOMContentLoaded',()=>{
 
                         fetch('https://chat-progress.ru/app/bot_max.php',{
                             method: 'POST',
-                            headers:{
-                                "Content-Type" : "application/json"
-                            },
                             credentials: "include",
                             body: formDataMaxBot
                         })
-                        .then(response => response.json())
+                        .then(response => response.text())
                         .then(data => {
                             console.log(data);
                             console.log(data.status);
