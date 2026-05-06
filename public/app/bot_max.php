@@ -79,7 +79,9 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
     if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
         $filePath = $_FILES['image']['tmp_name'];
     }else{
-        $message .= "Не удалось загрузить путь фото!";
+        if($_POST['selectedAssistant'] == 'Менеджер' && isset($_FILES['image'])){
+            $message .= "Не удалось загрузить путь фото!"; 
+        }
     }
 
     foreach($userIdArr as $elem){
@@ -119,9 +121,9 @@ function sendMessage($message, $user_id, $filePath = null){
 
         $fileToken = array_values($uploadResult['photos'])[0]['token'];
 
-        echo "<pre>";
-        print_r($fileToken);
-        echo "</pre>";
+        // echo "<pre>";
+        // print_r($fileToken);
+        // echo "</pre>";
 
         // если вдруг что-то пошло не так
         if (!$fileToken) {
