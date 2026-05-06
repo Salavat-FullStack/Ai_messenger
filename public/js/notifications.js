@@ -80,9 +80,10 @@ function startPolling() {
                     onNewMessage({
                         text: "Новое сообщение от менеджера!"
                     });
+                    const btn = document.querySelector('#assist_manager');
+                    btn.classList.add('message_notification');
                 }
-                const btn = document.querySelector('#assist_manager');
-                btn.classList.add('message_notification');
+
                 return;
             }
 
