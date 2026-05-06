@@ -152,9 +152,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 
                     fetch('https://chat-progress.ru/app/save_message.php',{
                         method: 'POST',
-                        headers: {
-                            "Content-Type" : "application/json"
-                        },
                         credentials: "include",
                         body: formData
                     })
