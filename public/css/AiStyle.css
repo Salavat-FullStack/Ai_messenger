@@ -69,7 +69,7 @@
 }
 .Ai_user_message{
     position: relative;
-    right: -23%;
+    left: 30%;
 }
 /* .Ai_user_message {
     align-items: end;
