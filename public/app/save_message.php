@@ -25,12 +25,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     try{
         $input = file_get_contents('php://input');
 
-        // $data = json_decode($input, true);
-
-        // if (!$data) {
-        //     throw new Exception("Невалидный JSON");
-        // }
-
         list($userId, $token) = explode(":", $_COOKIE["ai_chat_cookie"]);
 
         $expected = hash_hmac('sha256', $userId, COOKIE_GENERATE_KEY);
