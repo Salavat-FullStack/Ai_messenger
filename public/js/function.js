@@ -1,25 +1,41 @@
-window.renderMessage = function(messageRole, date, user, question, block = '.Ai_message_storage'){
+window.renderMessage = function(messageRole, date, user, question, block = '.Ai_message_storage', file = false){
         const Ai_message_storage = document.querySelector(block);
         
         let messageMainContainer = document.createElement('div');
         messageMainContainer.classList.add('messageMainContainer');
+
+        if(file){
+            let userImageChatContainer = document.createElement('div');
+            userImageChatContainer.classList.add('userImageChatContainer');
+
+            let img = document.createElement('img');
+            img.src = "https://chat-progress.ru/app" + file;
+
+            userImageChatContainer.append(img);
+
+            messageMainContainer.append(userImageChatContainer);
+        }
 
         let messageContainer = document.createElement('div');
 
         let message = document.createElement('div');
 
         let timeContainer = document.createElement('div');
-        // let user_name = document.createElement('div');
+        let user_name = document.createElement('div');
         let message_date = document.createElement('div');
 
-        // user_name.textContent = user;
+        user_name.textContent = user;
         message_date.textContent = date;
 
-        // user_name.classList.add('message_user_name');
+        user_name.classList.add('message_user_name');
         message_date.classList.add('message_date');
 
-        timeContainer.append(message_date);
-        // timeContainer.append(user_name, message_date);
+        if(user){
+            timeContainer.append(user_name, message_date);
+        }else{
+            timeContainer.append(message_date);
+        }
+        
         timeContainer.classList.add('Ai_message_date');
 
         message.innerHTML = question;   
@@ -87,7 +103,7 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
         container.innerHTML = "";
 
         data['response'].forEach(elem => {
-            renderMessage("user", formatDateView(elem['date']), elem['user_name'], elem['messageUser'], ".Ai_message_storage_manager");
+            renderMessage("user", formatDateView(elem['date']), false, elem['messageUser'], ".Ai_message_storage_manager", elem["file"]);
 
             if(elem['managerResponse'].length > 0){
                 const messageStore = addTagA(elem['managerResponse']);
