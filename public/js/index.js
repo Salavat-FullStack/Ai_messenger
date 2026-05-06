@@ -138,6 +138,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                 console.log(window.messageReview);
                 console.log(data['responseAi']);
                 console.log(formatDate());
+                console.log(window.selectedAssistant);
 
                 const formData = new FormData();
 
@@ -157,7 +158,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                         credentials: "include",
                         body: formData
                     })
-                    .then(response => response.json())
+                    .then(response => response.text())
                     .then(data =>{
                         console.log(data);
 
