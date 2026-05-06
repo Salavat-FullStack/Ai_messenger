@@ -139,7 +139,15 @@ document.addEventListener('DOMContentLoaded',()=>{
                 console.log(data['responseAi']);
                 console.log(formatDate());
 
-                responseAi = data['responseAi'];
+                const formData = new FormData();
+
+                formData.append('messageUser', window.messageUser);
+                formData.append('messageReview', window.messageReview);
+                formData.append('messageAi', data['responseAi']);
+                formData.append('date', formatDate());
+                formData.append('selectedAssistant', window.selectedAssistant);
+
+                    responseAi = data['responseAi'];
 
                     fetch('https://chat-progress.ru/app/save_message.php',{
                         method: 'POST',
@@ -147,30 +155,28 @@ document.addEventListener('DOMContentLoaded',()=>{
                             "Content-Type" : "application/json"
                         },
                         credentials: "include",
-                        body: JSON.stringify({
-                            messageUser: window.messageUser,
-                            messageReview: window.messageReview,
-                            messageAi: data['responseAi'],
-                            date: formatDate(),
-                            selectedAssistant: window.selectedAssistant
-                        })
+                        body: formData
                     })
                     .then(response => response.json())
                     .then(data =>{
                         console.log(data);
+
+                        const formDataMaxBot = new FormData();
+
+                        formDataMaxBot.append('messageUser', window.messageUser);
+                        formDataMaxBot.append('messageReview', window.messageReview);
+                        formDataMaxBot.append('messageAi', responseAi);
+                        formDataMaxBot.append('date', formatDateView(formatDate()));
+                        formDataMaxBot.append('selectedAssistant', window.selectedAssistant);
+                        formDataMaxBot.append('UserId', data['response']);
+
                         fetch('https://chat-progress.ru/app/bot_max.php',{
                             method: 'POST',
                             headers:{
                                 "Content-Type" : "application/json"
                             },
                             credentials: "include",
-                            body: JSON.stringify({
-                                messageUser: window.messageUser,
-                                messageReview: window.messageReview,
-                                messageAi: responseAi,
-                                date: formatDateView(formatDate()),
-                                selectedAssistant: window.selectedAssistant
-                            })
+                            body: formDataMaxBot
                         })
                         .then(response => response.json())
                         .then(data => {
