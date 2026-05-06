@@ -1,5 +1,7 @@
 window.renderMessage = function(messageRole, date, user, question, block = '.Ai_message_storage'){
         const Ai_message_storage = document.querySelector(block);
+        
+        let messageMainContainer = document.createElement('div');
 
         let messageContainer = document.createElement('div');
 
@@ -29,7 +31,9 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
         }
         
         messageContainer.append(timeContainer,message);
-        Ai_message_storage.append(messageContainer);
+        messageMainContainer.append(messageContainer);
+        
+        Ai_message_storage.append(messageMainContainer);
 
         // Ai_message_storage.scrollTop = Ai_message_storage.scrollHeight;
         Ai_message_storage.scrollTo({
