@@ -148,4 +148,23 @@ document.addEventListener('DOMContentLoaded',()=>{
         document.getElementById('fileInputAiModal').click();
     });
 
+
+
+    const input = document.getElementById('Ai_request_input');
+
+
+    input.addEventListener('change', () => {
+
+        const file = input.files[0];
+
+        console.log(`Выбран файл: ${file.name}`);
+
+        // if (file) {
+        //     fileName.textContent = `Выбран файл: ${file.name}`;
+        // } else {
+        //     fileName.textContent = '';
+        // }
+
+    });
+
 });
