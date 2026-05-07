@@ -153,9 +153,11 @@ document.addEventListener('DOMContentLoaded',()=>{
     const input = document.getElementById('Ai_request_input');
 
 
-    input.addEventListener('change', () => {
+    input.addEventListener('change', (event) => {
 
-        const file = input.files[0];
+        console.log('change');
+
+        const file = event.target.files[0];
 
         console.log(`Выбран файл: ${file.name}`);
 
