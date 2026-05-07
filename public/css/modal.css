@@ -158,26 +158,30 @@
     width: 100px;
 }
 
-#close_ai_chat_preview{
+/* #close_ai_chat_preview{
     width: 20px;
     position: absolute;
     top: -9px;
     right: -8px;
-}
+} */
 
 #close_ai_chat_preview{
-    width: 30px;
-    height: 30px;
-    position: relative;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: -10px;
+    right: -8px;
+    background: #122538 url(../image/nav_bg.png);
+    border-radius: 3px;
     cursor: pointer;
 }
 
 #close_ai_chat_preview::before,
 #close_ai_chat_preview::after{
     content: '';
-    width: 22px;
-    height: 3px;
-    background: black;
+    width: 20px;
+    height: 2px;
+    background: white;  
     position: absolute;
     top: 50%;
     left: 50%;
