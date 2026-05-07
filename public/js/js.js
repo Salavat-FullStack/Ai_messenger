@@ -45,6 +45,8 @@ document.addEventListener('DOMContentLoaded',()=>{
         <div class="Ai_panel">
             <textarea id="Ai_request_input"></textarea>
 
+            <img id="ai_chat_preview" width="200">
+
             <div class="Ai_file_btn display_none">
                 <img src="https://chat-progress.ru/image/icons/clip.svg" alt="file">
                 <input 
@@ -151,15 +153,23 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 
     const input = document.getElementById('fileInputAiModal');
+    const preview = document.getElementById('ai_chat_preview');
 
+    input.addEventListener('change', () => {
 
-    input.addEventListener('change', (event) => {
+        const file = input.files[0];
 
-        console.log('change');
+        // console.log(`Выбран файл: ${file.name}`);
 
-        const file = event.target.files[0];
+        if(file){
 
-        console.log(`Выбран файл: ${file.name}`);
+            const url = URL.createObjectURL(file);
+
+            preview.src = url;
+
+            console.log(url);
+
+        }
     });
 
 });
