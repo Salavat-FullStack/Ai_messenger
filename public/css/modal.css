@@ -164,3 +164,30 @@
     top: -9px;
     right: -8px;
 }
+
+#close_ai_chat_preview{
+    width: 30px;
+    height: 30px;
+    position: relative;
+    cursor: pointer;
+}
+
+#close_ai_chat_preview::before,
+#close_ai_chat_preview::after{
+    content: '';
+    width: 22px;
+    height: 3px;
+    background: black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+}
+
+#close_ai_chat_preview::before{
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+#close_ai_chat_preview::after{
+    transform: translate(-50%, -50%) rotate(-45deg);
+}

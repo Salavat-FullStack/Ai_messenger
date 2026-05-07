@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 
             <div id="ai_chat_preview_box">
-                <img src="https://chat-progress.ru/image/icons/close_icon_black.png" id="close_ai_chat_preview" class="display_none" alt="close">
+                <div id="close_ai_chat_preview" class="display_none"></div>
                 <img id="ai_chat_preview">
             </div>
 
@@ -183,6 +183,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     close.addEventListener('click',()=>{
         input.value = '';
         preview.src = '';
+        close.classList.add('display_none');
     });
 
 });
