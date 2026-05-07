@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 
 
-    const input = document.getElementById('Ai_request_input');
+    const input = document.getElementById('fileInputAiModal');
 
 
     input.addEventListener('change', (event) => {
@@ -160,13 +160,6 @@ document.addEventListener('DOMContentLoaded',()=>{
         const file = event.target.files[0];
 
         console.log(`Выбран файл: ${file.name}`);
-
-        // if (file) {
-        //     fileName.textContent = `Выбран файл: ${file.name}`;
-        // } else {
-        //     fileName.textContent = '';
-        // }
-
     });
 
 });
