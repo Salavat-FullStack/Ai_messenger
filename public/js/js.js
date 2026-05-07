@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 
             <div id="ai_chat_preview_box">
+                <img src="https://chat-progress.ru/image/icons/close_icon_black.png" id="close_ai_chat_preview" alt="close">
                 <img id="ai_chat_preview">
             </div>
 
