@@ -45,7 +45,11 @@ document.addEventListener('DOMContentLoaded',()=>{
         <div class="Ai_panel">
             <textarea id="Ai_request_input"></textarea>
 
-            <img id="ai_chat_preview" width="200">
+
+            <div id="ai_chat_preview_box">
+                <img id="ai_chat_preview">
+            </div>
+
 
             <div class="Ai_file_btn display_none">
                 <img src="https://chat-progress.ru/image/icons/clip.svg" alt="file">

@@ -147,3 +147,13 @@
     justify-content: end;
     margin-bottom: 5px;
 }
+
+#ai_chat_preview_box{
+    position: absolute;
+    bottom: 80px;
+    right: 20px;
+}
+
+#ai_chat_preview img{
+    width: 100px;
+}
