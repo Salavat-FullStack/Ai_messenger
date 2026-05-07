@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 
             <div id="ai_chat_preview_box">
-                <img src="https://chat-progress.ru/image/icons/close_icon_black.png" id="close_ai_chat_preview" alt="close">
+                <img src="https://chat-progress.ru/image/icons/close_icon_black.png" id="close_ai_chat_preview" class="display_none" alt="close">
                 <img id="ai_chat_preview">
             </div>
 
@@ -160,6 +160,8 @@ document.addEventListener('DOMContentLoaded',()=>{
     const input = document.getElementById('fileInputAiModal');
     const preview = document.getElementById('ai_chat_preview');
 
+    const close = document.getElementById('close_ai_chat_preview');
+
     input.addEventListener('change', () => {
 
         const file = input.files[0];
@@ -174,7 +176,13 @@ document.addEventListener('DOMContentLoaded',()=>{
 
             console.log(url);
 
+            close.classList.remove('display_none');
         }
+    });
+
+    close.addEventListener('click',()=>{
+        input.value = '';
+        preview.src = '';
     });
 
 });
