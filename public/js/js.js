@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                 <img src="https://chat-progress.ru/image/icons/question_icon.png" id="instructions_icon_Ai" alt="instructions">
             </div>
             <div class="Ai_manager_call">
-                <img src="https://chat-progress.ru/image/icons/roll_up_icon.png" alt="call" class="Ai_call_logo" id="Ai_modal_close_img">
+                <img src="https://chat-progress.ru/image/icons/roll_up_icon.svg" alt="call" class="Ai_call_logo" id="Ai_modal_close_img">
             </div>
         </div>
         <div class="Ai_message_storage">
