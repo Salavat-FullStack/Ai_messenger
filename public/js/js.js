@@ -75,8 +75,6 @@ document.addEventListener('DOMContentLoaded',()=>{
             <div class="instructions_nav">
                 <div class="instruc_btn_box">
                     <div class="instructions_btn instructions_btn_active" id="instructions_Ai_btn">ИИ ассистент</div>
-                    <div class="instructions_btn" id="instructions_manager_btn">Менеджер</div>
-                    <div class="instructions_btn" id="instructions_about_btn">Общее</div>
                 </div>
             </div>
             <img src="https://chat-progress.ru/image/icons/close_icon.png" id="icon_close_modal_instructions" alt="close">
@@ -84,7 +82,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             <div class="instructions_block assist_Ai_instruc" id="instructions_Ai">
                 <h2>ИИ ассистент</h2>
                 <p>ИИ-ассистент — это искусственный интеллект, который в любое время готов ответить на любой ваш вопрос, связанный с деятельностью akuprof.ru и не только, порекомендовать подходящие товары и помочь с выбором. Ассистент работает быстро, доступен 24/7 и помогает сэкономить ваше время.</p>
-                <p> * ИИ-ассистент — не знает о наличии товара. Если вам нужно уточнить наличие, пожалуйста, обратитесь к менеджерам, по номеру (+77777777777).</p>
+                <p> * ИИ-ассистент — не знает о наличии товара. Если вам нужно уточнить наличие, пожалуйста, обратитесь к менеджерам, по номеру +7 (495) 970 82 03</p>
                 <p> * Если вас не устраивает ответ ИИ-ассистента или вы хотите обратиться напрямую к менеджеру, выберите в панели чата опцию «Менеджер» и отправьте сообщение. Ваш вопрос будет отправлен и рассмотрен менеджерами в ближайшее время.</p>
             </div>
 
