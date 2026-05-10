@@ -3,4 +3,10 @@
         right: -4px;
         margin: 10px;
     }
+    .instructions_container{
+        width: 350px;
+    }
+    .instructions_block {
+        padding: 10px;
+    }
 }

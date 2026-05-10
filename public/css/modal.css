@@ -29,10 +29,9 @@
     top: 10px;
     cursor: pointer;
 }
-.instructions_block h2{
+/* .instructions_block h2{
     margin-top: 5px;
-    margin-bottom: 0;
-}
+} */
 .instructions_block{
     padding: 10px 15px;
 
