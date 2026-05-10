@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Pacifico&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     
     <div id="Ai_modal_open_btn">
+        <div class="open_btn_message_notification display_none"></div>
         <img src="https://chat-progress.ru/image/icons/chat-icon.svg" alt="open_modal">
     </div>
 
@@ -141,6 +142,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 
     Ai_modal_open_btn.addEventListener('click', () => {
         Ai_modal.classList.add('Ai_modal_active'); // открыть
+
+        const open_btn = document.querySelector('.open_btn_message_notification');
+        open_btn.classList.add('display_none');
     });
 
     closeBtn.addEventListener('click', () => {

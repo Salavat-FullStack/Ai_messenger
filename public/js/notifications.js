@@ -55,6 +55,8 @@ let messageQuantityGlobal = {
     startPolling(); // 👈 запускаем только после загрузки
 })();
 
+const open_btn = document.querySelector('.open_btn_message_notification');
+
 function startPolling() {
 
     setInterval(async () => {
@@ -82,6 +84,8 @@ function startPolling() {
                     });
                     const btn = document.querySelector('#assist_manager');
                     btn.classList.add('message_notification');
+
+                    open_btn.classList.remove('display_none');
                 }
 
                 return;
@@ -94,6 +98,8 @@ function startPolling() {
                 });
                 const btn = document.querySelector('#assist_manager');
                 btn.classList.add('message_notification');
+
+                open_btn.classList.remove('display_none');
             }
         });
 

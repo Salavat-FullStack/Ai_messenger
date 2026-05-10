@@ -205,6 +205,17 @@
     background-color: #3dc643;
     border-radius: 50%; /* обводка, чтобы красиво смотрелось */
 }
+
+.open_btn_message_notification::after{
+    content: "";
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    width: 15px;
+    height: 15px;
+    background-color: #3dc643;
+    border-radius: 50%;
+}
 .assistant_btn_active{
     color: #122538;
     background-color: #eaeaea;
