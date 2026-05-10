@@ -5,11 +5,13 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
         messageMainContainer.classList.add('messageMainContainer');
 
         if(file && file !== "не передан!"){
-            let userImageChatContainer = document.createElement('div');
+            let userImageChatContainer = document.createElement('a');
             userImageChatContainer.classList.add('userImageChatContainer');
 
             let img = document.createElement('img');
             img.src = "https://chat-progress.ru/app" + file;
+
+            userImageChatContainer.href = "https://chat-progress.ru/app" + file;
 
             userImageChatContainer.append(img);
 
