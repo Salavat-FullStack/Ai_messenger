@@ -12,6 +12,8 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
             img.src = "https://chat-progress.ru/app" + file;
 
             userImageChatContainer.href = "https://chat-progress.ru/app" + file;
+            userImageChatContainer.target = '_blank';
+            userImageChatContainer.rel = 'noopener noreferrer'; 
 
             userImageChatContainer.append(img);
 
