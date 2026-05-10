@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 
     const SendBtn = document.getElementById('Ai_send_message');
 
-    SendBtn.addEventListener('click',()=>{
+    function sendManager(){
 
         if(window.selectedAssistant == 'Менеджер'){
 
@@ -105,6 +105,20 @@ document.addEventListener("DOMContentLoaded",()=>{
                 console.error('Ошибка:', error);
                 input.value = '';
             });
+        }
+    }
+
+    SendBtn.addEventListener('click',()=>{
+        sendManager();
+    });
+
+    Ai_request_input.addEventListener('keydown', function(event) {
+
+        if (event.key === 'Enter' && !event.shiftKey) {
+
+            event.preventDefault();
+
+            sendManager();
         }
     });
 
