@@ -60,6 +60,12 @@ document.addEventListener("DOMContentLoaded",()=>{
 
             console.log(formData);
 
+            const preview = document.getElementById('ai_chat_preview');
+            const close = document.getElementById('close_ai_chat_preview');
+
+            preview.src = '';
+            close.classList.add('display_none');
+
             fetch('https://chat-progress.ru/app/save_message.php',{
                 method: 'POST',
                 credentials: "include",
@@ -94,12 +100,6 @@ document.addEventListener("DOMContentLoaded",()=>{
                     Ai_send_message.classList.remove('display_none');
                     Ai_load.classList.add('display_none');
                     input.value = '';
-
-                    const preview = document.getElementById('ai_chat_preview');
-                    const close = document.getElementById('close_ai_chat_preview');
-
-                    preview.src = '';
-                    close.classList.add('display_none');
 
                     renderMessageManager("Менеджер");
                 })
