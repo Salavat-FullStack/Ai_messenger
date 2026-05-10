@@ -64,11 +64,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
     });
 
-    
-    let AiResponse; 
-
-    SendBtn.addEventListener('click',()=>{
-
+    function sendAi(){
         question = Ai_request_input.value;
         console.log(question);
 
@@ -198,6 +194,23 @@ document.addEventListener('DOMContentLoaded',()=>{
             Ai_load.classList.add('display_none');
             alert('Что-то пошло не так :(');
         })
+        }
+    }
+
+    
+    let AiResponse; 
+
+    SendBtn.addEventListener('click',()=>{
+        sendAi();
+    });
+
+    Ai_request_input.addEventListener('keydown', function(event) {
+
+        if (event.key === 'Enter' && !event.shiftKey) {
+
+            event.preventDefault();
+
+            sendAi();
         }
     });
 
