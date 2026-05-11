@@ -120,7 +120,7 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
     }
 
     window.addTagA = function(message){
-        if(message.length < 1){
+        if(!message || message.length < 1){
             return message;
         }
         return message.replace(
