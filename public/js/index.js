@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         console.log(question);
 
         if(question.length < 3){
-            console.log('сообщение слишком короткое!');
+            alert('сообщение слишком короткое!');
             return;
         }
 

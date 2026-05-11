@@ -27,9 +27,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     $data = json_decode($input, true);
 
-    $question = $data['question'];
-
-    // $storeMessages = $data['storeMessages'];
+    $question = trim($data['question']);
+    $question = strip_tags($question);
 
     $docs = searchSimilar($question, $es, $client);
 

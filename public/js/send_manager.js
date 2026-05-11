@@ -12,11 +12,13 @@ document.addEventListener("DOMContentLoaded",()=>{
 
         if(window.selectedAssistant == 'Менеджер'){
 
+            const input = document.getElementById('fileInputAiModal');
+
             let question = Ai_request_input.value;
             console.log(question);
 
-            if(question.length < 3){
-                console.log('сообщение слишком короткое!');
+            if(question.length < 3 && !input.files.length){
+                alert('сообщение слишком короткое!');
                 return;
             }
 
@@ -44,7 +46,6 @@ document.addEventListener("DOMContentLoaded",()=>{
                 console.log(data);
             });
 
-            const input = document.getElementById('fileInputAiModal');
             const file = input.files[0];
 
             const formData = new FormData();

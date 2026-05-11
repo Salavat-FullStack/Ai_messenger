@@ -109,11 +109,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         //     ]);
         // }
 
+
+        $messageUser = strip_tags($_POST['messageUser']);
+        $messageAi = strip_tags($_POST['messageAi']);
+        $managerResponse = strip_tags($_POST['managerResponse']);
+
+
         if($_POST['selectedAssistant'] == 'ИИ ассистент'){
             $response = saveMessage(
                 $client,
-                $_POST['messageUser'],
-                $_POST['messageAi'],
+                $messageUser,
+                $$messageAi,
                 $_POST['messageReview'],
                 $userId,
                 str_replace(' ', 'T', $_POST['date'])
@@ -122,8 +128,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         if($_POST['selectedAssistant'] == 'Менеджер'){
             $response = saveMessageManager(
                 $client,
-                $_POST['messageUser'],
-                $_POST['managerResponse'],
+                $messageUser,
+                $managerResponse,
                 $userId,
                 $fileUrl,
                 str_replace(' ', 'T', $_POST['date'])
