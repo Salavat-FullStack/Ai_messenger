@@ -110,16 +110,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         // }
 
 
-        $messageUser = strip_tags($_POST['messageUser']);
-        $messageAi = strip_tags($_POST['messageAi']);
-        $managerResponse = strip_tags($_POST['managerResponse']);
-
+        $messageUser = trim(strip_tags($_POST['messageUser'] ?? ''));
+        $messageAi = trim(strip_tags($_POST['messageAi'] ?? ''));
+        $managerResponse = strip_tags($_POST['managerResponse'] ?? '');
 
         if($_POST['selectedAssistant'] == 'ИИ ассистент'){
             $response = saveMessage(
                 $client,
                 $messageUser,
-                $$messageAi,
+                $messageAi,
                 $_POST['messageReview'],
                 $userId,
                 str_replace(' ', 'T', $_POST['date'])
@@ -152,8 +151,8 @@ function saveMessage($client, $messageUser, $messageAi, $messageReview, $userDat
         'index' => 'message_history',
         'body' => [
             "user_token" => $userData,
-            "messageUser" => trim($messageUser),
-            "messageReview" => trim($messageReview),
+            "messageUser" => $messageUser,
+            "messageReview" => $messageReview,
             "messageAi" => $messageAi,
             "created_at" => $date
         ]
@@ -175,7 +174,7 @@ function saveMessageManager($client, $messageUser, $managerResponse, $userData, 
         'index' => 'message_history_manager',
         'body' => [
             "user_token" => $userData,
-            "messageUser" => trim($messageUser),
+            "messageUser" => $messageUser,
             "managerResponse" => $managerResponse,
             "file" => $file,
             "created_at" => $date
