@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         Ai_send_message.classList.add('display_none');
         Ai_load.classList.remove('display_none');
 
-        renderMessage('user', formatDateView(formatDate()), window.USER_DATA['name'], question);
+        renderMessage('user', formatDateView(formatDate()), "", question);
 
         fetch('https://chat-progress.ru/app/review.php',{
             method: "POST",
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                 Ai_send_message.classList.remove('display_none');
                 Ai_load.classList.add('display_none');
 
-                renderMessage('Ai', formatDateView(formatDate()), window.USER_DATA['name'], AiResponse);
+                renderMessage('Ai', formatDateView(formatDate()), "", AiResponse);
 
                 console.log(window.USER_DATA);
                 console.log(window.messageUser);
