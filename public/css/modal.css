@@ -199,5 +199,10 @@
 
 .Ai_message_img_data{
     width: 26%;
+    position: relative;
     left: 74%;
+    background: white;
+    padding: 5px;
+    display: flex;
+    align-items: end;
 }

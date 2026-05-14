@@ -62,7 +62,11 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         //             "<b>Фамилия : </b>" . $userData['surname'] . "\n" .
         //             "<b>Email : </b>" . $userData['email'] . "\n \n" ;
 
-        $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $_POST['messageUser'] . "\n \n";
+        $userQuestion = "";
+
+        if(!empty($_POST['messageUser'])){
+            $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $_POST['messageUser'] . "\n \n";
+        }
 
         $date = "<b>- Дата : </b>" . $_POST['date'] . "\n \n";
 
