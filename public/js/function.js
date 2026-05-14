@@ -50,6 +50,11 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
         }else if(messageRole == 'Ai'){
             messageContainer.classList.add('Ai_akuprof_message','Ai_message');
         }
+
+        if(question.length < 1){
+            messageContainer.classList.remove('Ai_user_message');
+            messageContainer.classList.add('Ai_message_img_data');
+        }
         
         messageContainer.append(timeContainer,message);
         messageMainContainer.append(messageContainer);

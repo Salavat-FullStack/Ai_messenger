@@ -195,3 +195,9 @@
 #close_ai_chat_preview::after{
     transform: translate(-50%, -50%) rotate(-45deg);
 }
+
+
+.Ai_message_img_data{
+    width: 26%;
+    left: 74%;
+}
