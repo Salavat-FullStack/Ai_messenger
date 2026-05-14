@@ -73,12 +73,8 @@ document.addEventListener('DOMContentLoaded',()=>{
 
     <div class="Ai_modal_instructions display_none">
         <div class="instructions_container">
-            <div class="instructions_nav">
-                <div class="instruc_btn_box">
-                    <div class="instructions_btn instructions_btn_active" id="instructions_Ai_btn">ИИ ассистент</div>
-                </div>
-            </div>
-            <img src="https://chat-progress.ru/image/icons/close_icon.png" id="icon_close_modal_instructions" alt="close">
+            <div class="instructions_nav"></div>
+            <img src="https://chat-progress.ru/image/icons/close_icon.svg" id="icon_close_modal_instructions" alt="close">
 
             <div class="instructions_block assist_Ai_instruc" id="instructions_Ai">
                 <h2>ИИ ассистент</h2>
