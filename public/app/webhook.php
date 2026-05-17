@@ -68,18 +68,36 @@ if (!empty($json['message']) && !empty($json['message']['link'])) {
 
     preg_match('/Id пользователя\s*:\s*(\S+)/u', $text, $array);
 
+    preg_match('/Вопрос\s+(?:для\s+)?(ИИ|менеджеру)!/u', $text, $typeMatch);
+
+    $type = $typeMatch[1] ?? null;
+
     $userId = $array[1] ?? null;
 
     if(!empty($id)){
-        $params = [
-            'index' => 'message_history_manager',
-            'id'    => $id,
-            'body'  => [
-                'doc' => [
-                    'managerResponse' => $menagerResponse
+        if($type === 'ИИ'){
+            $params = [
+                'index' => 'message_history',
+                'id'    => $id,
+                'body'  => [
+                    'doc' => [
+                        'managerResponse' => $menagerResponse
+                    ]
                 ]
-            ]
-        ];
+            ];
+        }else if($type === 'менеджеру'){
+            $params = [
+                'index' => 'message_history_manager',
+                'id'    => $id,
+                'body'  => [
+                    'doc' => [
+                        'managerResponse' => $menagerResponse
+                    ]
+                ]
+            ];
+        }else{
+            sendMessage('не удалось получить тип сообщения', $userId);
+        }
 
         $response = $client->update($params);
         // отправляем ответ
