@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
                 if(elem['managerResponse']){
                     renderMessage('Ai', formatDateView(elem['date']), "Менеджер akuprof", addTagA(elem['managerResponse']));
+                    
                 }
             });
 

@@ -54,6 +54,9 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
             }
         }else if(messageRole == 'Ai'){
             messageContainer.classList.add('Ai_akuprof_message','Ai_message');
+            if(user == "Менеджер akuprof"){
+                user_name.classList.add('Ai_meneger_response');
+            }
         }
 
         messageContainer.append(timeContainer,message);
