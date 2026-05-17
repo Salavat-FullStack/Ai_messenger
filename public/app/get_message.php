@@ -92,6 +92,7 @@ function getMessage($client, $token, $assistant){
                 "user_token" => $token,
                 "messageUser" => $hit['_source']['messageUser'],
                 "messageAi" => $hit['_source']['messageAi'],
+                "managerResponse" => $hit['_source']['managerResponse'],
                 "date" => $hit['_source']['created_at']
             ];
         }

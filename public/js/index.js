@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
                 renderMessage('user', formatDateView(elem['date']), elem['user_name'], elem['messageUser']);
                 renderMessage('Ai', formatDateView(elem['date']), "akuprof.ru", messageStore);
+                console.log(elem['managerResponse']);
             });
 
             let lastMessage = data['response'].slice(-2);
