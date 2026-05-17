@@ -154,6 +154,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                     .then(response => response.json())
                     .then(data =>{
                         console.log(data);
+                        console.log(data['response']);
 
                         const formDataMaxBot = new FormData();
 
@@ -162,6 +163,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                         formDataMaxBot.append('messageAi', responseAi);
                         formDataMaxBot.append('date', formatDateView(formatDate()));
                         formDataMaxBot.append('selectedAssistant', window.selectedAssistant);
+                        formDataMaxBot.append('UserId', data['response']);
 
                         fetch('https://chat-progress.ru/app/bot_max.php',{
                             method: 'POST',
