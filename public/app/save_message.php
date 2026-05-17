@@ -120,6 +120,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 $messageUser,
                 $messageAi,
                 $_POST['messageReview'],
+                '',
                 $userId,
                 str_replace(' ', 'T', $_POST['date'])
             );
@@ -145,7 +146,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     }
 }
 
-function saveMessage($client, $messageUser, $messageAi, $messageReview, $userData, $date){
+function saveMessage($client, $messageUser, $messageAi, $messageReview, $managerResponse, $userData, $date){
 
     $params = [
         'index' => 'message_history',
@@ -154,6 +155,7 @@ function saveMessage($client, $messageUser, $messageAi, $messageReview, $userDat
             "messageUser" => $messageUser,
             "messageReview" => $messageReview,
             "messageAi" => $messageAi,
+            "managerResponse" => $managerResponse,
             "created_at" => $date
         ]
     ];
