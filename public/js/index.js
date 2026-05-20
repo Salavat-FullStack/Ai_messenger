@@ -276,6 +276,9 @@ document.addEventListener('DOMContentLoaded',()=>{
                 btn.classList.remove('message_notification');
                 btn2.classList.remove('message_notification');
 
+                const open_btn = document.querySelector('.open_btn_message_notification');
+                open_btn.classList.add('display_none');
+
                 Ai_file_btn.classList.remove('display_none');
 
                 renderMessageManager("Менеджер");
@@ -283,6 +286,9 @@ document.addEventListener('DOMContentLoaded',()=>{
                 Ai_message_storage_manager.classList.add('display_none');
                 Ai_message_storage.classList.remove('display_none');
                 Ai_file_btn.classList.add('display_none');
+
+                const open_btn = document.querySelector('.open_btn_message_notification');
+                open_btn.classList.add('display_none');
 
                 const btn2 = document.querySelector('#assist_Ai');
                 btn2.classList.remove('message_notification');
