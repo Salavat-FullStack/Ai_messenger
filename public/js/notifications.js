@@ -171,6 +171,7 @@ async function renderAi(){
             assistant: window.selectedAssistant
         })
     });
+    console.log(window.selectedAssistant);
 
     const data = await response.json();
     console.log(data);
