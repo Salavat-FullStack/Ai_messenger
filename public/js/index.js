@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                 messageStore = addTagA(elem['messageAi']);
 
                 renderMessage('user', formatDateView(elem['date']), elem['user_name'], elem['messageUser']);
-                renderMessage('Ai', formatDateView(elem['date']), "akuprof.ru", messageStore);
+                renderMessage('Ai', formatDateView(elem['date']), "ИИ ассистент", messageStore);
 
                 if(elem['managerResponse']){
                     renderMessage('Ai', formatDateView(elem['date']), "Менеджер akuprof", addTagA(elem['managerResponse']));
