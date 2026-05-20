@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded",()=>{
             Ai_send_message.classList.add('display_none');
             Ai_load.classList.remove('display_none');
 
-            renderMessage('user', formatDateView(formatDate()), window.USER_DATA['name'], question, '.Ai_message_storage_manager');
+            renderMessage('user', formatDateView(formatDate()), '', question, '.Ai_message_storage_manager');
 
             console.log(window.messageUser);
             console.log(window.selectedAssistant);

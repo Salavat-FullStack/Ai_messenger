@@ -120,7 +120,7 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
             if(elem['managerResponse'].length > 0){
                 const messageStore = addTagA(elem['managerResponse']);
 
-                renderMessage("Ai", formatDateView(elem['date']), "akuprof.ru", messageStore, ".Ai_message_storage_manager");
+                renderMessage("Ai", formatDateView(elem['date']), "Менеджер akuprof", messageStore, ".Ai_message_storage_manager");
             }
         });
 

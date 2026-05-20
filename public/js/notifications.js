@@ -52,16 +52,31 @@ let messageQuantityGlobal = {
 (async () => {
     messageQuantityGlobal = await renderMessageManager("Менеджер");
 
-    startPolling(); // 👈 запускаем только после загрузки
+    startPolling(messageQuantityGlobal, "meneger"); // 👈 запускаем только после загрузки
+})();
+
+
+let AiArrayGlobal = {
+    response: []
+};
+
+(async () => {
+    AiArrayGlobal = await renderAi();
+
+    startPolling(AiArrayGlobal, "ai_and_meneger");
 })();
 
 const open_btn = document.querySelector('.open_btn_message_notification');
 
-function startPolling() {
+function startPolling(messageQuantityGlobal, type) {
 
     setInterval(async () => {
 
-        const data = await renderMessageManager("Менеджер");
+        if(type == "meneger"){
+            const data = await renderMessageManager("Менеджер");
+        }else if(type == "ai_and_meneger"){
+            const data = await renderAi();
+        }
 
         console.log(messageQuantityGlobal);
         console.log(data);
@@ -143,6 +158,39 @@ function detectChanges(oldArr, newArr) {
     console.log(changes);
 
     return changes;
+}
+
+async function renderAi(){
+    const response = await fetch('https://chat-progress.ru/app/get_message.php',{
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: "include",
+        body: JSON.stringify({
+            assistant: window.selectedAssistant
+        })
+    });
+
+    const data = response.json();
+
+    // .then(response => response.json())
+    // .then(data => {
+        AiArrayGlobal = data
+
+        data['response'].forEach(elem =>{
+            messageStore = addTagA(elem['messageAi']);
+
+            renderMessage('user', formatDateView(elem['date']), elem['user_name'], elem['messageUser']);
+            renderMessage('Ai', formatDateView(elem['date']), "akuprof.ru", messageStore);
+
+            if(elem['managerResponse']){
+                renderMessage('Ai', formatDateView(elem['date']), "Менеджер akuprof", addTagA(elem['managerResponse']));
+            }
+        });
+    // });
+
+    return data;
 }
 
 });
