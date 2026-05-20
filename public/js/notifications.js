@@ -168,10 +168,10 @@ async function renderAi(){
         },
         credentials: "include",
         body: JSON.stringify({
-            assistant: window.selectedAssistant
+            assistant: "ИИ ассистент"
         })
     });
-    console.log(window.selectedAssistant);
+    // console.log(window.selectedAssistant);
 
     const data = await response.json();
     console.log(data);
