@@ -75,9 +75,11 @@ function startPolling(messageQuantityGlobal, type) {
         let data;
 
         if(type == "meneger"){
-            const data = await renderMessageManager("Менеджер");
+            data = await renderMessageManager("Менеджер");
+
+            console.log()
         }else if(type == "ai_and_meneger"){
-            const data = await renderAi();
+            data = await renderAi();
         }
 
         console.log(messageQuantityGlobal);
