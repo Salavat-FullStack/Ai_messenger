@@ -172,8 +172,8 @@ async function renderAi(){
         })
     });
 
-    const data = response.json();
-
+    const data = await response.json();
+    console.log(data);
     // .then(response => response.json())
     // .then(data => {
         AiArrayGlobal = data
