@@ -101,7 +101,7 @@ function startPolling(messageQuantityGlobal, type) {
                     onNewMessage({
                         text: "Новое сообщение от менеджера!"
                     });
-                    const btn = document.querySelector('#assist_manager');
+                    let btn = document.querySelector('#assist_manager');
                     if(type == "ai_and_meneger"){
                         btn = document.querySelector('#assist_Ai');
                     }
@@ -118,7 +118,7 @@ function startPolling(messageQuantityGlobal, type) {
                 onNewMessage({
                     text: "Новое сообщение от менеджера!"
                 });
-                const btn = document.querySelector('#assist_manager');
+                let btn = document.querySelector('#assist_manager');
                 if(type == "ai_and_meneger"){
                     btn = document.querySelector('#assist_Ai');
                 }
