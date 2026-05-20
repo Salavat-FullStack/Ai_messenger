@@ -102,6 +102,9 @@ function startPolling(messageQuantityGlobal, type) {
                         text: "Новое сообщение от менеджера!"
                     });
                     const btn = document.querySelector('#assist_manager');
+                    if(type == "ai_and_meneger"){
+                        btn = document.querySelector('#assist_Ai');
+                    }
                     btn.classList.add('message_notification');
 
                     open_btn.classList.remove('display_none');
@@ -116,6 +119,9 @@ function startPolling(messageQuantityGlobal, type) {
                     text: "Новое сообщение от менеджера!"
                 });
                 const btn = document.querySelector('#assist_manager');
+                if(type == "ai_and_meneger"){
+                    btn = document.querySelector('#assist_Ai');
+                }
                 btn.classList.add('message_notification');
 
                 open_btn.classList.remove('display_none');

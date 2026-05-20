@@ -272,7 +272,9 @@ document.addEventListener('DOMContentLoaded',()=>{
                 Ai_message_storage.classList.add('display_none');   
                 
                 const btn = document.querySelector('#assist_manager');
+                const btn2 = document.querySelector('#assist_Ai');
                 btn.classList.remove('message_notification');
+                btn2.classList.remove('message_notification');
 
                 Ai_file_btn.classList.remove('display_none');
 
@@ -281,6 +283,9 @@ document.addEventListener('DOMContentLoaded',()=>{
                 Ai_message_storage_manager.classList.add('display_none');
                 Ai_message_storage.classList.remove('display_none');
                 Ai_file_btn.classList.add('display_none');
+
+                const btn2 = document.querySelector('#assist_Ai');
+                btn2.classList.remove('message_notification');
             }
         });
     });
