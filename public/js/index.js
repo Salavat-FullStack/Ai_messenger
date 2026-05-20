@@ -73,8 +73,9 @@ document.addEventListener('DOMContentLoaded',()=>{
         question = Ai_request_input.value;
         console.log(question);
 
-        if(question.length < 3){
-            alert('сообщение слишком короткое!');
+        if(question.length < 1){
+            const input = document.querySelector('#Ai_request_input');
+            input.placeholder = "введите сообщение!";
             return;
         }
 
