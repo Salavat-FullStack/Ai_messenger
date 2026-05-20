@@ -72,6 +72,8 @@ function startPolling(messageQuantityGlobal, type) {
 
     setInterval(async () => {
 
+        let data;
+
         if(type == "meneger"){
             const data = await renderMessageManager("Менеджер");
         }else if(type == "ai_and_meneger"){
