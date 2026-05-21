@@ -47,15 +47,13 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $_POST['messageUser'] . "\n \n";
         $AiResponse = "<b>- Ответ ИИ : \n </b>" . $_POST['messageAi'] . "\n \n";
 
-        $userAiQuestion = "<b>- Переделанный вопрос (ИИ) : </b> \n" . $_POST['messageReview'] . "\n \n";
-
         $documentId = "<b>- Id документа : </b>" . $_POST['UserId'] . "\n \n";
 
         $userIdText = "<b>- Id пользователя : </b>" . $userId . "\n \n";
 
         $date = "<b>- Дата : </b>" . $_POST['date'];
 
-        $message = $title . $userQuestion . $userAiQuestion . $AiResponse . $documentId . $userIdText . $date;
+        $message = $title . $userQuestion .  $AiResponse . $documentId . $userIdText . $date;
         // $message = $title . $userDataText . $userQuestion . $userAiQuestion . $AiResponse . $date;
     }else if($_POST['selectedAssistant'] == 'Менеджер'){
 

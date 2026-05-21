@@ -114,6 +114,57 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $messageAi = trim(strip_tags($_POST['messageAi'] ?? ''));
         $managerResponse = strip_tags($_POST['managerResponse'] ?? '');
 
+        if(!empty($_POST['USER_DATA'])){
+
+            $errors = [];
+
+            $email = trim($_POST['USER_DATA']['email']);
+            $name = trim($_POST['USER_DATA']['name']);
+            $surname = trim($_POST['USER_DATA']['surname']);    
+
+            if (empty($email)) {
+                $errors[] = "Введите email";
+            }
+            elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errors[] = "Некорректный email";
+            }
+            if (empty($name)) {
+                $errors[] = "Введите имя";
+            }
+
+            // Проверка длины
+            elseif (mb_strlen($name) < 2 || mb_strlen($name) > 30) {
+                $errors[] = "Имя должно быть от 2 до 30 символов";
+            }
+
+            // Разрешаем только буквы
+            elseif (!preg_match("/^[a-zA-Zа-яА-ЯёЁ]+$/u", $name)) {
+                $errors[] = "Имя может содержать только буквы";
+            }
+
+            if (empty($surname)) {
+                $errors[] = "Введите фамилию";
+            }
+
+            elseif (mb_strlen($surname) < 2 || mb_strlen($surname) > 30) {
+                $errors[] = "Фамилия должна быть от 2 до 30 символов";
+            }
+
+            elseif (!preg_match("/^[a-zA-Zа-яА-ЯёЁ]+$/u", $surname)) {
+                $errors[] = "Фамилия может содержать только буквы";
+            }
+
+            if (!empty($errors)) {
+
+                echo json_encode([
+                    "success" => false,
+                    "errors" => $errors
+                ]);
+
+                exit();
+            }
+        }
+
         if($_POST['selectedAssistant'] == 'ИИ ассистент'){
             $response = saveMessage(
                 $client,
@@ -122,7 +173,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 $_POST['messageReview'],
                 '',
                 $userId,
-                str_replace(' ', 'T', $_POST['date'])
+                str_replace(' ', 'T', $_POST['date']),
+                $name,
+                $surname,
+                $email
             );
         }
         if($_POST['selectedAssistant'] == 'Менеджер'){
@@ -132,7 +186,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 $managerResponse,
                 $userId,
                 $fileUrl,
-                str_replace(' ', 'T', $_POST['date'])
+                str_replace(' ', 'T', $_POST['date']),
+                $name,
+                $surname,
+                $email
             );
         }
 
@@ -146,7 +203,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     }
 }
 
-function saveMessage($client, $messageUser, $messageAi, $messageReview, $managerResponse, $userData, $date){
+function saveMessage($client, $messageUser, $messageAi, $messageReview, $managerResponse, $userData, $date, $name, $surname, $email){
 
     $params = [
         'index' => 'message_history',
@@ -156,6 +213,9 @@ function saveMessage($client, $messageUser, $messageAi, $messageReview, $manager
             "messageReview" => $messageReview,
             "messageAi" => $messageAi,
             "managerResponse" => $managerResponse,
+            "user_name" => $name,
+            "surname" => $surname,
+            "email" => $email,
             "created_at" => $date
         ]
     ];
@@ -170,7 +230,7 @@ function saveMessage($client, $messageUser, $messageAi, $messageReview, $manager
 }
 
 
-function saveMessageManager($client, $messageUser, $managerResponse, $userData, $file, $date){
+function saveMessageManager($client, $messageUser, $managerResponse, $userData, $file, $date, $name, $surname, $email){
 
     $params = [
         'index' => 'message_history_manager',
@@ -178,6 +238,9 @@ function saveMessageManager($client, $messageUser, $managerResponse, $userData, 
             "user_token" => $userData,
             "messageUser" => $messageUser,
             "managerResponse" => $managerResponse,
+            "user_name" => $name,
+            "surname" => $surname,
+            "email" => $email,
             "file" => $file,
             "created_at" => $date
         ]
