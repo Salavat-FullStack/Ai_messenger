@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
     window.USER_DATA = {
         'name' : 'Salavat',
-        'surname' : 'Axmetgareev',
+        'phone' : '+7 (999) 123-45-67',
         'email' : 'salavat@gmail.com'
     };
 
@@ -171,6 +171,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                         formDataMaxBot.append('date', formatDateView(formatDate()));
                         formDataMaxBot.append('selectedAssistant', window.selectedAssistant);
                         formDataMaxBot.append('UserId', data['response']);
+                        formDataMaxBot.append('USER_DATA', JSON.stringify(USER_DATA));
 
                         fetch('https://chat-progress.ru/app/bot_max.php',{
                             method: 'POST',

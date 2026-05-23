@@ -32,6 +32,64 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         exit("Invalid token");
     }
 
+    $name = '';
+    $email = '';
+    $phone = '';
+
+    $userData = json_decode($_POST['USER_DATA'], true);
+    
+    if(!empty($userData)){
+
+        $errors = [];
+
+        $email = trim($userData['email']);
+        $name = trim($userData['name']);
+        $phone = trim($userData['phone']);    
+
+        if (empty($email)) {
+            $errors[] = "Введите email";
+        }
+        elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = "Некорректный email";
+        }
+        if (empty($name)) {
+            $errors[] = "Введите имя";
+        }
+
+        // Проверка длины
+        elseif (mb_strlen($name) < 2 || mb_strlen($name) > 30) {
+            $errors[] = "Имя должно быть от 2 до 30 символов";
+        }
+
+        // Разрешаем только буквы
+        elseif (!preg_match("/^[a-zA-Zа-яА-ЯёЁ]+$/u", $name)) {
+            $errors[] = "Имя может содержать только буквы";
+        }
+        $phone = preg_replace('/[^0-9+]/', '', $phone);
+
+        if (empty($phone)) {
+            $errors[] = "Введите номер телефона";
+        }
+
+        elseif (!preg_match('/^(\+7|8)\d{10}$/', $phone)) {
+            $errors[] = "Введите корректный российский номер";
+        }
+
+        if (!empty($errors)) {
+
+            echo json_encode([
+                "success" => false,
+                "errors" => $errors
+            ]);
+
+            exit();
+        }
+
+        $name = "<b>- Имя : </b> \n" . $name . "\n \n";
+        $phone = "<b>- Телефон : </b> \n" . $phone . "\n \n";
+        $email = "<b>- Email : </b> \n" . $email . "\n \n";
+    }
+
     // $data = json_decode($input, true);
 
     // $userData = $data['userData'];
@@ -53,7 +111,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
         $date = "<b>- Дата : </b>" . $_POST['date'];
 
-        $message = $title . $userQuestion .  $AiResponse . $documentId . $userIdText . $date;
+        $message = $title . $userQuestion . $name . $email. $phone .  $AiResponse . $documentId . $userIdText . $date;
         // $message = $title . $userDataText . $userQuestion . $userAiQuestion . $AiResponse . $date;
     }else if($_POST['selectedAssistant'] == 'Менеджер'){
 
@@ -77,7 +135,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         $userIdText = "<b>- Id пользователя : </b>" . $userId . "\n \n";
 
 
-        $message = $title . $userQuestion . $date . $documentId . $userIdText;
+        $message = $title . $userQuestion . $name . $email. $phone . $date . $documentId . $userIdText;
     }
 
     $filePath = null;

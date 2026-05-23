@@ -116,7 +116,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
         $name = '';
         $email = '';
-        $surname = '';
+        $phone = '';
 
         $userData = json_decode($_POST['USER_DATA'], true);
 
@@ -126,7 +126,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
             $email = trim($userData['email']);
             $name = trim($userData['name']);
-            $surname = trim($userData['surname']);    
+            $phone = trim($userData['phone']);    
 
             if (empty($email)) {
                 $errors[] = "Введите email";
@@ -147,17 +147,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             elseif (!preg_match("/^[a-zA-Zа-яА-ЯёЁ]+$/u", $name)) {
                 $errors[] = "Имя может содержать только буквы";
             }
+            $phone = preg_replace('/[^0-9+]/', '', $phone);
 
-            if (empty($surname)) {
-                $errors[] = "Введите фамилию";
+            if (empty($phone)) {
+                $errors[] = "Введите номер телефона";
             }
 
-            elseif (mb_strlen($surname) < 2 || mb_strlen($surname) > 30) {
-                $errors[] = "Фамилия должна быть от 2 до 30 символов";
-            }
-
-            elseif (!preg_match("/^[a-zA-Zа-яА-ЯёЁ]+$/u", $surname)) {
-                $errors[] = "Фамилия может содержать только буквы";
+            elseif (!preg_match('/^(\+7|8)\d{10}$/', $phone)) {
+                $errors[] = "Введите корректный российский номер";
             }
 
             if (!empty($errors)) {
@@ -181,7 +178,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 $userId,
                 str_replace(' ', 'T', $_POST['date']),
                 $name,
-                $surname,
+                $phone,
                 $email
             );
         }
@@ -194,7 +191,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 $fileUrl,
                 str_replace(' ', 'T', $_POST['date']),
                 $name,
-                $surname,
+                $phone,
                 $email
             );
         }
@@ -209,7 +206,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     }
 }
 
-function saveMessage($client, $messageUser, $messageAi, $messageReview, $managerResponse, $userData, $date, $name, $surname, $email){
+function saveMessage($client, $messageUser, $messageAi, $messageReview, $managerResponse, $userData, $date, $name, $phone, $email){
 
     $params = [
         'index' => 'message_history',
@@ -220,7 +217,7 @@ function saveMessage($client, $messageUser, $messageAi, $messageReview, $manager
             "messageAi" => $messageAi,
             "managerResponse" => $managerResponse,
             "user_name" => $name,
-            "surname" => $surname,
+            "phone" => $phone,
             "email" => $email,
             "created_at" => $date
         ]
@@ -236,7 +233,7 @@ function saveMessage($client, $messageUser, $messageAi, $messageReview, $manager
 }
 
 
-function saveMessageManager($client, $messageUser, $managerResponse, $userData, $file, $date, $name, $surname, $email){
+function saveMessageManager($client, $messageUser, $managerResponse, $userData, $file, $date, $name, $phone, $email){
 
     $params = [
         'index' => 'message_history_manager',
@@ -245,7 +242,7 @@ function saveMessageManager($client, $messageUser, $managerResponse, $userData, 
             "messageUser" => $messageUser,
             "managerResponse" => $managerResponse,
             "user_name" => $name,
-            "surname" => $surname,
+            "phone" => $phone,
             "email" => $email,
             "file" => $file,
             "created_at" => $date
