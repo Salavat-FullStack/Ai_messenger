@@ -114,6 +114,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $messageAi = trim(strip_tags($_POST['messageAi'] ?? ''));
         $managerResponse = strip_tags($_POST['managerResponse'] ?? '');
 
+        $name = '';
+        $email = '';
+        $surname = '';
+
         if(!empty($_POST['USER_DATA'])){
 
             $errors = [];
