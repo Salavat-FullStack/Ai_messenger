@@ -118,13 +118,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $email = '';
         $surname = '';
 
-        if(!empty($_POST['USER_DATA'])){
+        $userData = json_decode($_POST['USER_DATA'], true);
+
+        if(!empty($userData)){
 
             $errors = [];
 
-            $email = trim($_POST['USER_DATA']['email']);
-            $name = trim($_POST['USER_DATA']['name']);
-            $surname = trim($_POST['USER_DATA']['surname']);    
+            $email = trim($userData['USER_DATA']['email']);
+            $name = trim($userData['USER_DATA']['name']);
+            $surname = trim($userData['USER_DATA']['surname']);    
 
             if (empty($email)) {
                 $errors[] = "Введите email";
