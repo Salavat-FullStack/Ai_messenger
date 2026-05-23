@@ -124,9 +124,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
             $errors = [];
 
-            $email = trim($userData['USER_DATA']['email']);
-            $name = trim($userData['USER_DATA']['name']);
-            $surname = trim($userData['USER_DATA']['surname']);    
+            $email = trim($userData['email']);
+            $name = trim($userData['name']);
+            $surname = trim($userData['surname']);    
 
             if (empty($email)) {
                 $errors[] = "Введите email";
