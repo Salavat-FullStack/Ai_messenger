@@ -212,10 +212,22 @@ document.addEventListener('DOMContentLoaded',()=>{
     let AiResponse; 
 
     SendBtn.addEventListener('click',()=>{
-        const result = AiForm();
-        if(!result){
-            sendAi();
+
+        const Ai_form = document.getElementById('Ai_form');
+
+        console.log(Ai_form.classList.contains('display_none'));
+
+        if(!Ai_form.classList.contains('display_none')){
+            const result = AiForm();
+            if(!result){
+                sendAi();
+            }
         }
+        Ai_form.classList.remove('display_none');
+        // const result = AiForm();
+        // if(!result){
+        //     sendAi();
+        // }
     });
 
     Ai_request_input.addEventListener('keydown', function(event) {
@@ -224,16 +236,16 @@ document.addEventListener('DOMContentLoaded',()=>{
             event.preventDefault();
 
             const Ai_form = document.getElementById('Ai_form');
-            // let classArr = Ai_form.classList;
 
-            // console.log(classArr);
-            // console.log(classArr['display_none']);
             console.log(Ai_form.classList.contains('display_none'));
 
-            const result = AiForm();
-            if(!result){
-                sendAi();
+            if(!Ai_form.classList.contains('display_none')){
+                const result = AiForm();
+                if(!result){
+                    sendAi();
+                }
             }
+            Ai_form.classList.remove('display_none');
         }
     });
 
