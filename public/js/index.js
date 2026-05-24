@@ -243,12 +243,11 @@ document.addEventListener('DOMContentLoaded',()=>{
             if(Ai_form.classList.contains('display_none') === false){
                 const result = AiForm();
                 if(!result){
-                    document.getElementById('Ai_form').classList.add('display_none');
-                    console.log(add('display_none'));
+                    Ai_form.classList.add('display_none');
+                    console.log('add display_none');
                     sendAi();
                 }
             }
-            Ai_form.classList.remove('display_none');
         }
     });
 
