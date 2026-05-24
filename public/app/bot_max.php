@@ -46,32 +46,33 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         $name = trim($userData['name']);
         $phone = trim($userData['phone']);    
 
-        if (empty($email)) {
-            $errors[] = "Введите email";
-        }
-        elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        // if (empty($email)) {
+        //     $errors[] = "Введите email";
+        // }
+        if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors[] = "Некорректный email";
         }
-        if (empty($name)) {
-            $errors[] = "Введите имя";
+        // if (empty($name)) {
+        //     $errors[] = "Введите имя";
+        // }
+
+        if(!empty($name)){
+            if (mb_strlen($name) < 2 || mb_strlen($name) > 30) {
+                $errors[] = "Имя должно быть от 2 до 30 символов";
+            }
+            // Разрешаем только буквы
+            if (!preg_match("/^[a-zA-Zа-яА-ЯёЁ]+$/u", $name)) {
+                $errors[] = "Имя может содержать только буквы";
+            }
         }
 
-        // Проверка длины
-        elseif (mb_strlen($name) < 2 || mb_strlen($name) > 30) {
-            $errors[] = "Имя должно быть от 2 до 30 символов";
-        }
-
-        // Разрешаем только буквы
-        elseif (!preg_match("/^[a-zA-Zа-яА-ЯёЁ]+$/u", $name)) {
-            $errors[] = "Имя может содержать только буквы";
-        }
         $phone = preg_replace('/[^0-9+]/', '', $phone);
 
-        if (empty($phone)) {
-            $errors[] = "Введите номер телефона";
-        }
+        // if (empty($phone)) {
+        //     $errors[] = "Введите номер телефона";
+        // }
 
-        elseif (!preg_match('/^(\+7|8)\d{10}$/', $phone)) {
+        if (!empty($phone) && !preg_match('/^(\+7|8)\d{10}$/', $phone)) {
             $errors[] = "Введите корректный российский номер";
         }
 
