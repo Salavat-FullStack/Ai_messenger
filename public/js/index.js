@@ -17,9 +17,9 @@ document.addEventListener('DOMContentLoaded',()=>{
     let responseAi = '';
 
     window.USER_DATA = {
-        'name' : 'Salavat',
-        'phone' : '+7 (999) 123-45-67',
-        'email' : 'salavat@gmail.com'
+        'name' : '',
+        'phone' : '',
+        'email' : ''
     };
 
     fetch("https://chat-progress.ru/app/cookie.php",{
