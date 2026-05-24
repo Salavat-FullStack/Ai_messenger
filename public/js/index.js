@@ -224,10 +224,11 @@ document.addEventListener('DOMContentLoaded',()=>{
             event.preventDefault();
 
             const Ai_form = document.getElementById('Ai_form');
-            let classArr = Ai_form.classList;
+            // let classArr = Ai_form.classList;
 
-            console.log(classArr);
-            console.log(classArr['display_none']);
+            // console.log(classArr);
+            // console.log(classArr['display_none']);
+            console.log(Ai_form.classList.contains('display_none'));
 
             const result = AiForm();
             if(!result){
