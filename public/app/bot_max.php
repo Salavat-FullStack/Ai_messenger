@@ -101,7 +101,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
     $location = json_decode($response, true);
 
-    $location = "<b>- Локация: </b>" . $location . "\n \n";
+    $location = "<b>- Локация: </b>" . $location['country'] . "\n \n";
 
     if($_POST['selectedAssistant'] == 'ИИ ассистент'){
         $title = "<b>- Вопрос для ИИ! 🟢 </b> \n \n";
