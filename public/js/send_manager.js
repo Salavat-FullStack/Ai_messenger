@@ -55,7 +55,6 @@ document.addEventListener("DOMContentLoaded",()=>{
             formData.append('managerResponse', '');
             formData.append('date', formatDate());
             formData.append('selectedAssistant', window.selectedAssistant);
-            formData.append('USER_DATA', JSON.stringify(USER_DATA));
 
             if (file) {
                 formData.append('image', file);
@@ -86,6 +85,7 @@ document.addEventListener("DOMContentLoaded",()=>{
                 formDataMaxBot.append('selectedAssistant', window.selectedAssistant);
                 formDataMaxBot.append('UserId', data['response']);
                 formDataMaxBot.append('image', file);
+                formDataMaxBot.append('USER_DATA', JSON.stringify(USER_DATA));
 
                 console.log(file);
                 console.log(formDataMaxBot);
