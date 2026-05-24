@@ -95,6 +95,14 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
     // $userData = $data['userData'];
 
+    $ip = $_SERVER['REMOTE_ADDR'];
+
+    $response = file_get_contents("http://ip-api.com/json/$ip");
+
+    $location = json_decode($response, true);
+
+    $location = "<b>- Локация: </b>" . $location . "\n \n";
+
     if($_POST['selectedAssistant'] == 'ИИ ассистент'){
         $title = "<b>- Вопрос для ИИ! 🟢 </b> \n \n";
 
@@ -112,7 +120,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
         $date = "<b>- Дата : </b>" . $_POST['date'];
 
-        $message = $title . $userQuestion . $name . $email. $phone .  $AiResponse . $documentId . $userIdText . $date;
+        $message = $title . $userQuestion . $name . $email. $phone . $location . $AiResponse . $documentId . $userIdText . $date;
         // $message = $title . $userDataText . $userQuestion . $userAiQuestion . $AiResponse . $date;
     }else if($_POST['selectedAssistant'] == 'Менеджер'){
 
@@ -136,7 +144,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         $userIdText = "<b>- Id пользователя : </b>" . $userId . "\n \n";
 
 
-        $message = $title . $userQuestion . $name . $email. $phone . $date . $documentId . $userIdText;
+        $message = $title . $userQuestion . $name . $email. $phone . $location . $date . $documentId . $userIdText;
     }
 
     $filePath = null;
