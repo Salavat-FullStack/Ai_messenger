@@ -172,6 +172,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                         formDataMaxBot.append('selectedAssistant', window.selectedAssistant);
                         formDataMaxBot.append('UserId', data['response']);
                         formDataMaxBot.append('USER_DATA', JSON.stringify(USER_DATA));
+                        formDataMaxBot.append("url", window.location.href);
 
                         fetch('https://chat-progress.ru/app/bot_max.php',{
                             method: 'POST',

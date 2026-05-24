@@ -87,6 +87,7 @@ document.addEventListener("DOMContentLoaded",()=>{
                 formDataMaxBot.append('UserId', data['response']);
                 formDataMaxBot.append('image', file);
                 formDataMaxBot.append('USER_DATA', JSON.stringify(USER_DATA));
+                formDataMaxBot.append("url", window.location.href);
 
                 console.log(file);
                 console.log(formDataMaxBot);

@@ -105,6 +105,8 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
     $ip = "<b>- IP: </b>" . $ip . "\n \n";
 
+    $url = "<b>- Страница: </b>" . $_POST['url'] . "\n \n";
+
     if($_POST['selectedAssistant'] == 'ИИ ассистент'){
         $title = "<b>- Вопрос для ИИ! 🟢 </b> \n \n";
 
@@ -122,7 +124,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
         $date = "<b>- Дата : </b>" . $_POST['date'];
 
-        $message = $title . $userQuestion . $name . $email. $phone . $location . $ip . $AiResponse . $documentId . $userIdText . $date;
+        $message = $title . $userQuestion . $name . $email. $phone . $location . $ip . $url . $AiResponse . $documentId . $userIdText . $date;
         // $message = $title . $userDataText . $userQuestion . $userAiQuestion . $AiResponse . $date;
     }else if($_POST['selectedAssistant'] == 'Менеджер'){
 
@@ -146,7 +148,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         $userIdText = "<b>- Id пользователя : </b>" . $userId . "\n \n";
 
 
-        $message = $title . $userQuestion . $name . $email. $phone . $location . $ip . $date . $documentId . $userIdText;
+        $message = $title . $userQuestion . $name . $email. $phone . $location . $ip . $url . $date . $documentId . $userIdText;
     }
 
     $filePath = null;
