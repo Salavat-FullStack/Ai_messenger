@@ -222,7 +222,7 @@
     min-height: 180px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     padding: 10px;
     background: #122538 url(../image/nav_bg.png);
 }

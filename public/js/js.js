@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             </div>
         </div>
         
-        <form id="Ai_form">
+        <form id="Ai_form" class="display_none">
             <div class="Ai_form_input">
                 <input type="text" id="AiInputUserName" placeholder="Имя">
                 <div id="AiInputUserNameError" style="color:red;"></div>

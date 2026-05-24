@@ -223,6 +223,12 @@ document.addEventListener('DOMContentLoaded',()=>{
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
 
+            const Ai_form = document.getElementById('Ai_form');
+            let classArr = Ai_form.classList;
+
+            console.log(classArr);
+            console.log(classArr['display_none']);
+
             const result = AiForm();
             if(!result){
                 sendAi();
