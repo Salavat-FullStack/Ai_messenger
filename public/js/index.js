@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         if(Ai_form.classList.contains('display_none') === false){
             const result = AiForm();
             if(!result){
-                Ai_form.classList.add('display_none');
+                document.getElementById('Ai_form').classList.add('display_none');
                 sendAi();
             }
         }
@@ -243,7 +243,8 @@ document.addEventListener('DOMContentLoaded',()=>{
             if(Ai_form.classList.contains('display_none') === false){
                 const result = AiForm();
                 if(!result){
-                    Ai_form.classList.add('display_none');
+                    document.getElementById('Ai_form').classList.add('display_none');
+                    console.log(add('display_none'));
                     sendAi();
                 }
             }
