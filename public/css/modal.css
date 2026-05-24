@@ -212,3 +212,18 @@
     font-style: italic;
     text-decoration: underline;
 }
+
+
+#Ai_form{
+    width: 70%;
+    position: absolute;
+    bottom: 70px;
+    right: 5px;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.Ai_form_input{
+    width: 100%;
+}
