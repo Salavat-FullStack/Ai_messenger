@@ -86,9 +86,13 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
             exit();
         }
 
-        $name = "<b>- Имя : </b>" . $name . "\n \n";
-        $phone = "<b>- Телефон : </b>" . $phone . "\n \n";
-        $email = "<b>- Email : </b>" . $email . "\n \n";
+        if(!empty($name)){
+            $name = "<b>- Имя : </b>" . $name . "\n \n";
+        }elseif(!empty($phone)){
+            $phone = "<b>- Телефон : </b>" . $phone . "\n \n";
+        }elseif(!empty($email)){
+            $email = "<b>- Email : </b>" . $email . "\n \n";
+        }
     }
 
     // $data = json_decode($input, true);
