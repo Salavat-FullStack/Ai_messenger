@@ -220,8 +220,8 @@ document.addEventListener('DOMContentLoaded',()=>{
         if(Ai_form.classList.contains('display_none') === false){
             const result = AiForm();
             if(!result){
-                sendAi();
                 Ai_form.classList.add('display_none');
+                sendAi();
             }
         }
         Ai_form.classList.remove('display_none');
@@ -243,8 +243,8 @@ document.addEventListener('DOMContentLoaded',()=>{
             if(Ai_form.classList.contains('display_none') === false){
                 const result = AiForm();
                 if(!result){
-                    sendAi();
                     Ai_form.classList.add('display_none');
+                    sendAi();
                 }
             }
             Ai_form.classList.remove('display_none');
