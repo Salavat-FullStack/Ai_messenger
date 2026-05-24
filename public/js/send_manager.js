@@ -148,9 +148,10 @@ document.addEventListener("DOMContentLoaded",()=>{
 
             const Ai_form = document.getElementById('Ai_form');
 
+            console.log(Ai_form.classList);
             console.log(Ai_form.classList.contains('display_none'));
 
-            if(!Ai_form.classList.contains('display_none')){
+            if(Ai_form.classList.contains('display_none') === false){
                 const result = AiForm();
                 if(!result){
                     sendManager();
