@@ -212,16 +212,21 @@ document.addEventListener('DOMContentLoaded',()=>{
     let AiResponse; 
 
     SendBtn.addEventListener('click',()=>{
-        sendAi();
+        const result = AiForm();
+        if(!result){
+            sendAi();
+        }
     });
 
     Ai_request_input.addEventListener('keydown', function(event) {
 
         if (event.key === 'Enter' && !event.shiftKey) {
-
             event.preventDefault();
 
-            sendAi();
+            const result = AiForm();
+            if(!result){
+                sendAi();
+            }
         }
     });
 

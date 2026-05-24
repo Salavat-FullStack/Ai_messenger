@@ -69,6 +69,21 @@ document.addEventListener('DOMContentLoaded',()=>{
 
             </div>
         </div>
+        
+        <form id="Ai_form">
+            <div>
+                <input type="text" id="AiInputUserName" placeholder="Имя">
+                <div id="AiInputUserNameError" style="color:red;"></div>
+            </div>
+            <div>
+                <input type="text" id="AiInputUserEmail" placeholder="Email">
+                <div id="AiInputUserEmailError" style="color:red;"></div>
+            </div>
+            <div>
+                <input type="text" id="AiInputUserPhone" placeholder="Телефон">
+                <div id="AiInputUserPhoneError" style="color:red;"></div>
+            </div>
+        </form>
     </div>
 
     <div class="Ai_modal_instructions display_none">

@@ -122,7 +122,10 @@ document.addEventListener("DOMContentLoaded",()=>{
     }
 
     SendBtn.addEventListener('click',()=>{
-        sendManager();
+        const result = AiForm();
+        if(!result){
+            sendManager();
+        }
     });
 
     Ai_request_input.addEventListener('keydown', function(event) {
@@ -131,7 +134,10 @@ document.addEventListener("DOMContentLoaded",()=>{
 
             event.preventDefault();
 
-            sendManager();
+            const result = AiForm();
+            if(!result){
+                sendManager();
+            }
         }
     });
 

@@ -139,3 +139,64 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
             }
         );
     }
+
+    window.AiForm = function(){
+        document.getElementById('AiInputUserNameError').textContent = '';
+        document.getElementById('AiInputUserEmailError').textContent = '';
+        document.getElementById('AiInputUserPhoneError').textContent = '';
+
+        const name = document.getElementById('AiInputUserName').value.trim();
+        const email = document.getElementById('AiInputUserEmail').value.trim();
+        let phone = document.getElementById('AiInputUserPhone').value.trim();
+
+        let hasError = false;
+
+        // EMAIL
+
+        if(email !== ''){
+
+            const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if(!emailValid.test(email)){
+                document.getElementById('AiInputUserEmailError').textContent = 'Некорректный email';
+                hasError = true;
+            }
+        }
+
+        // NAME
+
+        if(name !== ''){
+
+            if(name.length < 2 || name.length > 30){
+                document.getElementById('AiInputUserNameError').textContent = 'Имя должно быть от 2 до 30 символов';
+                hasError = true;
+            }
+
+            else if(!/^[a-zA-Zа-яА-ЯёЁ]+$/u.test(name)){
+                document.getElementById('AiInputUserNameError').textContent = 'Имя может содержать только буквы';
+                hasError = true;
+            }
+        }
+
+        // PHONE
+
+        phone = phone.replace(/[^0-9+]/g, '');
+
+        if(phone !== ''){
+
+            const phoneValid = /^(\+7|8)\d{10}$/;
+
+            if(!phoneValid.test(phone)){
+                document.getElementById('AiInputUserPhoneError').textContent = 'Введите корректный российский номер';
+                hasError = true;
+            }
+        }
+
+        if(!hasError){
+            USER_DATA.name = name;
+            USER_DATA.email = email;
+            USER_DATA.phone = phone;
+        }
+        
+        return hasError;
+    }
