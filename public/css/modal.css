@@ -217,6 +217,7 @@
 #Ai_form{
     width: 60%;
     position: absolute;
+    display: none;
     bottom: 70px;
     right: 0px;
     min-height: 180px;
