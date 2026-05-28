@@ -354,6 +354,16 @@ function userCookie(userData = null) {
         return null;
     }
 
+    const hasData =
+        userData.name?.trim() ||
+        userData.phone?.trim() ||
+        userData.email?.trim();
+
+    // если все поля пустые
+    if (!hasData) {
+        return null;
+    }
+
     // создаем куку на 7 дней
     document.cookie = `
         UserDataAi=${encodeURIComponent(JSON.stringify(userData))};
