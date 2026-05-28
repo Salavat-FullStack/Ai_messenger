@@ -88,9 +88,11 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
         if(!empty($name)){
             $name = "<b>- Имя : </b>" . $name . "\n \n";
-        }elseif(!empty($phone)){
+        }
+        if(!empty($phone)){
             $phone = "<b>- Телефон : </b>" . $phone . "\n \n";
-        }elseif(!empty($email)){
+        }
+        if(!empty($email)){
             $email = "<b>- Email : </b>" . $email . "\n \n";
         }
     }
