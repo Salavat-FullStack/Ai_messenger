@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
         const Ai_form = document.getElementById('Ai_form');
 
-        if(Ai_form.classList.contains('display_none') && userCookie(USER_DATA) === null){
+        if(Ai_form.classList.contains('display_none') && getCookie('UserDataAi') === null){
             Ai_form.classList.remove('display_none');
             return;
         }
@@ -240,13 +240,16 @@ document.addEventListener('DOMContentLoaded',()=>{
 
             const Ai_form = document.getElementById('Ai_form');
 
-            if(Ai_form.classList.contains('display_none') && userCookie(USER_DATA) === null){
+            console.log(getCookie('UserDataAi'));
+
+            if(Ai_form.classList.contains('display_none') && getCookie('UserDataAi') === null){
                 Ai_form.classList.remove('display_none');
                 return;
             }
 
             const result = AiForm();
             if(!result){
+                console.log(USER_DATA);
                 const userData = userCookie(USER_DATA);
                 // if(userData){
                     Ai_form.classList.add('display_none');
@@ -337,21 +340,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 function userCookie(userData = null) {
 
-    // функция получения куки
-    function getCookie(name) {
-        const cookies = document.cookie.split(';');
-
-        for (let cookie of cookies) {
-            const [key, value] = cookie.trim().split('=');
-
-            if (key === name) {
-                return decodeURIComponent(value);
-            }
-        }
-
-        return null;
-    }
-
     // ищем куку
     const cookie = getCookie('UserDataAi');
 
@@ -375,4 +363,19 @@ function userCookie(userData = null) {
     // возвращаем данные
     return userData;
 }
+
+    function getCookie(name) {
+        const cookies = document.cookie.split(';');
+
+        for (let cookie of cookies) {
+            const [key, value] = cookie.trim().split('=');
+
+            if (key === name) {
+                return decodeURIComponent(value);
+            }
+        }
+
+        return null;
+    }
+
 });
