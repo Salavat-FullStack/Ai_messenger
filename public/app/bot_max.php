@@ -128,7 +128,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
         $date = "<b>- Дата : </b>" . $_POST['date'];
 
-        $message = $title . $userQuestion . $name . $email. $phone . $location . $ip . $url . $AiResponse . $documentId . $userIdText . $date;
+        $message = $title . $userQuestion . $AiResponse . $name . $email. $phone . $location . $ip . $url . $documentId . $userIdText . $date;
         // $message = $title . $userDataText . $userQuestion . $userAiQuestion . $AiResponse . $date;
     }else if($_POST['selectedAssistant'] == 'Менеджер'){
 
