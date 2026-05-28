@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
     });
 
-    function sendAi(){
+    function sendAi(USER_DATA = null){
         question = Ai_request_input.value;
         console.log(question);
 
@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
         const Ai_form = document.getElementById('Ai_form');
 
-        if(Ai_form.classList.contains('display_none')){
+        if(Ai_form.classList.contains('display_none') && userCookie(USER_DATA) === null){
             Ai_form.classList.remove('display_none');
             return;
         }
@@ -223,10 +223,11 @@ document.addEventListener('DOMContentLoaded',()=>{
         const result = AiForm();
         if(!result){
             Ai_form.classList.add('display_none');
+            const userData = userCookie(USER_DATA);
             if(window.selectedAssistant == 'Менеджер'){
-                sendManager();
+                sendManager(userData);
             }else{
-                sendAi();
+                sendAi(userData);
             }
         }
 
@@ -239,18 +240,21 @@ document.addEventListener('DOMContentLoaded',()=>{
 
             const Ai_form = document.getElementById('Ai_form');
 
-            if(Ai_form.classList.contains('display_none')){
+            if(Ai_form.classList.contains('display_none') && userCookie(USER_DATA) === null){
                 Ai_form.classList.remove('display_none');
                 return;
             }
 
             const result = AiForm();
             if(!result){
-                Ai_form.classList.add('display_none');
+                const userData = userCookie(USER_DATA);
+                // if(userData){
+                    Ai_form.classList.add('display_none');
+                // }
                 if(window.selectedAssistant == 'Менеджер'){
-                    sendManager();
+                    sendManager(userData);
                 }else{
-                    sendAi();
+                    sendAi(userData);
                 }
             }
         }
@@ -330,4 +334,45 @@ document.addEventListener('DOMContentLoaded',()=>{
             }
         });
     });
+
+function userCookie(userData = null) {
+
+    // функция получения куки
+    function getCookie(name) {
+        const cookies = document.cookie.split(';');
+
+        for (let cookie of cookies) {
+            const [key, value] = cookie.trim().split('=');
+
+            if (key === name) {
+                return decodeURIComponent(value);
+            }
+        }
+
+        return null;
+    }
+
+    // ищем куку
+    const cookie = getCookie('UserDataAi');
+
+    // если кука уже есть
+    if (cookie) {
+        return JSON.parse(cookie);
+    }
+
+    // если куки нет и данные не передали
+    if (!userData) {
+        return null;
+    }
+
+    // создаем куку на 7 дней
+    document.cookie = `
+        UserDataAi=${encodeURIComponent(JSON.stringify(userData))};
+        max-age=${60 * 60 * 24 * 7};
+        path=/
+    `.replace(/\n/g, '').trim();
+
+    // возвращаем данные
+    return userData;
+}
 });

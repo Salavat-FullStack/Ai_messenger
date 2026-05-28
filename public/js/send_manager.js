@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 
     const SendBtn = document.getElementById('Ai_send_message');
 
-    window.sendManager = function(){
+    window.sendManager = function(USER_DATA = []){
 
         if(window.selectedAssistant == 'Менеджер'){
 
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 
             console.log(window.messageUser);
             console.log(window.selectedAssistant);
-            console.log(window.USER_DATA);
+            // console.log(window.USER_DATA);
 
             fetch("https://chat-progress.ru/app/cookie.php", {
                 method: "GET",
