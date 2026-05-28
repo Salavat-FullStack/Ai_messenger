@@ -58,7 +58,17 @@ document.addEventListener('DOMContentLoaded',()=>{
                 <input 
                     type="file" 
                     id="fileInputAiModal" 
-                    accept="image/png, image/jpeg, image/webp" 
+                        accept="
+                            image/png,
+                            image/jpeg,
+                            image/webp,
+                            application/pdf,
+                            text/plain,
+                            .doc,
+                            .docx,
+                            .xls,
+                            .xlsx
+                        "
                     style="display: none;"
                 >
             </div>

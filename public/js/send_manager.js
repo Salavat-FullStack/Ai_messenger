@@ -78,6 +78,13 @@ document.addEventListener("DOMContentLoaded",()=>{
             .then(data =>{
                 console.log(data);
 
+                if (data.error_file) {
+
+                    alert(data.error_file);
+
+                    return;
+                }
+
                 const formDataMaxBot = new FormData();
 
                 formDataMaxBot.append('messageUser', window.messageUser);

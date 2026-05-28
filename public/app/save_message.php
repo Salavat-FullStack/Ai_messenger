@@ -45,38 +45,64 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             }
 
             $allowedExtensions = [
+
+                // text
                 'txt',
+
+                // images
                 'png',
                 'jpeg',
                 'jpg',
                 'gif',
                 'webp',
+
+                // pdf
+                'pdf',
+
+                // word
                 'doc',
-                'pdf'
+                'docx',
+
+                // excel
+                'xls',
+                'xlsx'
             ];
 
             $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
 
             if (!in_array($extension, $allowedExtensions)) {
-                echo json_encode(['error' => 'Неверный формат файла']);
+                echo json_encode(['error_file' => 'Неверный формат файла']);
                 exit;
             }
 
-            $allowedMimeTypes = [
+             $allowedMimeTypes = [
+
+                // txt
                 'text/plain',
+
+                // images
                 'image/png',
                 'image/jpeg',
                 'image/gif',
                 'image/webp',
+
+                // pdf
                 'application/pdf',
-                'application/msword'
+
+                // word
+                'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+
+                // excel
+                'application/vnd.ms-excel',
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
             ];
 
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
             $mimeType = finfo_file($finfo, $file['tmp_name']);
 
             if (!in_array($mimeType, $allowedMimeTypes)) {
-                echo json_encode(['error' => 'Неверный MIME-тип']);
+                echo json_encode(['error_file' => 'Неверный MIME-тип']);
                 exit;
             }
 
