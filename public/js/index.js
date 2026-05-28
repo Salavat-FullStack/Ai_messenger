@@ -241,10 +241,10 @@ document.addEventListener('DOMContentLoaded',()=>{
             console.log(Ai_form.classList.contains('display_none'));
 
             // if(Ai_form.classList.contains('display_none')){
-                Ai_form.classList.toggle('display_none');
+                Ai_form.classList.remove('display_none');
             // }
 
-            if(Ai_form.classList.contains('display_none') === false){
+            if(!Ai_form.classList.contains('display_none')){
                 const result = AiForm();
                 if(!result){
                     Ai_form.classList.add('display_none');
