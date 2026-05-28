@@ -223,9 +223,13 @@ document.addEventListener('DOMContentLoaded',()=>{
         const result = AiForm();
         if(!result){
             Ai_form.classList.add('display_none');
-            sendAi();
+            if(window.selectedAssistant == 'Менеджер'){
+                sendManager();
+            }else{
+                sendAi();
+            }
         }
-        
+
     });
 
     Ai_request_input.addEventListener('keydown', function(event) {
@@ -243,7 +247,11 @@ document.addEventListener('DOMContentLoaded',()=>{
             const result = AiForm();
             if(!result){
                 Ai_form.classList.add('display_none');
-                sendAi();
+                if(window.selectedAssistant == 'Менеджер'){
+                    sendManager();
+                }else{
+                    sendAi();
+                }
             }
         }
     });

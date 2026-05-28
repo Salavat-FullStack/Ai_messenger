@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 
     const SendBtn = document.getElementById('Ai_send_message');
 
-    function sendManager(){
+    window.sendManager = function(){
 
         if(window.selectedAssistant == 'Менеджер'){
 
@@ -121,27 +121,27 @@ document.addEventListener("DOMContentLoaded",()=>{
         }
     }
 
-    SendBtn.addEventListener('click',()=>{
+    // SendBtn.addEventListener('click',()=>{
 
-        const result = AiForm();
-        if(!result){
-            sendManager();
-        }
+    //     const result = AiForm();
+    //     if(!result){
+    //         sendManager();
+    //     }
 
-    });
+    // });
 
-    Ai_request_input.addEventListener('keydown', function(event) {
+    // Ai_request_input.addEventListener('keydown', function(event) {
 
-        if (event.key === 'Enter' && !event.shiftKey) {
+    //     if (event.key === 'Enter' && !event.shiftKey) {
 
-            event.preventDefault();
+    //         event.preventDefault();
 
-            const result = AiForm();
-            if(!result){
-                sendManager();
-            }
-        }
-    });
+    //         const result = AiForm();
+    //         if(!result){
+    //             sendManager();
+    //         }
+    //     }
+    // });
 
     function loadingGenerateManager(action){
         const Ai_message_storage = document.querySelector('.Ai_message_storage_manager');
