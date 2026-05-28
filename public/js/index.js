@@ -215,6 +215,8 @@ document.addEventListener('DOMContentLoaded',()=>{
 
         const Ai_form = document.getElementById('Ai_form');
 
+        console.log(getCookie('UserDataAi'));
+
         if(Ai_form.classList.contains('display_none') && getCookie('UserDataAi') === null){
             Ai_form.classList.remove('display_none');
             return;
@@ -222,6 +224,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
         const result = AiForm();
         if(!result){
+            console.log(USER_DATA);
             Ai_form.classList.add('display_none');
             const userData = userCookie(USER_DATA);
             if(window.selectedAssistant == 'Менеджер'){
@@ -251,9 +254,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             if(!result){
                 console.log(USER_DATA);
                 const userData = userCookie(USER_DATA);
-                // if(userData){
-                    Ai_form.classList.add('display_none');
-                // }
+                Ai_form.classList.add('display_none');
                 if(window.selectedAssistant == 'Менеджер'){
                     sendManager(userData);
                 }else{
