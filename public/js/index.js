@@ -238,20 +238,26 @@ document.addEventListener('DOMContentLoaded',()=>{
 
             const Ai_form = document.getElementById('Ai_form');
 
-            console.log(Ai_form.classList.contains('display_none'));
+            // console.log(Ai_form.classList.contains('display_none'));
 
             // if(Ai_form.classList.contains('display_none')){
-                Ai_form.classList.remove('display_none');
-            // }
 
-            if(!Ai_form.classList.contains('display_none')){
+            if(Ai_form.classList.contains('display_none')){
+                Ai_form.classList.remove('display_none');
+                return;
+            }
+
+            // if(Ai_form.classList.contains('display_none') === false){
+            // if(USER_DATA.name == "" && USER_DATA.email == "" && USER_DATA.phone == ""){
+                
+            // }
                 const result = AiForm();
                 if(!result){
+                    // console.log('add display_none');
                     Ai_form.classList.add('display_none');
-                    console.log('add display_none');
                     sendAi();
                 }
-            }
+            // }
         }
     });
 
