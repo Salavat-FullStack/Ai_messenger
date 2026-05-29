@@ -62,11 +62,21 @@ document.addEventListener("DOMContentLoaded",()=>{
             }
 
             console.log(formData);
-
+            
             const preview = document.getElementById('ai_chat_preview');
+
+            const filePreview = document.getElementById('ai_chat_file_preview');
+
             const close = document.getElementById('close_ai_chat_preview');
 
             preview.src = '';
+
+            preview.style.display = 'block';
+
+            filePreview.innerHTML = '';
+
+            filePreview.classList.add('display_none');
+
             close.classList.add('display_none');
 
             fetch('https://chat-progress.ru/app/save_message.php',{

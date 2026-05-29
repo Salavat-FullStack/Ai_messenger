@@ -46,11 +46,11 @@ document.addEventListener('DOMContentLoaded',()=>{
         <div class="Ai_panel">
             <textarea id="Ai_request_input"></textarea>
 
-
-            <div id="ai_chat_preview_box">
-                <div id="close_ai_chat_preview" class="display_none"></div>
-                <img id="ai_chat_preview">
-            </div>
+        <div id="ai_chat_preview_box">
+            <div id="close_ai_chat_preview" class="display_none"></div>
+            <img id="ai_chat_preview">
+            <div id="ai_chat_file_preview" class="display_none"></div>
+        </div>
 
 
             <div class="Ai_file_btn display_none">
@@ -180,34 +180,83 @@ document.addEventListener('DOMContentLoaded',()=>{
     });
 
 
+const input = document.getElementById('fileInputAiModal');
 
-    const input = document.getElementById('fileInputAiModal');
-    const preview = document.getElementById('ai_chat_preview');
+const preview = document.getElementById('ai_chat_preview');
 
-    const close = document.getElementById('close_ai_chat_preview');
+const filePreview = document.getElementById('ai_chat_file_preview');
 
-    input.addEventListener('change', () => {
+const close = document.getElementById('close_ai_chat_preview');
 
-        const file = input.files[0];
+input.addEventListener('change', () => {
 
-        // console.log(`Выбран файл: ${file.name}`);
+    const file = input.files[0];
 
-        if(file){
+    if (!file) return;
 
-            const url = URL.createObjectURL(file);
+    const url = URL.createObjectURL(file);
 
-            preview.src = url;
+    console.log(url);
 
-            console.log(url);
+    close.classList.remove('display_none');
 
-            close.classList.remove('display_none');
-        }
-    });
+    // =========================
+    // ЕСЛИ КАРТИНКА
+    // =========================
+    if (file.type.startsWith('image/')) {
 
-    close.addEventListener('click',()=>{
-        input.value = '';
+        preview.src = url;
+
+        preview.style.display = 'block';
+
+        filePreview.classList.add('display_none');
+
+        // открытие картинки
+        preview.onclick = () => {
+            window.open(url, '_blank');
+        };
+    }
+
+    // =========================
+    // ЕСЛИ ФАЙЛ
+    // =========================
+    else {
+
         preview.src = '';
-        close.classList.add('display_none');
-    });
+
+        preview.style.display = 'none';
+
+        filePreview.classList.remove('display_none');
+
+        filePreview.innerHTML = `
+            <div class="ai_chat_file_item">
+                📄 ${file.name}
+            </div>
+        `;
+
+        // открытие файла
+        filePreview.onclick = () => {
+            window.open(url, '_blank');
+        };
+    }
+});
+
+
+
+// закрытие
+close.addEventListener('click', () => {
+
+    input.value = '';
+
+    preview.src = '';
+
+    preview.style.display = 'block';
+
+    filePreview.innerHTML = '';
+
+    filePreview.classList.add('display_none');
+
+    close.classList.add('display_none');
+});
 
 });

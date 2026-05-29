@@ -242,3 +242,13 @@
 .Ai_form_input input::placeholder{
     color:white;
 }
+
+.ai_chat_file_item{
+    padding: 10px 14px;
+    background: #f1f1f1;
+    border-radius: 10px;
+    cursor: pointer;
+    width: fit-content;
+    max-width: 250px;
+    word-break: break-word;
+}
