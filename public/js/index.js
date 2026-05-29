@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             const chat = document.querySelector('.Ai_message_storage');
 
             chat.insertAdjacentHTML('beforeend', `
-                <div class="Ai_typing Ai_message_loading" id="Ai_loading">
+                <div class="Ai_typing Ai_message_loading" id="Ai_loading_manager">
                     <span></span>
                     <span></span>
                     <span></span>
