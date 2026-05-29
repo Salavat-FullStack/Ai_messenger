@@ -158,17 +158,23 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
     }
 
     $filePath = null;
+    $mimeType = null;
+
 
     if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
+
         $filePath = $_FILES['image']['tmp_name'];
-    }else{
-        if($_POST['selectedAssistant'] == 'Менеджер' && isset($_FILES['image'])){
-            $message .= "Не удалось загрузить путь фото!"; 
+        $mimeType = $_FILES['image']['type'];
+
+    } else {
+
+        if ($_POST['selectedAssistant'] == 'Менеджер' && isset($_FILES['image'])) {
+            $message .= "Не удалось загрузить файл!";
         }
     }
 
-    foreach($userIdArr as $elem){
-        sendMessage($message, $elem, $filePath);
+    foreach ($userIdArr as $elem) {
+        sendMessage($message, $elem, $filePath, $mimeType);
     }
 
     echo json_encode([
@@ -177,43 +183,67 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
     ]);
 }
 
-function sendMessage($message, $user_id, $filePath = null){
+function sendMessage($message, $user_id, $filePath = null, $mimeType = null) {
+
     global $tokenMax;
 
     $url = "https://platform-api.max.ru/messages?user_id=" . $user_id;
 
-    // 👉 если есть файл
+    // =========================
+    // ЕСЛИ ЕСТЬ ФАЙЛ
+    // =========================
     if ($filePath && file_exists($filePath)) {
 
-        // 1. получаем upload URL
-        $uploadData = getUploadUrl($tokenMax);
+        // определяем тип загрузки
+        $uploadType = 'file';
+
+        if ($mimeType && strpos($mimeType, 'image/') === 0) {
+            $uploadType = 'image';
+        }
+
+        // получаем upload URL
+        $uploadData = getUploadUrl($tokenMax, $uploadType);
+
+        if (!isset($uploadData['url'])) {
+
+            echo 'Ошибка получения upload URL';
+
+            echo '<pre>';
+            print_r($uploadData);
+            echo '</pre>';
+
+            exit;
+        }
+
         $uploadUrl = $uploadData['url'];
 
-        // echo "<pre>";
-        // print_r($uploadData);
-        // echo "</pre>";
-
-        // 2. загружаем файл
+        // загружаем файл
         $uploadResult = uploadFileToMax($uploadUrl, $filePath, $tokenMax);
 
-
-        // echo "----------------------------вывод uploadResult----------------------";
-        // echo "<pre>";
+        // echo '<pre>';
         // print_r($uploadResult);
-        // echo "</pre>";
+        // echo '</pre>';
 
+        $fileToken = null;
+
+        // если фото
         if (isset($uploadResult['photos'])) {
 
-            $fileToken = array_values($uploadResult['photos'])[0]['token'];
+            $photo = array_values($uploadResult['photos'])[0] ?? null;
 
+            $fileToken = $photo['token'] ?? null;
         }
-        // обычные файлы
+
+        // если обычный файл
         elseif (isset($uploadResult['files'])) {
 
-            $fileToken = array_values($uploadResult['files'])[0]['token'];
+            $file = array_values($uploadResult['files'])[0] ?? null;
 
+            $fileToken = $file['token'] ?? null;
         }
-        else {
+
+        // если ошибка
+        if (!$fileToken) {
 
             echo 'Ошибка загрузки файла';
 
@@ -224,24 +254,23 @@ function sendMessage($message, $user_id, $filePath = null){
             exit;
         }
 
-        // echo "<pre>";
-        // print_r($fileToken);
-        // echo "</pre>";
+        // тип attachment
+        $attachmentType = 'file';
 
-        // если вдруг что-то пошло не так
-        if (!$fileToken) {
-            return false;
+        if ($uploadType === 'image') {
+            $attachmentType = 'image';
         }
 
-        // ❗ пауза (важно)
+        // небольшая пауза
         sleep(1);
 
+        // сообщение с файлом
         $data = [
             "text" => $message,
             "format" => "html",
             "attachments" => [
                 [
-                    "type" => "image",
+                    "type" => $attachmentType,
                     "payload" => [
                         "token" => $fileToken
                     ]
@@ -250,17 +279,20 @@ function sendMessage($message, $user_id, $filePath = null){
         ];
 
     } else {
-        // 👉 обычное сообщение
+
+        // обычное сообщение
         $data = [
             "text" => $message,
             "format" => "html"
         ];
     }
 
+    // отправка сообщения
     $ch = curl_init($url);
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POST, true);
+
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         "Authorization: $tokenMax",
         "Content-Type: application/json"
@@ -273,31 +305,24 @@ function sendMessage($message, $user_id, $filePath = null){
     return $result;
 }
 
-function getUploadUrl($token) {
 
-    $ch = curl_init("https://platform-api.max.ru/uploads?type=image");
+function getUploadUrl($token, $type = 'file') {
+
+    $url = "https://platform-api.max.ru/uploads?type=" . $type;
+
+    $ch = curl_init($url);
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POST, true);
+
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         "Authorization: $token"
     ]);
 
     $response = curl_exec($ch);
 
-    if ($response === false) {
-        die('Curl error: ' . curl_error($ch));
-    }
-    $data = json_decode($response, true);
-
-    // 👇 защита от ошибки
-    if (!isset($data['url'])) {
-        die('Ошибка получения upload URL: ' . $response);
-    }
-
-    return $data;
+    return json_decode($response, true);
 }
-
 
 function uploadFileToMax($uploadUrl, $filePath, $token) {
 
@@ -310,6 +335,7 @@ function uploadFileToMax($uploadUrl, $filePath, $token) {
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         "Authorization: $token"
     ]);
