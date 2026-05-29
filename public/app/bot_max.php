@@ -223,10 +223,9 @@ function sendMessage($message, $user_id, $filePath = null, $mimeType = null) {
         // echo '<pre>';
         // print_r($uploadResult);
         // echo '</pre>';
-
         $fileToken = null;
 
-        // если фото
+        // фото
         if (isset($uploadResult['photos'])) {
 
             $photo = array_values($uploadResult['photos'])[0] ?? null;
@@ -234,12 +233,10 @@ function sendMessage($message, $user_id, $filePath = null, $mimeType = null) {
             $fileToken = $photo['token'] ?? null;
         }
 
-        // если обычный файл
-        elseif (isset($uploadResult['files'])) {
+        // обычный файл
+        elseif (isset($uploadResult['token'])) {
 
-            $file = array_values($uploadResult['files'])[0] ?? null;
-
-            $fileToken = $file['token'] ?? null;
+            $fileToken = $uploadResult['token'];
         }
 
         // если ошибка
