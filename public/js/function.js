@@ -1,24 +1,78 @@
 window.renderMessage = function(messageRole, date, user, question, block = '.Ai_message_storage', file = false){
-        const Ai_message_storage = document.querySelector(block);
-        
-        let messageMainContainer = document.createElement('div');
-        messageMainContainer.classList.add('messageMainContainer');
+    const Ai_message_storage = document.querySelector(block);
 
-        if(file && file !== "не передан!"){
+    let messageMainContainer = document.createElement('div');
+
+    messageMainContainer.classList.add('messageMainContainer');
+
+    if (file && file !== "не передан!") {
+
+        const fileUrl = "https://chat-progress.ru/app" + file;
+
+        // расширение файла
+        const extension = file.split('.').pop().toLowerCase();
+
+        // типы изображений
+        const imageExtensions = [
+            'jpg',
+            'jpeg',
+            'png',
+            'gif',
+            'webp',
+            'bmp'
+        ];
+
+        // =========================
+        // ЕСЛИ КАРТИНКА
+        // =========================
+        if (imageExtensions.includes(extension)) {
+
             let userImageChatContainer = document.createElement('a');
+
             userImageChatContainer.classList.add('userImageChatContainer');
 
-            let img = document.createElement('img');
-            img.src = "https://chat-progress.ru/app" + file;
+            userImageChatContainer.href = fileUrl;
 
-            userImageChatContainer.href = "https://chat-progress.ru/app" + file;
             userImageChatContainer.target = '_blank';
-            userImageChatContainer.rel = 'noopener noreferrer'; 
+
+            userImageChatContainer.rel = 'noopener noreferrer';
+
+            let img = document.createElement('img');
+
+            img.src = fileUrl;
 
             userImageChatContainer.append(img);
 
             messageMainContainer.append(userImageChatContainer);
         }
+
+        // =========================
+        // ЕСЛИ ОБЫЧНЫЙ ФАЙЛ
+        // =========================
+        else {
+
+            let fileContainer = document.createElement('a');
+
+            fileContainer.classList.add('userFileChatContainer');
+
+            fileContainer.href = fileUrl;
+
+            fileContainer.target = '_blank';
+
+            fileContainer.rel = 'noopener noreferrer';
+
+            // имя файла
+            const fileName = file.split('/').pop();
+
+            fileContainer.innerHTML = `
+                <div class="userFileChatItem">
+                    📄 ${fileName}
+                </div>
+            `;
+
+            messageMainContainer.append(fileContainer);
+        }
+    }
 
         let messageContainer = document.createElement('div');
 

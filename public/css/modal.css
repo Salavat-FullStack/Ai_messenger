@@ -252,3 +252,18 @@
     max-width: 250px;
     word-break: break-word;
 }
+
+.userFileChatContainer{
+    text-decoration: none;
+}
+
+.userFileChatItem{
+    padding: 10px 14px;
+    background: #f1f1f1;
+    border-radius: 10px;
+    width: fit-content;
+    max-width: 250px;
+    word-break: break-word;
+    cursor: pointer;
+    color: #000;
+}
