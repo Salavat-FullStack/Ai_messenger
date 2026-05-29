@@ -202,7 +202,27 @@ function sendMessage($message, $user_id, $filePath = null){
         // print_r($uploadResult);
         // echo "</pre>";
 
-        $fileToken = array_values($uploadResult['photos'])[0]['token'];
+        if (isset($uploadResult['photos'])) {
+
+            $fileToken = array_values($uploadResult['photos'])[0]['token'];
+
+        }
+        // обычные файлы
+        elseif (isset($uploadResult['files'])) {
+
+            $fileToken = array_values($uploadResult['files'])[0]['token'];
+
+        }
+        else {
+
+            echo 'Ошибка загрузки файла';
+
+            echo '<pre>';
+            print_r($uploadResult);
+            echo '</pre>';
+
+            exit;
+        }
 
         // echo "<pre>";
         // print_r($fileToken);
