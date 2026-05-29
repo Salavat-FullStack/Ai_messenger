@@ -74,6 +74,16 @@ if (!empty($json['message']) && !empty($json['message']['link'])) {
 
     $userId = $array[1] ?? null;
 
+    $UserName = ", ответил(а) пользователю с id = " . $userId;
+
+    preg_match('/Имя\s*:\s*(.+)/u', $text, $nameMatch);
+
+    $name = trim($nameMatch[1] ?? '');
+
+    if(!empty($name)){
+        $UserName = ", ответил(а) пользователю = " . $name;
+    }
+
     if(!empty($id)){
         if($type === 'ИИ'){
             $params = [
@@ -102,7 +112,7 @@ if (!empty($json['message']) && !empty($json['message']['link'])) {
         $response = $client->update($params);
         // отправляем ответ
         foreach($userIdArr as $elem){
-            sendMessage("менеджер - " . $json['message']['sender']['name'] . ", ответил(а) пользователю с id = " . $userId, $elem);
+            sendMessage("менеджер - " . $json['message']['sender']['name'] . $UserName, $elem);
         }
     }else if(empty($id)){
         sendMessage('сообщение не имеет id документа', $userId);
