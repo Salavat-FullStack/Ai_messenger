@@ -169,8 +169,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             }
             $phone = preg_replace('/[^0-9+]/', '', $phone);
 
-            if (!empty($phone) && !preg_match('/^(\+7|8)\d{10}$/', $phone)) {
-                $errors[] = "Введите корректный российский номер";
+            if (!empty($phone) && mb_strlen($phone) < 10) {
+                $errors[] = "Номер телефона слишком короткий (минимум 10 символов)";
             }
 
             if (!empty($errors)) {

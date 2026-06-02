@@ -72,10 +72,10 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         //     $errors[] = "Введите номер телефона";
         // }
 
-        if (!empty($phone) && !preg_match('/^(\+7|8)\d{10}$/', $phone)) {
-            $errors[] = "Введите корректный российский номер";
+        if (!empty($phone) && mb_strlen($phone) < 10) {
+            $errors[] = "Номер телефона слишком короткий (минимум 10 символов)";
         }
-
+        
         if (!empty($errors)) {
 
             echo json_encode([
