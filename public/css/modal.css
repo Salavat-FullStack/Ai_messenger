@@ -75,7 +75,7 @@
 .loader {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 3px;
 }
 
 .loader span {
@@ -101,7 +101,7 @@
     }
 
     40% {
-        transform: translateY(-8px);
+        transform: translateY(-5px);
         opacity: 1;
     }
 }
