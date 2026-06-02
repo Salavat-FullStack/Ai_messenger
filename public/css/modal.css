@@ -277,17 +277,18 @@
 #Ai_form h2{
     color: white;   
     margin-bottom: 5px;
-    font-size: 17px;
+    font-size: 15px;
 }
 #Ai_form p{
     color: #f3f3f3;
     text-decoration: none;
     font-size: 11px;
+    line-height: 13px;
 }
 
 #Ai_form p a{
     color: #f3f3f3;
-  text-decoration: underline; /* Подчеркиваем только текст внутри span */
+    text-decoration: underline; /* Подчеркиваем только текст внутри span */
 }
 
 #AiInputUserPhone{
