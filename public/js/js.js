@@ -75,8 +75,11 @@ document.addEventListener('DOMContentLoaded',()=>{
             
             <div id="Ai_send_btn">
                 <img src="https://chat-progress.ru/image/icons/send.svg" id="Ai_send_message" alt="send">
-                <div class="loader display_none" id="Ai_load"></div>
-
+                <div class="loader" id="Ai_load">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
         </div>
         
