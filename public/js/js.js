@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         </div>
         
         <form id="Ai_form" class="display_none">
-            <h2>Текст test test!</h2>
+            <h2>Представьтесь пожалуйста</h2>
             
             <div class="Ai_form_input">
                 <input type="text" id="AiInputUserName" placeholder="Имя">
