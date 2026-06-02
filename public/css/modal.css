@@ -270,3 +270,17 @@
     cursor: pointer;
     color: #000;
 }
+
+.Ai_form h2{
+    color: white;
+    margin-bottom: 5px;
+}
+.Ai_form a{
+    color: #4444ff;
+    text-decoration: underline;
+    font-size: 14px;
+}
+
+#AiInputUserPhone{
+    margin-bottom: 10px;
+}
