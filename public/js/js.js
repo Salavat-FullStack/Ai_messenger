@@ -81,6 +81,8 @@ document.addEventListener('DOMContentLoaded',()=>{
         </div>
         
         <form id="Ai_form" class="display_none">
+            <h2>Текст test test!</h2>
+            
             <div class="Ai_form_input">
                 <input type="text" id="AiInputUserName" placeholder="Имя">
                 <div id="AiInputUserNameError" style="color:red;"></div>
@@ -93,6 +95,8 @@ document.addEventListener('DOMContentLoaded',()=>{
                 <input type="text" id="AiInputUserPhone" placeholder="Телефон">
                 <div id="AiInputUserPhoneError" style="color:red;"></div>
             </div>
+
+            <a href="https://akuprof.ru/terms.html">Отправляя свои данные, вы соглашаетесь с пользовательским соглашением!</a>
         </form>
     </div>
 
