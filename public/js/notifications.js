@@ -193,6 +193,8 @@ async function renderAi(){
     // .then(data => {
         AiArrayGlobal = data
 
+        console.log('AiArrayGlobal', AiArrayGlobal);
+
         const Ai_message_storage = document.querySelector('.Ai_message_storage');
         Ai_message_storage.replaceChildren(); 
 

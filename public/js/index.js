@@ -44,17 +44,17 @@ document.addEventListener('DOMContentLoaded',()=>{
         .then(data => {
             console.log(data);
 
-            data['response'].forEach(elem =>{
-                messageStore = addTagA(elem['messageAi']);
+            // data['response'].forEach(elem =>{
+            //     messageStore = addTagA(elem['messageAi']);
 
-                renderMessage('user', formatDateView(elem['date']), elem['user_name'], elem['messageUser']);
-                renderMessage('Ai', formatDateView(elem['date']), "ИИ ассистент", messageStore);
+            //     renderMessage('user', formatDateView(elem['date']), elem['user_name'], elem['messageUser']);
+            //     renderMessage('Ai', formatDateView(elem['date']), "ИИ ассистент", messageStore);
 
-                if(elem['managerResponse']){
-                    renderMessage('Ai', formatDateView(elem['date']), "Менеджер akuprof", addTagA(elem['managerResponse']));
+            //     if(elem['managerResponse']){
+            //         renderMessage('Ai', formatDateView(elem['date']), "Менеджер akuprof", addTagA(elem['managerResponse']));
                     
-                }
-            });
+            //     }
+            // });
 
             let lastMessage = data['response'].slice(-2);
 
