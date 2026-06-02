@@ -120,8 +120,7 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
 
         // Ai_message_storage.scrollTop = Ai_message_storage.scrollHeight;
         Ai_message_storage.scrollTo({
-            top: Ai_message_storage.scrollHeight,
-            behavior: 'smooth'
+            top: Ai_message_storage.scrollHeight
         });
     }
 

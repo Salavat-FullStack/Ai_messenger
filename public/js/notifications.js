@@ -189,6 +189,9 @@ async function renderAi(){
     // .then(data => {
         AiArrayGlobal = data
 
+        const Ai_message_storage = document.querySelector('.Ai_message_storage');
+        Ai_message_storage.innerHTML = "";
+
         data['response'].forEach(elem =>{
             messageStore = addTagA(elem['messageAi']);
 
