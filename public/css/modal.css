@@ -285,7 +285,8 @@
     font-size: 11px;
 }
 
-#Ai_form p span{
+#Ai_form p a{
+    color: #f3f3f3;
   text-decoration: underline; /* Подчеркиваем только текст внутри span */
 }
 
