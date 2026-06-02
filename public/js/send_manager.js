@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 
             if(question.length < 1 && !input.files.length){
                 const input = document.querySelector('#Ai_request_input');
-                input.placeholder = "введите сообщение!";
+                input.placeholder = "ВВЕДИТЕ СООБЩЕНИЕ...";
                 return;
             }
 
