@@ -224,6 +224,7 @@
     gap: 10px;
     padding: 10px;
     background: #122538 url(../image/nav_bg.png);
+    border-radius: 8px;
 }
 .Ai_form_input{
     width: 100%;
@@ -277,9 +278,13 @@
     font-size: 17px;
 }
 #Ai_form a{
-    color: #4444ff;
-    text-decoration: underline;
-    font-size: 14px;
+    color: #a1a1a1;
+    text-decoration: none;
+    font-size: 11px;
+}
+
+#Ai_form a span{
+  text-decoration: underline; /* Подчеркиваем только текст внутри span */
 }
 
 #AiInputUserPhone{
