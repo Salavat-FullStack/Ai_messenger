@@ -96,7 +96,7 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
         
         timeContainer.classList.add('Ai_message_date');
 
-        message.innerHTML = question;   
+        message.innerHTML = addTagA(question);   
         message.classList.add('Ai_message_value');
 
         if(messageRole == 'user'){

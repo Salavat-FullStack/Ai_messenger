@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
                 formData.append('messageUser', window.messageUser);
                 formData.append('messageReview', window.messageReview);
-                formData.append('messageAi', data['responseAi']);
+                formData.append('messageAi', AiResponse);
                 formData.append('date', formatDate());
                 formData.append('selectedAssistant', window.selectedAssistant);
                 formData.append('USER_DATA', JSON.stringify(USER_DATA));
