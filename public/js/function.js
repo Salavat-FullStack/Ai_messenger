@@ -237,12 +237,17 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
 
         if(phone !== ''){
 
-            const phoneValid = /^(\+7|8)\d{10}$/;
-
-            if(!phoneValid.test(phone)){
-                document.getElementById('AiInputUserPhoneError').textContent = 'Введите корректный российский номер';
+            if(phone.length < 10){
+                document.getElementById('AiInputUserPhoneError').textContent = 'Короткий номер';
                 hasError = true;
             }
+
+            // const phoneValid = /^(\+7|8)\d{10}$/;
+
+            // if(!phoneValid.test(phone)){
+            //     document.getElementById('AiInputUserPhoneError').textContent = 'Введите корректный российский номер';
+            //     hasError = true;
+            // }
         }
 
         if(!hasError){
