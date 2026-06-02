@@ -61,6 +61,8 @@ let AiArrayGlobal = {
 };
 
 (async () => {
+    const Ai_message_storage = document.querySelector('.Ai_message_storage');
+    Ai_message_storage.replaceChildren(); 
     AiArrayGlobal = await renderAi();
 
     startPolling(AiArrayGlobal, "ai_and_meneger");
@@ -77,8 +79,10 @@ function startPolling(messageQuantityGlobal, type) {
         if(type == "meneger"){
             data = await renderMessageManager("Менеджер");
 
-            console.log()
         }else if(type == "ai_and_meneger"){
+            const Ai_message_storage = document.querySelector('.Ai_message_storage');
+            Ai_message_storage.replaceChildren(); 
+
             data = await renderAi();
         }
 
@@ -190,7 +194,7 @@ async function renderAi(){
         AiArrayGlobal = data
 
         const Ai_message_storage = document.querySelector('.Ai_message_storage');
-        Ai_message_storage.innerHTML = "";
+        Ai_message_storage.replaceChildren(); 
 
         data['response'].forEach(elem =>{
             messageStore = addTagA(elem['messageAi']);
