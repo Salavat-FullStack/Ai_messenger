@@ -96,9 +96,9 @@ document.addEventListener('DOMContentLoaded',()=>{
                 <div id="AiInputUserPhoneError" style="color:red;"></div>
             </div>
 
-            <a target="_blank" href="https://akuprof.ru/terms.html">
-                Отправляя свои данные, вы соглашаетесь с <span>пользовательским соглашением</span>!
-            </a>
+            <p>
+                Отправляя свои данные, вы соглашаетесь с <a target="_blank" href="https://akuprof.ru/terms.html">пользовательским соглашением</a>!
+            </p>
         </form>
     </div>
 
