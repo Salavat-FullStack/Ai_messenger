@@ -316,11 +316,10 @@
 
 .reminder_message_ai{
     position: fixed;
-    background-color: white;
     bottom: 150px;
     right: 10px;
     width: 220px;
-    background-color: pink;
+    background-color: #0f2841d4;
     padding: 10px;
     border-radius: 8px;
 }
@@ -339,16 +338,14 @@
 .reminder_message_ai::after{
     content: '';
     position: absolute;
-    left: 50%;
+    left: 75%;
     top: 100%;
     transform: translateX(-50%);
-
     width: 0;
     height: 0;
-
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-top: 10px solid #fff;
+    border-top: 10px solid #0f2841d4;
 }
 .reminder_message_btn img{
     height: 15px;
