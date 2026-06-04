@@ -315,6 +315,20 @@
 }
 
 .reminder_message_ai{
-    position: absolute;
+    position: fixed;
     background-color: white;
+    bottom: 150px;
+    right: 10px;
+    width: 220px;
+    background-color: pink;
+    padding: 10px;
+    border-radius: 8px;
+}
+.reminder_message_btn{
+    position: absolute;
+    top: -10px;
+    /* display: none; */
+    padding: 5px;
+    background: gray;
+    right: 1px;
 }
