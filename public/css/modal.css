@@ -313,3 +313,8 @@
 #AiInputUserPhone{
     margin-bottom: 10px;
 }
+
+.reminder_message_ai{
+    position: absolute;
+    background-color: white;
+}

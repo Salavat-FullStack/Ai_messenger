@@ -9,6 +9,11 @@ document.addEventListener('DOMContentLoaded',()=>{
         <img src="https://chat-progress.ru/image/icons/chat-icon.svg" alt="open_modal">
     </div>
 
+    <div class="reminder_message_ai">
+        <p>Здравствуйте, задайте пожалуйста вопрос. Обычно мы отвечаем в течении пары минут (за исключением выходных и ночных часов)</p>
+        <div class="reminder_message_btn">x</div>
+    </div>
+
     <div class="Ai_modal">
         <div class="Ai_nav">
             <div class="Ai_manager">
