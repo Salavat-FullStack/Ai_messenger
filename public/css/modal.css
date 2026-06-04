@@ -327,8 +327,30 @@
 .reminder_message_btn{
     position: absolute;
     top: -10px;
-    /* display: none; */
     padding: 5px;
     background: gray;
-    right: 1px;
+    right: -10px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reminder_message_ai::after{
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+
+    width: 0;
+    height: 0;
+
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #fff;
+}
+.reminder_message_btn img{
+    height: 15px;
+    padding-left: 2px;
 }
