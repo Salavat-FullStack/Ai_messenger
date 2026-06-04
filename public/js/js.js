@@ -273,4 +273,11 @@ close.addEventListener('click', () => {
     close.classList.add('display_none');
 });
 
+
+const reminder_message_btn = document.querySelector('.reminder_message_btn');
+
+reminder_message_btn.addEventListener('click', ()=>{
+    document.querySelector('.reminder_message_ai').style.display = "none";
+});
+
 });
