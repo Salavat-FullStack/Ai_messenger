@@ -273,6 +273,9 @@ close.addEventListener('click', () => {
     close.classList.add('display_none');
 });
 
+if(document.cookie.includes('UserDataAi=')){
+    document.querySelector('.reminder_message_ai').style.display = "none";
+}
 
 const reminder_message_btn = document.querySelector('.reminder_message_btn');
 
