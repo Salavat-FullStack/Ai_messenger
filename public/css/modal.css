@@ -316,12 +316,13 @@
 
 .reminder_message_ai{
     position: fixed;
-    bottom: 150px;
+    bottom: 160px;
     right: 10px;
     width: 220px;
     background-color: #0f2841d4;
     padding: 10px;
     border-radius: 8px;
+    color: white;
 }
 .reminder_message_btn{
     position: absolute;
@@ -333,13 +334,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .reminder_message_ai::after{
     content: '';
     position: absolute;
     left: 75%;
-    top: 100%;
+    top: 99%;
     transform: translateX(-50%);
     width: 0;
     height: 0;
