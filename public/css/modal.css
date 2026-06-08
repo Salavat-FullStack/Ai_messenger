@@ -319,7 +319,9 @@
     bottom: 160px;
     right: 10px;
     width: 220px;
-    background-color: #0f2841d4;
+    background-color: rgb(0 0 0 / 30%);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     padding: 10px;
     border-radius: 8px;
     color: white;
@@ -338,17 +340,24 @@
     cursor: pointer;
 }
 
-.reminder_message_ai::after{
-    content: '';
-    position: absolute;
-    left: 75%;
-    top: 99%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid #0f2841d4;
+.reminder_message_ai::after {
+  content: '';
+  position: absolute;
+  left: 75%;
+  top: 99%;
+  transform: translateX(-50%);
+  
+  /* Задаем реальные размеры стрелочки */
+  width: 20px;
+  height: 10px;
+  
+  /* Применяем ваши стили фона и размытия */
+  background-color: rgb(0 0 0 / 30%);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  
+  /* Обрезаем квадрат до формы треугольника, направленного вниз */
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
 .reminder_message_btn img{
     height: 15px;
