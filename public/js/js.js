@@ -273,14 +273,22 @@ close.addEventListener('click', () => {
     close.classList.add('display_none');
 });
 
+const reminder_message_ai = document.querySelector('.reminder_message_ai');
+
+setTimeout(() => {
+    if(!document.cookie.includes('UserDataAi=')){
+        reminder_message_ai.classList.add('reminder_message_ai_active');
+    }
+}, 5000);
+
 if(document.cookie.includes('UserDataAi=')){
-    document.querySelector('.reminder_message_ai').style.display = "none";
+    reminder_message_ai.style.display = "none";
 }
 
 const reminder_message_btn = document.querySelector('.reminder_message_btn');
 
 reminder_message_btn.addEventListener('click', ()=>{
-    document.querySelector('.reminder_message_ai').style.display = "none";
+    reminder_message_ai.style.display = "none";
 });
 
 });

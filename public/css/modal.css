@@ -326,6 +326,15 @@
     border-radius: 8px;
     color: white;
     z-index: 999;
+
+    display: flex; 
+
+  /* Начальное состояние: полностью прозрачный и не кликабельный */
+    opacity: 0;
+    visibility: hidden;
+
+    /* Плавность анимации (0.5 секунды) */
+    transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 .reminder_message_btn{
     position: absolute;
@@ -344,7 +353,7 @@
   content: '';
   position: absolute;
   left: 75%;
-  top: 99%;
+  top: 100%;
   transform: translateX(-50%);
   
   /* Задаем реальные размеры стрелочки */
@@ -362,4 +371,9 @@
 .reminder_message_btn img{
     height: 15px;
     padding-left: 2px;
+}
+
+.reminder_message_ai_active {
+  opacity: 1;
+  visibility: visible;
 }
