@@ -151,7 +151,9 @@ document.addEventListener('DOMContentLoaded',()=>{
                 formData.append('selectedAssistant', window.selectedAssistant);
                 formData.append('USER_DATA', JSON.stringify(USER_DATA));
 
-                    responseAi = data['responseAi'];
+                    responseAi =  data['responseAi'].replace(/https?:\/\/\S+/g, url => {
+                        return url.replace(/\.html/g, '');
+                    });
 
                     fetch('https://chat-progress.ru/app/save_message.php',{
                         method: 'POST',
