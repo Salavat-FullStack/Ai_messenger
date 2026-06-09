@@ -2,7 +2,7 @@
 
 require_once "functions.php";
 
-define('DATA_DIR', __DIR__ . '/../dataText/product');
+define('DATA_DIR', __DIR__ . '/../dataText/product/main');
 
 $files = array_slice(scandir(DATA_DIR), 2);
 
