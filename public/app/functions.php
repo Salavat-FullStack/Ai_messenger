@@ -11,7 +11,7 @@ define('CHUNK_OVERLAP', 200);
 define('TOP_K', 7);
 
 define('ELASTIC_HOST', $_ENV['ELASTIC_HOST']);
-define('OPENAI_API_KEY', $_ENV['OPENAI_API_KEY']);
+define('GEMINI_API_KEY', $_ENV['GEMINI_API_KEY']);
 
 use Elastic\Elasticsearch\ClientBuilder;
 use GuzzleHttp\Client;
@@ -37,7 +37,7 @@ function getEmbedding($text, Client $client) : array
         'https://api.openai.com/v1/embeddings',
         [
             'headers' => [
-                'Authorization' => 'Bearer ' . OPENAI_API_KEY,
+                'Authorization' => 'Bearer ' . GEMINI_API_KEY,
                 'Content-Type' => 'application/json',
             ],
             'json' => [

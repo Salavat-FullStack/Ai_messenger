@@ -136,22 +136,26 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 function reviewGpt(Client $client, $prompt, $story, $request){
     $response = $client->post(
-        'https://api.openai.com/v1/responses',
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' . GEMINI_API_KEY,
         [
-            "headers" => [
-                'Authorization' => 'Bearer ' . OPENAI_API_KEY,
+            'headers' => [
                 'Content-Type' => 'application/json',
             ],
             'json' => [
-                'model' => 'gpt-5-mini',
-                'input' => [
+                'systemInstruction' => [
+                    'parts' => [
+                        [
+                            'text' => $prompt
+                        ]
+                    ]
+                ],
+                'contents' => [
                     [
-                        'role' => 'system',
-                        'content' => $prompt
-                    ],
-                    [
-                        'role' => 'user',
-                        'content' => "История диалога:\n$story\n\nТекущий вопрос:\n$request"
+                        'parts' => [
+                            [
+                                'text' => "История диалога:\n$story\n\nТекущий вопрос:\n$request"
+                            ]
+                        ]
                     ]
                 ]
             ]
@@ -160,5 +164,5 @@ function reviewGpt(Client $client, $prompt, $story, $request){
 
     $data = json_decode($response->getBody(), true);
 
-    return $data['output'][1]['content'][0]['text'];
+    return $data['candidates'][0]['content']['parts'][0]['text'] ?? '';
 }
