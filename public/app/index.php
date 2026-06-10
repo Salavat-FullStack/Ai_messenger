@@ -37,11 +37,21 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         array_map(fn($d) => $d['_source']['content'], $docs)
     );
 
-    $prompt = "
+    // $prompt = "
+    //     Ты помощник интернет-магазина akuprof.ru.
+
+    //     Используй только этот контекст:
+    //     $context
+
+
+    //     Вопрос пользователя:
+    //     $question
+
+    // ";
+    $systemPrompt = "        
         Ты помощник интернет-магазина akuprof.ru.
 
-        Используй только этот контекст:
-        $context
+        У тебя есть контекст из базы данных, по которому ты должен отвечать.
 
         ВАЖНО: Контекст может быть: 
             - нерелевантным 
@@ -58,10 +68,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
         НЕ отвечай только из-за совпадения слов. 
         Анализируй именно смысл вопроса пользователя.
-
-        Вопрос пользователя:
-        $question
-
+        
         Ответ должен быть четким и по делу.
 
         Правила ответа:
@@ -82,12 +89,20 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             - кратко описать его
             - обязательно вставить ссылку (если она есть в контексте)
             - не отправлять к менеджеру без необходимости
-        5. Если в контексте, есть ссылка на источник, доболяй этй ссылку в ответ и порекомендуй прочитать содержимое пользователю
+        5. Если в контексте, есть ссылка на источник, доболяй эту ссылку в ответ и порекомендуй прочитать содержимое пользователю
         6. НЕ задавай вопросы и не предлогай помощь, если это не критично для ответа 
         7. НЕ пиши в ответе чтото по типу (в контексте нет информации и тд) это пользователю знать не нужно.
     ";
 
-    $responseAi = askGPT($prompt,$client);
+    $userPrompt = "
+        Контекст:
+        $context
+
+        Вопрос пользователя:
+        $question
+    ";  
+
+    $responseAi = askGPT($systemPrompt,$userPrompt,$client);
 
     // $responseElastic = saveMessage($es, $question, $responseAi, $userData);
 
@@ -164,20 +179,30 @@ function searchSimilar(string $question, $es, Client $client): array
 
 // searchSimilar - преобразование запроса клиента в embedding и поиск в elastic наиболее подходящих 3 чанков 
 
-function askGPT(string $prompt, Client $client): string
+function askGPT(string $systemPrompt, string $userPrompt, Client $client): string
 {
 
     $response = $client->post(
-        'https://api.openai.com/v1/responses',
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' . GEMINI_API_KEY,
         [
-            'headers' => [
-                'Authorization' => 'Bearer ' . OPENAI_API_KEY,
-                'Content-Type' => 'application/json',
-            ],
             'json' => [
-                'model' => 'gpt-5-nano',
-                'input' => $prompt,
-            ],
+                'systemInstruction' => [
+                    'parts' => [
+                        [
+                            'text' => $systemPrompt
+                        ]
+                    ]
+                ],
+                'contents' => [
+                    [
+                        'parts' => [
+                            [
+                                'text' => $userPrompt
+                            ]
+                        ]
+                    ]
+                ]
+            ]
         ]
     );
 
@@ -187,5 +212,5 @@ function askGPT(string $prompt, Client $client): string
     // echo($data['output'][1]['content'][0]['text']);
     // echo "</pre>";
 
-    return $data['output'][1]['content'][0]['text'];
+    return $data['candidates'][0]['content']['parts'][0]['text'];
 }
