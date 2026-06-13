@@ -135,34 +135,44 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 }
 
 function reviewGpt(Client $client, $prompt, $story, $request){
-    $response = $client->post(
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' . GEMINI_API_KEY,
-        [
-            'headers' => [
-                'Content-Type' => 'application/json',
-            ],
-            'json' => [
-                'systemInstruction' => [
-                    'parts' => [
-                        [
-                            'text' => $prompt
-                        ]
-                    ]
+    try {
+        $response = $client->post(
+            'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' . GEMINI_API_KEY,
+            [
+                'headers' => [
+                    'Content-Type' => 'application/json',
                 ],
-                'contents' => [
-                    [
+                'json' => [
+                    'systemInstruction' => [
                         'parts' => [
                             [
-                                'text' => "История диалога:\n$story\n\nТекущий вопрос:\n$request"
+                                'text' => $prompt
+                            ]
+                        ]
+                    ],
+                    'contents' => [
+                        [
+                            'parts' => [
+                                [
+                                    'text' => "История диалога:\n$story\n\nТекущий вопрос:\n$request"
+                                ]
                             ]
                         ]
                     ]
                 ]
             ]
-        ]
-    );
+        );
+        $data = json_decode($response->getBody(), true);
+        
+        return $data['candidates'][0]['content']['parts'][0]['text'] ?? '';
 
-    $data = json_decode($response->getBody(), true);
+    }   catch (\GuzzleHttp\Exception\ClientException $e) {
 
-    return $data['candidates'][0]['content']['parts'][0]['text'] ?? '';
+        echo '<pre>';
+        echo $e->getResponse()->getBody()->getContents();
+        echo '</pre>';
+        die();
+
+    }
+
 }
