@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                 request: question
             })
         })
-        .then(response => response.json())
+        .then(response => response.text())
         .then(data => {
             console.log(data);
             console.log(data['response']);
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                     question: data['response']
                 })
             })
-            .then(response => response.json())
+            .then(response => response.text())
             .then(data => {
                 console.log('Ответ сервера:', data['responseAi']);
                 console.log('контекст', data['docs']);
@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                         credentials: "include",
                         body: formData
                     })
-                    .then(response => response.json())
+                    .then(response => response.text())
                     .then(data =>{
                         console.log(data);
                         console.log(data['response']);
@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                             credentials: "include",
                             body: formDataMaxBot
                         })
-                        .then(response => response.json())
+                        .then(response => response.text())
                         .then(data => {
                             console.log(data);
                             console.log(data.status);
