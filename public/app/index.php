@@ -37,7 +37,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         array_map(fn($d) => $d['_source']['content'], $docs)
     );
 
-    $store_messages = $data['store_messages'];
+    $store_messages = $data['story'];
 
     // $prompt = "
     //     Ты помощник интернет-магазина akuprof.ru.
