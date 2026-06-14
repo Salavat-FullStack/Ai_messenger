@@ -60,12 +60,19 @@ document.addEventListener('DOMContentLoaded',()=>{
 
             console.log(lastMessage);
 
-            for(let i = 0; i == lastMessage.length; i++){
-                store_messages[i]['role'] = "user";
-                store_messages[i]['content'] = lastMessage[i]['messageUser'];
-
-                store_messages[i]['role'] = "assistant";
-                store_messages[i]['content'] = lastMessage[i]['messageAi'];
+            for (let i = 0; i < lastMessage.length; i++) {
+                
+                // Добавляем сообщение пользователя (messageUser)
+                store_messages.push({
+                    role: "user",
+                    content: lastMessage[i]['messageUser']
+                });
+                
+                // Добавляем ответ ассистента (messageAi)
+                store_messages.push({
+                    role: "assistant",
+                    content: lastMessage[i]['messageAi']
+                });
             }
 
             // lastMessage.forEach(element => {
