@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                 },
                 body: JSON.stringify({
                     story: store_messages,
-                    question: data['response']
+                    question: question
                 })
             })
             .then(response => response.text())
