@@ -214,7 +214,10 @@ $response = $client->post(
     //     ]
     // );
 
-    $data = json_decode($response->getBody(), true);
+    $responseBody = $response->getBody()->getContents();
+
+    // 2. Декодируем JSON-строку в ассоциативный массив PHP
+    $data = json_decode($responseBody, true);
 
     // echo "<pre>";
     // echo($data['output'][1]['content'][0]['text']);
