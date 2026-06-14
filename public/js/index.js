@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                     question: question
                 })
             })
-            .then(response => response.text())
+            .then(response => response.json())
             .then(data => {
                 console.log(data);
                 console.log('Ответ сервера:', data['responseAi']);
