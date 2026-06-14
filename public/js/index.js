@@ -109,27 +109,28 @@ document.addEventListener('DOMContentLoaded',()=>{
 
         renderMessage('user', formatDateView(formatDate()), "", question);
 
-        fetch('https://chat-progress.ru/app/review.php',{
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                story: store_messages,
-                request: question
-            })
-        })
-        .then(response => response.text())
-        .then(data => {
-            console.log(data);
-            console.log(data['response']);
-            messageReview = data['response'];
+        // fetch('https://chat-progress.ru/app/review.php',{
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     },
+        //     body: JSON.stringify({
+        //         story: store_messages,
+        //         request: question
+        //     })
+        // })
+        // .then(response => response.text())
+        // .then(data => {
+        //     console.log(data);
+        //     console.log(data['response']);
+        //     messageReview = data['response'];
             fetch('https://chat-progress.ru/app/index.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
+                    story: store_messages,
                     question: data['response']
                 })
             })
@@ -216,15 +217,15 @@ document.addEventListener('DOMContentLoaded',()=>{
                     Ai_load.classList.add('display_none');
                     alert('Что-то пошло не так :(');
             });
-        })
-        .catch(error => {
-            console.error(error);
-            loadingGenerate('delete');
-            Ai_send_message.classList.remove('display_none');
-            Ai_load.classList.add('display_none');
-            alert('Что-то пошло не так :(');
-        })
-        }
+    //     })
+    //     .catch(error => {
+    //         console.error(error);
+    //         loadingGenerate('delete');
+    //         Ai_send_message.classList.remove('display_none');
+    //         Ai_load.classList.add('display_none');
+    //         alert('Что-то пошло не так :(');
+    //     })
+    //     }
     }
 
     
