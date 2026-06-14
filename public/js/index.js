@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     //         Ai_load.classList.add('display_none');
     //         alert('Что-то пошло не так :(');
     //     })
-    //     }
+    }
     }
 
     
