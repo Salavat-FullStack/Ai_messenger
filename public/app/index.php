@@ -173,7 +173,7 @@ function searchSimilar(string $question, $es, Client $client): array
 
 // searchSimilar - преобразование запроса клиента в embedding и поиск в elastic наиболее подходящих 3 чанков 
 
-function askGPT(array $prompt, Client $client): string
+function askGPT(array $prompt, Client $client)
 {
 
 $response = $client->post(
