@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     const Ai_send_message = document.getElementById('Ai_send_message');
     const Ai_load = document.getElementById('Ai_load');
 
-    let store_messages = '';
+    let store_messages = [];
     let question = '';
 
     window.messageUser = '';
@@ -56,15 +56,25 @@ document.addEventListener('DOMContentLoaded',()=>{
             //     }
             // });
 
-            let lastMessage = data['response'].slice(-2);
+            let lastMessage = data['response'].slice(-5);
 
             console.log(lastMessage);
 
-            lastMessage.forEach(element => {
-                console.log(element);
-                store_messages += `вопрос пользователя: "${element['messageUser']}" \n ответ асистента: "${element['messageAi']}" \n`;
-            });
+            for(let i = 0; i == lastMessage.length; i++){
+                store_messages[i]['role'] = "user";
+                store_messages[i]['content'] = lastMessage[i]['messageUser'];
+
+                store_messages[i]['role'] = "assistant";
+                store_messages[i]['content'] = lastMessage[i]['messageAi'];
+            }
+
+            // lastMessage.forEach(element => {
+            //     console.log(element);
+
+            //     store_messages += `вопрос пользователя: "${element['messageUser']}" \n ответ асистента: "${element['messageAi']}" \n`;
+            // });
             console.log(store_messages);
+
         });
 
     });
