@@ -223,5 +223,5 @@ $response = $client->post(
     // echo($data['output'][1]['content'][0]['text']);
     // echo "</pre>";
 
-    return $data['choices'][0]['message']['content'];
+    return $data;
 }

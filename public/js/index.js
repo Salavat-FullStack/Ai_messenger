@@ -136,6 +136,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             })
             .then(response => response.text())
             .then(data => {
+                console.log(data);
                 console.log('Ответ сервера:', data['responseAi']);
                 console.log('контекст', data['docs']);
 
