@@ -2,95 +2,66 @@
 
 require_once "functions.php";
 
-define('DATA_DIR', __DIR__ . '/../dataText/product/main');
+define('DATA_DIR', __DIR__ . '/../dataText/product/parsed_products');
 
+$client = generatClient("client"); 
+$es = generatClient("es");
 $files = array_slice(scandir(DATA_DIR), 2);
 
 $batchSize = 7;
 $batch = [];
-$bulk = [];
-
-$client = generatClient("client");
-$es = generatClient("es");
-
 
 foreach ($files as $file) {
-
     $fullPath = DATA_DIR . '/' . $file;
-
     if (!is_file($fullPath)) {
-        continue; 
+        continue;
     }
 
     $content = file_get_contents($fullPath);
 
-    $chanks = splitText($content);
+    $batch[] = [
+        'text' => $content,
+        'file' => $file
+    ];
 
-    // echo('------------------chanks--------------\n');
-    // print_r($chanks);
+    if (count($batch) === $batchSize) {
+        // Передаем ELASTIC_INDEX четвертым аргументом для надежности
+        processAndSendWholeProducts($batch, $client, $es, ELASTIC_INDEX);
+        $batch = []; 
+        
+        // Пауза 0.5 секунды между батчами, чтобы не словить Rate Limit от OpenAI
+        usleep(500000); 
+    }
+}
 
-    foreach($chanks as $chank){
-        $batch[] = $chank;
+if (count($batch) > 0) {
+    processAndSendWholeProducts($batch, $client, $es, ELASTIC_INDEX);
+}
+
+echo "\nИндексация всех товаров успешно завершена!\n";
+
+/**
+ * Функция отправки целых товаров в OpenAI и Elasticsearch
+ */
+function processAndSendWholeProducts($batch, $client, $es, $indexName) {
+    $textsOnly = array_column($batch, 'text');
+    
+    // Получаем эмбеддинги
+    $embeddingResponse = getEmbedding($textsOnly, $client);
+
+    $bulk = [];
+    foreach ($batch as $index => $item) {
+        // Используем переданное имя индекса из аргумента $indexName
+        $bulk[] = ['index' => ['_index' => $indexName]];
+        $bulk[] = [
+            'content'   => $item['text'], 
+            'embedding' => $embeddingResponse[$index]['embedding'],
+            'source'    => $item['file'],
+        ];
     }
 
-    $batchCount = count($batch);
-    echo("count(batch) == $batchCount \n");
-
-    $remainderBatch = 0;
-
-    if(count($batch) <= $batchSize){
-        echo("вызов, count(batch) <= batchSize  \n");
-
-        $embeddingResponse  = getEmbedding($batch, $client);
-
-        foreach ($batch as $index => $text) {
-
-            $url = str_replace('txt', 'html', $file);
-
-            $bulk[] = ['index' => ['_index' => ELASTIC_INDEX]];
-
-            $bulk[] = [
-                'content'   => $text . "... ссылка на продукт-товар(исходник) " . "https://akuprof.ru/" . str_replace('_copy', '', $url),  
-                'embedding' => $embeddingResponse[$index]['embedding'],
-                'source'    => $file,
-            ];
-        }
-
-        $es->bulk(['body' => $bulk]);
-
-        $batch = [];
-        $bulk = [];
-    }else if(count($batch) > $batchSize){
-        while(count($batch) > 0){
-
-            $newBatch = array_slice($batch, 0, $batchSize);
-
-            $remainderBatch = count($batch) - count($newBatch);
-
-            // вызов getEmbedding с $newBatch
-            $embeddingResponse  = getEmbedding($newBatch, $client);
-
-            foreach ($newBatch as $index => $text) {
-
-                $bulk[] = ['index' => ['_index' => ELASTIC_INDEX]];
-
-                $bulk[] = [
-                    'content'   => $text . "...  ссылка на продукт-товар(исходник) " . "https://akuprof.ru/" . str_replace('txt', 'html', $file),
-                    'embedding' => $embeddingResponse[$index]['embedding'],
-                    'source'    => $file,
-                ];
-            }
-
-            $es->bulk(['body' => $bulk]);
-
-            // уменьшение количества
-            $batch = array_slice($batch, count($newBatch));
-            $bulk = [];
-
-            $l = count($newBatch);
-            echo("newBatch == $l\n");
-            echo("remainderBatch == $remainderBatch\n");
-
-        }
-    }
+    // Загрузка в Elasticsearch
+    $es->bulk(['body' => $bulk]);
+    
+    echo "Загружена пачка из " . count($batch) . " товаров в Elasticsearch.\n";
 }
