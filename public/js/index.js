@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             //     }
             // });
 
-            let lastMessage = data['response'].slice(-5);
+            let lastMessage = data['response'].slice(-3);
 
             console.log(lastMessage);
 
