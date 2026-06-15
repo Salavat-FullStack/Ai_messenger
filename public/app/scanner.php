@@ -139,18 +139,32 @@ function getArticleProduct($url){
 
 function cleanText($text) {
     if (!$text) return '';
+    
+    // 1. Заменяем все табы (\t) на обычные одиночные пробелы
+    $text = str_replace("\t", " ", $text);
+    
+    // 2. Схлопываем множественные пробелы (если их 2 и более подряд) в один
+    $text = preg_replace('/[ ]{2,}/', ' ', $text);
+    
+    // 3. Разбиваем текст на строки для дальнейшей очистки
     $lines = preg_split('/\r\n|\r|\n/', $text);
     $seen = [];
     $cleanedLines = [];
+    
     foreach ($lines as $line) {
-        $line = trim($line);
-        if ($line && !in_array($line, $seen)) {
-            // Преобразуем "Ключ:" в "Ключ —"
+        $line = trim($line); // Убираем пробелы по краям строки
+        
+        // Пропускаем пустые строки и дубликаты
+        if ($line !== '' && !in_array($line, $seen)) {
+            // Твоя замена "Ключ:" на "Ключ —"
             $line = preg_replace('/^([А-ЯЁ][^:]+):\s*$/u', '$1 —', $line);
+            
             $cleanedLines[] = $line;
             $seen[] = $line;
         }
     }
+    
+    // Объединяем обратно с красивым одиночным переносом строки
     return implode("\n", $cleanedLines);
 }
 
