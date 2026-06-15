@@ -3,6 +3,7 @@
 require_once "functions.php";
 
 define('DATA_DIR', __DIR__ . '/../dataText/parsed_products');
+define('MAX_CHAR_LIMIT', 4000); // Выносим лимит в константу для удобства
 
 $client = generatClient("client"); 
 $es = generatClient("es");
@@ -20,10 +21,10 @@ foreach ($files as $file) {
     // 1. Читаем сырой файл с диска
     $rawContent = file_get_contents($fullPath);
 
-    // 2. Очищаем текст от табов и мусора "на лету" перед отправкой
+    // 2. Очищаем текст от табов, мусора и жестко ограничиваем длину до 4000 символов "на лету"
     $cleanContent = cleanTextOnTheFly($rawContent);
 
-    // Добавляем в батч уже чистый текст
+    // Добавляем в батч уже чистый и компактный текст
     $batch[] = [
         'text' => $cleanContent,
         'file' => $file
@@ -40,10 +41,10 @@ if (count($batch) > 0) {
     processAndSendWholeProducts($batch, $client, $es, ELASTIC_INDEX);
 }
 
-echo "\nИндексация очищенных товаров успешно завершена!\n";
+echo "\nИндексация очищенных товаров (с лимитом в " . MAX_CHAR_LIMIT . " симв.) успешно завершена!\n";
 
 /**
- * Функция умной очистки текста от табов и пустых пространств
+ * Функция умной очистки текста от табов, пустых пространств + ограничение длины
  */
 function cleanTextOnTheFly($text) {
     if (!$text) return '';
@@ -71,8 +72,13 @@ function cleanTextOnTheFly($text) {
 
     // КРАСИВЫЙ ХАК ДЛЯ ХАРАКТЕРИСТИК:
     // Если параметр и цифра идут на разных строках, склеиваем их через двоеточие.
-    // Это превратит: "Длина рулона, мм\n2500" в "Длина рулона, мм: 2500"
     $resultText = preg_replace('/(мм|м²|кг|дБ)\n(\d+)/ui', '$1: $2', $resultText);
+
+    // МАГИЯ ОБРЕЗКИ: 
+    // Если длина строки в кодировке UTF-8 больше лимита, аккуратно обрезаем её.
+    if (mb_strlen($resultText, 'UTF-8') > MAX_CHAR_LIMIT) {
+        $resultText = mb_substr($resultText, 0, MAX_CHAR_LIMIT, 'UTF-8');
+    }
 
     return $resultText;
 }
@@ -90,7 +96,7 @@ function processAndSendWholeProducts($batch, $client, $es, $indexName) {
     foreach ($batch as $index => $item) {
         $bulk[] = ['index' => ['_index' => $indexName]];
         $bulk[] = [
-            'content'   => $item['text'], // Сюда идет очищенный текст
+            'content'   => $item['text'], // Сюда идет очищенный и обрезанный текст
             'embedding' => $embeddingResponse[$index]['embedding'],
             'source'    => $item['file'],
         ];
