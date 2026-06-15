@@ -2,7 +2,7 @@
 
 require_once "functions.php";
 
-define('DATA_DIR', __DIR__ . '/../dataText/product/parsed_products');
+define('DATA_DIR', __DIR__ . '/../dataText/parsed_products');
 
 $client = generatClient("client"); 
 $es = generatClient("es");
