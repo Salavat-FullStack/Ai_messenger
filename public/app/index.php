@@ -113,14 +113,25 @@ function processBatch($batch, $client, $es){
 
 function searchSimilar(string $question, $es, Client $client): array
 {
+    // 1. Получаем вектор от OpenAI для семантического поиска
     $embeddingResponse = getEmbedding($question, $client);
-
     $queryVector = $embeddingResponse[0]['embedding'];
 
+    // 2. Делаем ГИБРИДНЫЙ запрос
     $response = $es->search([
         'index' => ELASTIC_INDEX,
         'body' => [
             'size' => TOP_K,
+            // Ветка 1: Классический текстовый поиск (чтобы ловить точные цифры "45")
+            'query' => [
+                'match' => [
+                    'content' => [
+                        'query' => $question,
+                        'boost' => 1.5 // Даем текстовому совпадению чуть больший приоритет
+                    ]
+                ]
+            ],
+            // Ветка 2: Векторный поиск (чтобы понимать синонимы и общую суть)
             'knn' => [
                 'field' => 'embedding',
                 'query_vector' => $queryVector,
@@ -132,7 +143,6 @@ function searchSimilar(string $question, $es, Client $client): array
 
     return $response['hits']['hits'];
 }
-
 // searchSimilar - преобразование запроса клиента в embedding и поиск в elastic наиболее подходящих 3 чанков 
 
 function askGPT(array $prompt, Client $client)
