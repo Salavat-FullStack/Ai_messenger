@@ -39,17 +39,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     $store_messages = $data['story'];
 
-    // $prompt = "
-    //     Ты помощник интернет-магазина akuprof.ru.
-
-    //     Используй только этот контекст:
-    //     $context
-
-
-    //     Вопрос пользователя:
-    //     $question
-
-    // ";
     $systemPrompt = "
         Ты — квалифицированный ИИ-консультант интернет-магазина акустических и звукоизоляционных материалов akuprof.ru. 
         Твоя задача — помогать пользователям подбирать материалы, отвечать на вопросы о характеристиках, размерах и монтаже, строго опираясь на предоставленный контекст из базы данных.
@@ -76,15 +65,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         - Избегай вводных фраз вроде «Итак», «Таким образом», «Я рад помочь».
         - Не задавай встречных вопросов и не пиши дежурные фразы вроде «Могу ли я еще чем-то помочь?» в конце ответа (исключение — приветствие).
     ";
-    // $userPrompt = "
-    //     Контекст:
-    //     $context
 
-    //     Вопрос пользователя:
-    //     $question
-    // ";  
+    $userContent = "КОНТЕКСТ ИЗ БАЗЫ ДАННЫХ:\n" . $context . "\n\nВЫШЕ ПРЕДОСТАВЛЕН КОНТЕКСТ. ИСПОЛЬЗУЯ ЕГО, ОТВЕТЬ НА ВОПРОС ПОЛЬЗОВАТЕЛЯ: " . $question;
 
-    $question = ['role' => 'user', 'content' => $question];
+    $question = ['role' => 'user', 'content' => $userContent];
     $systemPrompt = ['role' => 'system', 'content' => $systemPrompt];
 
     $prompt = $store_messages;
@@ -93,10 +77,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     array_unshift($prompt, $systemPrompt);
 
     $responseAi = askGPT($prompt,$client);
-
-    // $responseElastic = saveMessage($es, $question, $responseAi, $userData);
-
-    // $messagesHistory = getMessage($es, $userData['email'], 5);
 
     header('Content-Type: application/json');
 
@@ -111,10 +91,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     ]);
 }
 
-// $client = generatClient("client");
-// $es = generatClient("es");
-
-// $hits = '';
 
 function processBatch($batch, $client, $es){
     foreach($batch as $file){
@@ -154,16 +130,6 @@ function searchSimilar(string $question, $es, Client $client): array
         ]
     ]);
 
-    // $hits = $response['hits']['hits'];
-
-    // foreach ($hits as $hit) {
-    //     echo "ID: " . $hit['_id'] . "\n";
-    //     echo "Text:\n";
-    //     echo $hit['_source']['content'] . "\n";
-    //     echo "-------------------------<br><br>";
-        
-    // }
-
     return $response['hits']['hits'];
 }
 
@@ -185,30 +151,6 @@ $response = $client->post(
         ]
     ]
 );
-
-    // $response = $client->post(
-    //     'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' . GEMINI_API_KEY,
-    //     [
-    //         'json' => [
-    //             'systemInstruction' => [
-    //                 'parts' => [
-    //                     [
-    //                         'text' => $systemPrompt
-    //                     ]
-    //                 ]
-    //             ],
-    //             'contents' => [
-    //                 [
-    //                     'parts' => [
-    //                         [
-    //                             'text' => $userPrompt
-    //                         ]
-    //                     ]
-    //                 ]
-    //             ]
-    //         ]
-    //     ]
-    // );
 
     $responseBody = $response->getBody()->getContents();
 
