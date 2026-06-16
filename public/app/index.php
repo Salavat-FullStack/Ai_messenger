@@ -122,7 +122,7 @@ function searchSimilar(string $question, $es, Client $client): array
         'Soundguard'     => 1.8, // Второй по важности бренд
         'Technosonus'    => 1.6, // Третий
         'Izogertz'    => 1.4,
-        'Acousticgroup'    => 1.2  
+        'Acousticgroup'    => 1.4  
     ];
 
     // Формируем массив условий для секции should динамически
