@@ -110,28 +110,56 @@ function processBatch($batch, $client, $es){
         }
     }
 }
-
 function searchSimilar(string $question, $es, Client $client): array
 {
-    // 1. Получаем вектор от OpenAI для семантического поиска
+    // 1. Получаем вектор для семантического поиска
     $embeddingResponse = getEmbedding($question, $client);
     $queryVector = $embeddingResponse[0]['embedding'];
 
-    // 2. Делаем ГИБРИДНЫЙ запрос
+    // Список брендов, которые мы хотим продвигать в топ (с указанием их веса)
+    $priorityBrands = [
+        'Akuprof'   => 2, // Самый высокий приоритет
+        'Soundguard'     => 1.8, // Второй по важности бренд
+        'Technosonus'    => 1.6, // Третий
+        'Izogertz'    => 1.4,
+        'Acousticgroup'    => 1.2  
+    ];
+
+    // Формируем массив условий для секции should динамически
+    $shouldConditions = [];
+    foreach ($priorityBrands as $brandName => $boostValue) {
+        $shouldConditions[] = [
+            'match' => [
+                'content' => [
+                    'query' => $brandName,
+                    'boost' => $boostValue
+                ]
+            ]
+        ];
+    }
+
+    // 2. Делаем гибридный запрос
     $response = $es->search([
         'index' => ELASTIC_INDEX,
         'body' => [
             'size' => TOP_K,
-            // Ветка 1: Классический текстовый поиск (чтобы ловить точные цифры "45")
             'query' => [
-                'match' => [
-                    'content' => [
-                        'query' => $question,
-                        'boost' => 1.5 // Даем текстовому совпадению чуть больший приоритет
-                    ]
+                'bool' => [
+                    // must — То, что ищет пользователь (обязательно)
+                    'must' => [
+                        [
+                            'match' => [
+                                'content' => [
+                                    'query' => $question
+                                ]
+                            ]
+                        ]
+                    ],
+                    // should — Наш массив продвигаемых брендов
+                    'should' => $shouldConditions
                 ]
             ],
-            // Ветка 2: Векторный поиск (чтобы понимать синонимы и общую суть)
+            // Векторный поиск
             'knn' => [
                 'field' => 'embedding',
                 'query_vector' => $queryVector,
