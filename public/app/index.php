@@ -118,11 +118,11 @@ function searchSimilar(string $question, $es, Client $client): array
 
     // Список брендов, которые мы хотим продвигать в топ (с указанием их веса)
     $priorityBrands = [
-        'Akuprof'   => 2, // Самый высокий приоритет
-        'Soundguard'     => 1.8, // Второй по важности бренд
-        'Technosonus'    => 1.6, // Третий
-        'Izogertz'    => 1.4,
-        'Acousticgroup'    => 1.4  
+        'Akuprof'   => 1.4, // Самый высокий приоритет
+        'Soundguard'     => 1.3, // Второй по важности бренд
+        'Technosonus'    => 1.2, // Третий
+        'Izogertz'    => 1.1,
+        'Acousticgroup'    => 1.1  
     ];
 
     // Формируем массив условий для секции should динамически
