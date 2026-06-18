@@ -116,13 +116,13 @@ function searchSimilar(string $question, $es, Client $client): array
     $embeddingResponse = getEmbedding($question, $client);
     $queryVector = $embeddingResponse[0]['embedding'];
 
-    // Список брендов, которые мы хотим продвигать в топ (с указанием их веса)
+    // Твоя лесенка приоритетов — теперь она будет работать мягко
     $priorityBrands = [
-        'Akuprof'   => 1.4, // Самый высокий приоритет
-        'Soundguard'     => 1.3, // Второй по важности бренд
-        'Technosonus'    => 1.2, // Третий
-        'Izogertz'    => 1.1,
-        'Acousticgroup'    => 1.1  
+        'Akuprof'       => 1.4, // Твой СТМ в приоритете
+        'Soundguard'    => 1.3, 
+        'Technosonus'   => 1.2,
+        'Izogertz'      => 1.1,
+        'Acousticgroup' => 1.1  
     ];
 
     // Формируем массив условий для секции should динамически
@@ -145,12 +145,20 @@ function searchSimilar(string $question, $es, Client $client): array
             'size' => TOP_K,
             'query' => [
                 'bool' => [
-                    // must — То, что ищет пользователь (обязательно)
+                    // must — То, что ищет пользователь
                     'must' => [
                         [
                             'match' => [
                                 'content' => [
-                                    'query' => $question
+                                    'query' => $question,
+                                    // КЛЮЧЕВОЕ ИЗМЕНЕНИЕ 1: 
+                                    // Требуем, чтобы в документе совпало минимум 60% слов из запроса.
+                                    // Это отсечет подрозетники, если пользователь ищет "подложку на пол".
+                                    'minimum_should_match' => '60%', 
+                                    // КЛЮЧЕВОЕ ИЗМЕНЕНИЕ 2: 
+                                    // Слегка прижимаем общий балл текста, чтобы kNN (вектор смысла) 
+                                    // имел веское слово и отбирал именно ТИП товара (подложка/плита/клей)
+                                    'boost' => 0.6 
                                 ]
                             ]
                         ]
@@ -159,7 +167,7 @@ function searchSimilar(string $question, $es, Client $client): array
                     'should' => $shouldConditions
                 ]
             ],
-            // Векторный поиск
+            // Векторный поиск (оставляем без изменений, он держит баланс смысла)
             'knn' => [
                 'field' => 'embedding',
                 'query_vector' => $queryVector,
