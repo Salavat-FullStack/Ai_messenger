@@ -8,7 +8,7 @@ $dotenv->load();
 define('ELASTIC_INDEX', 'documents');
 define('CHUNK_SIZE', 1000);
 define('CHUNK_OVERLAP', 200);
-define('TOP_K', 3);
+define('TOP_K', 5);
 
 define('ELASTIC_HOST', $_ENV['ELASTIC_HOST']);
 define('OPENAI_API_KEY', $_ENV['OPENAI_API_KEY']);
