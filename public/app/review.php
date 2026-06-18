@@ -72,8 +72,7 @@ function reviewGpt(Client $client, $prompt, $story, $request) {
                         'role' => 'user',
                         'content' => "История диалога:\n$story\n\nТекущий вопрос пользователя:\n$request"
                     ]
-                ],
-                'temperature' => 0.1
+                ]
             ]
         ]);
 
