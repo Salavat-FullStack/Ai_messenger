@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                 request: question
             })
         })
-        .then(response => response.text())
+        .then(response => response.json())
         .then(data => {
             console.log(data);
             console.log(data['response']);
