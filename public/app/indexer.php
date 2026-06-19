@@ -2,8 +2,8 @@
 
 require_once "functions.php";
 
-define('DATA_DIR', __DIR__ . '/../dataText/parsed_products/podlojki');
-define('MAX_CHAR_LIMIT', 4000); // Выносим лимит в константу для удобства
+define('DATA_DIR', __DIR__ . '/../dataText/parsed_products_json');
+define('MAX_CHAR_LIMIT', 4000); // Лимит на текстовое описание
 
 $client = generatClient("client"); 
 $es = generatClient("es");
@@ -14,20 +14,33 @@ $batch = [];
 
 foreach ($files as $file) {
     $fullPath = DATA_DIR . '/' . $file;
-    if (!is_file($fullPath)) {
-        continue;
+    if (!is_file($fullPath) || pathinfo($file, PATHINFO_EXTENSION) !== 'json') {
+        continue; // Пропускаем всё, что не является .json файлом
     }
 
-    // 1. Читаем сырой файл с диска
-    $rawContent = file_get_contents($fullPath);
+    // 1. Читаем JSON файл с диска и декодируем его в массив
+    $jsonRaw = file_get_contents($fullPath);
+    $productData = json_decode($jsonRaw, true);
 
-    // 2. Очищаем текст от табов, мусора и жестко ограничиваем длину до 4000 символов "на лету"
-    $cleanContent = cleanTextOnTheFly($rawContent);
+    if (!$productData || !isset($productData['content'])) {
+        continue; // Защита: пропускаем битые файлы
+    }
 
-    // Добавляем в батч уже чистый и компактный текст
+    // 2. Очищаем и жестко ограничиваем длину до 4000 символов ТОЛЬКО для поля content
+    $cleanContent = cleanTextOnTheFly($productData['content']);
+
+    // 3. Формируем полную текстовую строку для генерации ИИ-вектора (embedding)
+    // Важно, чтобы ИИ знал и название, и бренд, и описание товара при создании вектора
+    $textForEmbedding = "НАЗВАНИЕ: " . $productData['title'] . "\nБРЕНД: " . $productData['brand'] . "\n" . $cleanContent;
+
+    // Добавляем в батч структурированные данные
     $batch[] = [
-        'text' => $cleanContent,
-        'file' => $file
+        'title'        => $productData['title'],
+        'brand'        => $productData['brand'],
+        'url'          => $productData['url'],
+        'content'      => $cleanContent, // Уже очищенный и урезанный текст
+        'embedding_text' => $textForEmbedding, // Это поле скормим OpenAI
+        'file'         => $file
     ];
 
     if (count($batch) === $batchSize) {
@@ -41,7 +54,7 @@ if (count($batch) > 0) {
     processAndSendWholeProducts($batch, $client, $es, ELASTIC_INDEX);
 }
 
-echo "\nИндексация очищенных товаров (с лимитом в " . MAX_CHAR_LIMIT . " симв.) успешно завершена!\n";
+echo "\nИндексация разделенных JSON товаров (с лимитом описания в " . MAX_CHAR_LIMIT . " симв.) успешно завершена!\n";
 
 /**
  * Функция умной очистки текста от табов, пустых пространств + ограничение длины
@@ -71,11 +84,9 @@ function cleanTextOnTheFly($text) {
     $resultText = implode("\n", $cleanedLines);
 
     // КРАСИВЫЙ ХАК ДЛЯ ХАРАКТЕРИСТИК:
-    // Если параметр и цифра идут на разных строках, склеиваем их через двоеточие.
     $resultText = preg_replace('/(мм|м²|кг|дБ)\n(\d+)/ui', '$1: $2', $resultText);
 
     // МАГИЯ ОБРЕЗКИ: 
-    // Если длина строки в кодировке UTF-8 больше лимита, аккуратно обрезаем её.
     if (mb_strlen($resultText, 'UTF-8') > MAX_CHAR_LIMIT) {
         $resultText = mb_substr($resultText, 0, MAX_CHAR_LIMIT, 'UTF-8');
     }
@@ -84,24 +95,30 @@ function cleanTextOnTheFly($text) {
 }
 
 /**
- * Функция отправки в OpenAI и Elasticsearch
+ * Функция отправки в OpenAI и Elasticsearch по разделенным полям
  */
 function processAndSendWholeProducts($batch, $client, $es, $indexName) {
-    $textsOnly = array_column($batch, 'text');
+    // Берем специальную склейку текстов для генерации точного вектора
+    $textsOnly = array_column($batch, 'embedding_text');
     
-    // Получаем эмбеддинги для чистого контента
+    // Получаем эмбеддинги
     $embeddingResponse = getEmbedding($textsOnly, $client);
 
     $bulk = [];
     foreach ($batch as $index => $item) {
         $bulk[] = ['index' => ['_index' => $indexName]];
+        
+        // РАСКЛАДЫВАЕМ ВСЁ ПО НОВЫМ ПОЛЯМ ДЛЯ СХЕМЫ ИНДЕКСА
         $bulk[] = [
-            'content'   => $item['text'], // Сюда идет очищенный и обрезанный текст
+            'title'     => $item['title'],
+            'brand'     => $item['brand'],
+            'url'       => $item['url'],
+            'content'   => $item['content'], // Описание и характеристики отдельно
             'embedding' => $embeddingResponse[$index]['embedding'],
-            'source'    => $item['file'],
+            'source'    => $item['file']
         ];
     }
 
     $es->bulk(['body' => $bulk]);
-    echo "Загружена чистая пачка из " . count($batch) . " товаров.\n";
+    echo "Загружена структурированная пачка из " . count($batch) . " товаров в Elastic.\n";
 }
