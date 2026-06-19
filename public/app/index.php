@@ -118,7 +118,7 @@ function searchSimilar(string $question, $es, Client $client): array
 
     // Твоя лесенка приоритетов — теперь она будет работать мягко
     $priorityBrands = [
-        'Akuprof'       => 1.4, // Твой СТМ в приоритете
+        'Akuprof'       => 1.6, // Твой СТМ в приоритете
         'Soundguard'    => 1.3, 
         'Technosonus'   => 1.2,
         'Izogertz'      => 1.1,
