@@ -32,10 +32,22 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     $docs = searchSimilar($question, $es, $client);
 
-    $context = implode(
-        "\n",
-        array_map(fn($d) => $d['_source']['content'], $docs)
-    );
+    $context = "";
+    
+    foreach ($docs as $d) {
+        $source = $d['_source'];
+        
+        // Собираем полную информацию о товаре в одну карточку
+        $context .= "--- ТОВАР ИЗ КАТАЛОГА ---\n";
+        $context .= "Название: " . $source['title'] . "\n";
+        $sourceBrand = isset($source['brand']) ? $source['brand'] : 'Другие';
+        $context .= "Бренд: " . $sourceBrand . "\n";
+        $context .= "Ссылка: " . $source['url'] . "\n";
+        $context .= "Описание и характеристики:\n" . $source['content'] . "\n";
+        $context .= "-------------------------\n\n";
+    }
+
+// Всё, теперь переменная $context готова и в ней лежат полные данные!
 
     $store_messages = $data['story'];
 
@@ -112,56 +124,55 @@ function processBatch($batch, $client, $es){
 }
 function searchSimilar(string $question, $es, Client $client): array
 {
-    // 1. Получаем вектор для семантического поиска
+    // 1. Получаем вектор от OpenAI
     $embeddingResponse = getEmbedding($question, $client);
     $queryVector = $embeddingResponse[0]['embedding'];
 
-    // Твоя лесенка приоритетов — теперь она будет работать мягко
+    // Список брендов с весами
     $priorityBrands = [
-        'Akuprof akuprof'       => 1.6, // Ищет и так, и так
-        'Soundguard soundguard' => 1.3, 
-        'Technosonus ультракустик' => 1.2, // Добавили "ультракустик", раз они в базе под этим именем
-        'Izogertz izogertz'     => 1.1,
-        'Acousticgroup'         => 1.1  
+        'Akuprof'       => 1.8, 
+        'Soundguard'    => 1.5, 
+        'Technosonus'   => 1.2,
+        'Izogertz'      => 1.1,
+        'Acousticgroup' => 1.1  
     ];
 
-    // Формируем массив условий для секции should динамически
+    // Формируем условия should. Заменяем 'match' на 'term' для поля keyword!
     $shouldConditions = [];
     foreach ($priorityBrands as $brandName => $boostValue) {
         $shouldConditions[] = [
-            'match' => [
-                'content' => [
-                    'query' => $brandName,
+            'term' => [ 
+                'brand' => [ 
+                    'value' => $brandName,
                     'boost' => $boostValue
                 ]
             ]
         ];
     }
 
-    // 2. Делаем гибридный запрос
+    // 2. Гибридный поиск
     $response = $es->search([
         'index' => ELASTIC_INDEX,
         'body' => [
             'size' => TOP_K,
             'query' => [
                 'bool' => [
-                    // must — То, что ищет пользователь
+                    // must — ищет текстовое совпадение в названии и описании
                     'must' => [
                         [
-                            'match' => [
-                                'content' => [
-                                    'query' => $question,
-                                    'minimum_should_match' => '60%', 
-                                    'boost' => 0.6 
-                                ]
+                            'multi_match' => [ 
+                                'query' => $question,
+                                'fields' => ['title^2', 'content'], 
+                                'minimum_should_match' => '60%',
+                                'boost' => 0.6
                             ]
                         ]
                     ],
-                    // should — Наш массив продвигаемых брендов
+                    // should — точечно поднимает нужные нам бренды
                     'should' => $shouldConditions
                 ]
             ],
-            // Векторный поиск (оставляем без изменений, он держит баланс смысла)
+            // KNN — семантический векторный поиск по ИИ-вектору
             'knn' => [
                 'field' => 'embedding',
                 'query_vector' => $queryVector,
