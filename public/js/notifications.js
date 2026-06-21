@@ -57,7 +57,7 @@ let messageQuantityGlobal = {
         },
         credentials: "include",
         body: JSON.stringify({
-            assistant: assistant
+            assistant: "Менеджер"
         })
     });
 
@@ -108,7 +108,7 @@ function startPolling(messageQuantityGlobal, type) {
                 },
                 credentials: "include",
                 body: JSON.stringify({
-                    assistant: assistant
+                    assistant: "Менеджер"
                 })
             });
 
