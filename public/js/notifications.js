@@ -72,8 +72,8 @@ let AiArrayGlobal = {
 };
 
 (async () => {
-    const Ai_message_storage = document.querySelector('.Ai_message_storage');
-    Ai_message_storage.replaceChildren(); 
+    // const Ai_message_storage = document.querySelector('.Ai_message_storage');
+    // Ai_message_storage.replaceChildren(); 
 
     const response = await fetch('https://chat-progress.ru/app/get_message.php',{
         method: "POST",
@@ -115,8 +115,8 @@ function startPolling(messageQuantityGlobal, type) {
             data = await response.json();
 
         }else if(type == "ai_and_meneger"){
-            const Ai_message_storage = document.querySelector('.Ai_message_storage');
-            Ai_message_storage.replaceChildren(); 
+            // const Ai_message_storage = document.querySelector('.Ai_message_storage');
+            // Ai_message_storage.replaceChildren(); 
 
             const response = await fetch('https://chat-progress.ru/app/get_message.php',{
                 method: "POST",
@@ -149,6 +149,10 @@ function startPolling(messageQuantityGlobal, type) {
             if (item.type === 'new') {
                 if(item.new.managerResponse.length > 1){
                     console.log("новое сообщение");
+
+                    const Ai_message_storage = document.querySelector('.Ai_message_storage');
+                    Ai_message_storage.replaceChildren(); 
+
                     renderMessageManager("Менеджер");
                     renderAi();
                     onNewMessage({
@@ -171,6 +175,9 @@ function startPolling(messageQuantityGlobal, type) {
                 onNewMessage({
                     text: "Новое сообщение от менеджера!"
                 });
+                const Ai_message_storage = document.querySelector('.Ai_message_storage');
+                Ai_message_storage.replaceChildren(); 
+
                 renderMessageManager("Менеджер");
                 renderAi();
                 let btn = document.querySelector('#assist_manager');
