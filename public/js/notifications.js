@@ -50,7 +50,18 @@ let messageQuantityGlobal = {
 };
 
 (async () => {
-    messageQuantityGlobal = await renderMessageManager("Менеджер");
+    const response = await fetch('https://chat-progress.ru/app/get_message.php',{
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: "include",
+        body: JSON.stringify({
+            assistant: assistant
+        })
+    });
+
+    messageQuantityGlobal = await response.json();
 
     startPolling(messageQuantityGlobal, "meneger"); // 👈 запускаем только после загрузки
 })();
@@ -63,7 +74,20 @@ let AiArrayGlobal = {
 (async () => {
     const Ai_message_storage = document.querySelector('.Ai_message_storage');
     Ai_message_storage.replaceChildren(); 
-    AiArrayGlobal = await renderAi();
+
+    const response = await fetch('https://chat-progress.ru/app/get_message.php',{
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: "include",
+        body: JSON.stringify({
+            assistant: "ИИ ассистент"
+        })
+    });
+    // console.log(window.selectedAssistant);
+
+    AiArrayGlobal = await response.json();
 
     startPolling(AiArrayGlobal, "ai_and_meneger");
 })();
@@ -77,13 +101,36 @@ function startPolling(messageQuantityGlobal, type) {
         let data;
 
         if(type == "meneger"){
-            data = await renderMessageManager("Менеджер");
+            const response = await fetch('https://chat-progress.ru/app/get_message.php',{
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    assistant: assistant
+                })
+            });
+
+            data = await response.json();
 
         }else if(type == "ai_and_meneger"){
             const Ai_message_storage = document.querySelector('.Ai_message_storage');
             Ai_message_storage.replaceChildren(); 
 
-            data = await renderAi();
+            const response = await fetch('https://chat-progress.ru/app/get_message.php',{
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    assistant: "ИИ ассистент"
+                })
+            });
+            // console.log(window.selectedAssistant);
+
+            data = await response.json();
         }
 
         console.log(messageQuantityGlobal);
@@ -102,6 +149,8 @@ function startPolling(messageQuantityGlobal, type) {
             if (item.type === 'new') {
                 if(item.new.managerResponse.length > 1){
                     console.log("новое сообщение");
+                    renderMessageManager("Менеджер");
+                    renderAi();
                     onNewMessage({
                         text: "Новое сообщение от менеджера!"
                     });
@@ -122,6 +171,8 @@ function startPolling(messageQuantityGlobal, type) {
                 onNewMessage({
                     text: "Новое сообщение от менеджера!"
                 });
+                renderMessageManager("Менеджер");
+                renderAi();
                 let btn = document.querySelector('#assist_manager');
                 if(type == "ai_and_meneger"){
                     btn = document.querySelector('#assist_Ai');
