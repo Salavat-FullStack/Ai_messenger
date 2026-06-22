@@ -156,7 +156,7 @@ function searchSimilar(string $question, $es, Client $client): array
             'knn' => [
                 'field'          => 'embedding',
                 'query_vector'   => $queryVector,
-                'k'              => TOP_K,
+                'k'              => 8,
                 'num_candidates' => 100,
                 'boost'          => 2.0 // Поднимаем вес ИИ-смысла, чтобы он склеивал "шумо" и "звуко" изоляцию
             ]
