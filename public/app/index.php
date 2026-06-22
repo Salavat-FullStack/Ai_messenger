@@ -139,14 +139,13 @@ function searchSimilar(string $question, $es, Client $client): array
 
     // Список брендов с весами
     $priorityBrands = [
-        'Akuprof'       => 1.8, 
-        'Soundguard'    => 1.5, 
+        'Akuprof'       => 1.5, 
+        'Soundguard'    => 1.3, 
         'Technosonus'   => 1.2,
         'Izogertz'      => 1.1,
         'Acousticgroup' => 1.1  
     ];
 
-    // Формируем условия should для брендов
     $shouldConditions = [];
     foreach ($priorityBrands as $brandName => $boostValue) {
         $shouldConditions[] = [
@@ -159,36 +158,33 @@ function searchSimilar(string $question, $es, Client $client): array
         ];
     }
 
-    // Текстовый поиск с ОЧЕНЬ маленьким бустом, чтобы он не перебивал вектор
-    $allShouldConditions = array_merge([
-        [
-            'multi_match' => [ 
-                'query' => $question,
-                'fields' => ['title^2', 'content'], 
-                'boost' => 0.02 // Сбиваем вес текста, чтобы он не глушил вектор
-            ]
-        ]
-    ], $shouldConditions);
-
-    // 2. Гибридный поиск, совместимый с бесплатной лицензией
+    // КРИТИЧЕСКИЙ ФИКС: Убираем ['body' => [...]]. В ES PHP Client v8 все параметры идут на верхнем уровне!
     $response = $es->search([
         'index' => ELASTIC_INDEX,
-        'body' => [
-            'size' => TOP_K,
-            'query' => [
-                'bool' => [
-                    'should' => $allShouldConditions
-                ]
-            ],
-            // KNN отлично работает на базовой лицензии
-            'knn' => [
-                'field' => 'embedding',
-                'query_vector' => $queryVector,
-                'k' => TOP_K,
-                'num_candidates' => 100,
-                'boost' => 2.0 // Поднимаем значимость ИИ-вектора, чтобы он доминировал
+        'size'  => TOP_K,
+        
+        // Текстовая подстраховка
+        'query' => [
+            'bool' => [
+                'should' => array_merge([
+                    [
+                        'multi_match' => [ 
+                            'query'  => $question,
+                            'fields' => ['title^2', 'content'], 
+                            'boost'  => 0.1 // Крошечный вес для текста
+                        ]
+                    ]
+                ], $shouldConditions)
             ]
-            // Блок 'rank' с 'rrf' полностью УДАЛЕН, чтобы не было ошибки лицензии
+        ],
+        
+        // Теперь KNN гарантированно улетит на сервер и вернет СМЫСЛ
+        'knn' => [
+            'field'          => 'embedding',
+            'query_vector'   => $queryVector,
+            'k'              => TOP_K,
+            'num_candidates' => 100,
+            'boost'          => 10.0 // Огромный вес вектору, чтобы он управлял выдачей
         ]
     ]);
 
