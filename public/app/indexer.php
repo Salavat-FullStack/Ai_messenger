@@ -2,7 +2,7 @@
 
 require_once "functions.php";
 
-define('DATA_DIR', __DIR__ . '/../dataText/parsed_products_json');
+define('DATA_DIR', __DIR__ . '/../dataText/about');
 define('MAX_CHAR_LIMIT', 4000); // Лимит на текстовое описание
 
 $client = generatClient("client"); 
