@@ -137,27 +137,29 @@ function searchSimilar(string $question, $es, Client $client): array
     $embeddingResponse = getEmbedding($question, $client);
     $queryVector = $embeddingResponse[0]['embedding'];
 
-    // 2. Делаем плоский запрос без 'body' — теперь всё точно долетит до Elastic
+    // 2. Передаем параметры запроса внутрь ключа 'body'
     $response = $es->search([
         'index' => ELASTIC_INDEX,
-        'size'  => TOP_K, // Здесь должно быть 5
-        
-        // Убираем искусственное завышение брендов. Оставляем только мягкий поиск по словам.
-        'query' => [
-            'multi_match' => [ 
-                'query'  => $question,
-                'fields' => ['title^2', 'content'], 
-                'boost'  => 0.2 // Небольшой вес для точных совпадений слов
+        'body'  => [
+            'size'  => TOP_K, // Параметр количества можно передавать как в body, так и на верхний уровень
+            
+            // Текстовый поиск
+            'query' => [
+                'multi_match' => [ 
+                    'query'  => $question,
+                    'fields' => ['title^2', 'content'], 
+                    'boost'  => 0.2 
+                ]
+            ],
+            
+            // Векторный поиск (kNN)
+            'knn' => [
+                'field'          => 'embedding',
+                'query_vector'   => $queryVector,
+                'k'              => TOP_K,
+                'num_candidates' => 100,
+                'boost'          => 1.5 
             ]
-        ],
-        
-        // Векторный поиск находит СМЫСЛ (потолок, новостройка) среди ВСЕХ брендов
-        'knn' => [
-            'field'          => 'embedding',
-            'query_vector'   => $queryVector,
-            'k'              => TOP_K,
-            'num_candidates' => 100,
-            'boost'          => 1.5 // Основной вес идет на смысл запроса
         ]
     ]);
 

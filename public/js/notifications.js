@@ -110,11 +110,11 @@ function startPolling(messageQuantityGlobal, type) {
             data = await response.json();
         }
 
-        console.log(messageQuantityGlobal);
-        console.log(data);
+        // console.log(messageQuantityGlobal);
+        // console.log(data);
 
-        console.log(messageQuantityGlobal.response.length);
-        console.log(data.response.length);
+        // console.log(messageQuantityGlobal.response.length);
+        // console.log(data.response.length);
 
         const changes = detectChanges(
             messageQuantityGlobal.response,
