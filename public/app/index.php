@@ -144,21 +144,22 @@ function searchSimilar(string $question, $es, Client $client): array
             'size'  => TOP_K, // Параметр количества можно передавать как в body, так и на верхний уровень
             
             // Текстовый поиск
+// Увеличь вес текста, чтобы точные совпадения (например, "потолок") имели значение
             'query' => [
                 'multi_match' => [ 
                     'query'  => $question,
-                    'fields' => ['title^2', 'content'], 
-                    'boost'  => 0.2 
+                    'fields' => ['title^3', 'content'], // Повысили важность заголовка
+                    'boost'  => 1.2 // Было 0.2, подняли до 1.2
                 ]
             ],
-            
-            // Векторный поиск (kNN)
+
+            // Немного приземли вес вектора, пока данные не идеальны
             'knn' => [
                 'field'          => 'embedding',
                 'query_vector'   => $queryVector,
                 'k'              => TOP_K,
                 'num_candidates' => 100,
-                'boost'          => 1.5 
+                'boost'          => 0.8 // Было 1.5, снизили до 0.8
             ]
         ]
     ]);
