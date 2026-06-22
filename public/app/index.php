@@ -133,58 +133,31 @@ function processBatch($batch, $client, $es){
 }
 function searchSimilar(string $question, $es, Client $client): array
 {
-    // 1. Получаем вектор от OpenAI
+    // 1. Получаем ИИ-вектор от OpenAI
     $embeddingResponse = getEmbedding($question, $client);
     $queryVector = $embeddingResponse[0]['embedding'];
 
-    // Список брендов с весами
-    $priorityBrands = [
-        'Akuprof'       => 1.5, 
-        'Soundguard'    => 1.3, 
-        'Technosonus'   => 1.2,
-        'Izogertz'      => 1.1,
-        'Acousticgroup' => 1.1  
-    ];
-
-    $shouldConditions = [];
-    foreach ($priorityBrands as $brandName => $boostValue) {
-        $shouldConditions[] = [
-            'term' => [ 
-                'brand' => [ 
-                    'value' => $brandName,
-                    'boost' => $boostValue
-                ]
-            ]
-        ];
-    }
-
-    // КРИТИЧЕСКИЙ ФИКС: Убираем ['body' => [...]]. В ES PHP Client v8 все параметры идут на верхнем уровне!
+    // 2. Делаем плоский запрос без 'body' — теперь всё точно долетит до Elastic
     $response = $es->search([
         'index' => ELASTIC_INDEX,
-        'size'  => TOP_K,
+        'size'  => TOP_K, // Здесь должно быть 5
         
-        // Текстовая подстраховка
+        // Убираем искусственное завышение брендов. Оставляем только мягкий поиск по словам.
         'query' => [
-            'bool' => [
-                'should' => array_merge([
-                    [
-                        'multi_match' => [ 
-                            'query'  => $question,
-                            'fields' => ['title^2', 'content'], 
-                            'boost'  => 0.1 // Крошечный вес для текста
-                        ]
-                    ]
-                ], $shouldConditions)
+            'multi_match' => [ 
+                'query'  => $question,
+                'fields' => ['title^2', 'content'], 
+                'boost'  => 0.2 // Небольшой вес для точных совпадений слов
             ]
         ],
         
-        // Теперь KNN гарантированно улетит на сервер и вернет СМЫСЛ
+        // Векторный поиск находит СМЫСЛ (потолок, новостройка) среди ВСЕХ брендов
         'knn' => [
             'field'          => 'embedding',
             'query_vector'   => $queryVector,
             'k'              => TOP_K,
             'num_candidates' => 100,
-            'boost'          => 10.0 // Огромный вес вектору, чтобы он управлял выдачей
+            'boost'          => 1.5 // Основной вес идет на смысл запроса
         ]
     ]);
 
