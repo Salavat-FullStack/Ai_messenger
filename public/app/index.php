@@ -146,7 +146,7 @@ function searchSimilar(string $question, $es, Client $client): array
         'Acousticgroup' => 1.1  
     ];
 
-    // Формируем условия should. Заменяем 'match' на 'term' для поля keyword!
+    // Формируем условия should для брендов
     $shouldConditions = [];
     foreach ($priorityBrands as $brandName => $boostValue) {
         $shouldConditions[] = [
@@ -159,34 +159,40 @@ function searchSimilar(string $question, $es, Client $client): array
         ];
     }
 
-    // 2. Гибридный поиск
+    // Добавляем основное текстовое условие в массив should условий
+    $allShouldConditions = array_merge([
+        [
+            'multi_match' => [ 
+                'query' => $question,
+                'fields' => ['title^2', 'content'], 
+                // УБРАЛИ минимум 60% — теперь текст не блокирует выдачу, а лишь помогает ей
+                'boost' => 1.0 
+            ]
+        ]
+    ], $shouldConditions);
+
+    // 2. Гибридный поиск с использованием RRF
     $response = $es->search([
         'index' => ELASTIC_INDEX,
         'body' => [
             'size' => TOP_K,
             'query' => [
                 'bool' => [
-                    // must — ищет текстовое совпадение в названии и описании
-                    'must' => [
-                        [
-                            'multi_match' => [ 
-                                'query' => $question,
-                                'fields' => ['title^2', 'content'], 
-                                'minimum_should_match' => '60%',
-                                'boost' => 0.6
-                            ]
-                        ]
-                    ],
-                    // should — точечно поднимает нужные нам бренды
-                    'should' => $shouldConditions
+                    // Перенесли всё в should. Текст теперь — рекомендация, а не жесткий фильтр
+                    'should' => $allShouldConditions
                 ]
             ],
-            // KNN — семантический векторный поиск по ИИ-вектору
+            // KNN — ищет чистый смысл (потолок в новостройке)
             'knn' => [
                 'field' => 'embedding',
                 'query_vector' => $queryVector,
                 'k' => TOP_K,
                 'num_candidates' => 100
+            ],
+            // МЕГА-ФИКС: Включаем RRF. Он заставит Elastic ранжировать документы не по кривым баллам,
+            // а по их реальной позиции в текстовой и векторной выдаче.
+            'rank' => [
+                'rrf' => (object)[]
             ]
         ]
     ]);
