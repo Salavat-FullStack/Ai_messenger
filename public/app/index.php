@@ -144,9 +144,6 @@ function searchSimilar(string $question, $es, Client $client): array
             'size' => 10, // Берем чуть больше, так как схлопывание (collapse) уменьшит их количество
             
             // КЛЮЧЕВОЕ: Схлопываем дубли по URL. В выдаче останется только один SoundGuard Cover
-            'collapse' => [
-                'field' => 'url' 
-            ],
             
             'query' => [
                 'multi_match' => [ 
