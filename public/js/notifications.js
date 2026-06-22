@@ -204,7 +204,7 @@ function detectChanges(oldArr, newArr) {
         }
 
     });
-    console.log(changes);
+    // console.log(changes);
 
     return changes;
 }

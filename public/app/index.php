@@ -141,25 +141,29 @@ function searchSimilar(string $question, $es, Client $client): array
     $response = $es->search([
         'index' => ELASTIC_INDEX,
         'body'  => [
-            'size'  => TOP_K, // Параметр количества можно передавать как в body, так и на верхний уровень
+            'size' => 10, // Берем чуть больше, так как схлопывание (collapse) уменьшит их количество
             
-            // Текстовый поиск
-// Увеличь вес текста, чтобы точные совпадения (например, "потолок") имели значение
+            // КЛЮЧЕВОЕ: Схлопываем дубли по URL. В выдаче останется только один SoundGuard Cover
+            'collapse' => [
+                'field' => 'url' 
+            ],
+            
             'query' => [
                 'multi_match' => [ 
-                    'query'  => $question,
-                    'fields' => ['title^3', 'content'], // Повысили важность заголовка
-                    'boost'  => 1.2 // Было 0.2, подняли до 1.2
+                    'query'          => $question,
+                    'fields'         => ['title^3', 'content'], 
+                    'type'           => 'cross_fields', // Ищет слова так, будто поля title и content — это одно большое поле
+                    'operator'       => 'or',
+                    'boost'          => 0.5 // Понижаем агрессивность, чтобы точное слово "шумоизоляция" не ломало логику
                 ]
             ],
-
-            // Немного приземли вес вектора, пока данные не идеальны
+            
             'knn' => [
                 'field'          => 'embedding',
                 'query_vector'   => $queryVector,
-                'k'              => TOP_K,
+                'k'              => 10,
                 'num_candidates' => 100,
-                'boost'          => 0.8 // Было 1.5, снизили до 0.8
+                'boost'          => 2.0 // Поднимаем вес ИИ-смысла, чтобы он склеивал "шумо" и "звуко" изоляцию
             ]
         ]
     ]);
