@@ -135,30 +135,31 @@ function searchSimilar(string $question, $es, Client $client): array
     $embeddingResponse = getEmbedding($question, $client);
     $queryVector = $embeddingResponse[0]['embedding'];
 
-    // 2. Передаем параметры запроса внутрь ключа 'body'
+    // 2. Выполняем гибридный поиск в Elasticsearch
     $response = $es->search([
         'index' => ELASTIC_INDEX,
         'body'  => [
-            'size' => 10, // Берем чуть больше, так как схлопывание (collapse) уменьшит их количество
+            'size' => 8, 
             
-            // КЛЮЧЕВОЕ: Схлопываем дубли по URL. В выдаче останется только один SoundGuard Cover
-            
+            // Традиционный полнотекстовый поиск (BM25)
             'query' => [
                 'multi_match' => [ 
-                    'query'          => $question,
-                    'fields'         => ['title^3', 'content'], 
-                    'type'           => 'cross_fields', // Ищет слова так, будто поля title и content — это одно большое поле
-                    'operator'       => 'or',
-                    'boost'          => 0.5 // Понижаем агрессивность, чтобы точное слово "шумоизоляция" не ломало логику
+                    'query'  => $question,
+                    // Ищем по новым полям. Заголовку даем самый высокий приоритет (^4), описанию чуть меньше (^1.5)
+                    'fields' => ['title^4', 'description^1.5', 'specification'], 
+                    'type'   => 'best_fields', 
+                    'operator' => 'or',
+                    'boost'  => 0.5 // Оставляем пониженный коэффициент для текста, чтобы ИИ-смысл доминировал
                 ]
             ],
             
+            // Векторный поиск (Поиск по смыслу нейросети)
             'knn' => [
                 'field'          => 'embedding',
                 'query_vector'   => $queryVector,
-                'k'              => 8,
+                'k'              => 10,
                 'num_candidates' => 100,
-                'boost'          => 2.0 // Поднимаем вес ИИ-смысла, чтобы он склеивал "шумо" и "звуко" изоляцию
+                'boost'          => 2.0 // Приоритет отдаем вектору
             ]
         ]
     ]);

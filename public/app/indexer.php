@@ -2,8 +2,8 @@
 
 require_once "functions.php";
 
-define('DATA_DIR', __DIR__ . '/../dataText/about');
-define('MAX_CHAR_LIMIT', 4000); // Лимит на текстовое описание
+define('DATA_DIR', __DIR__ . '/../dataText/my_parsed_products');
+define('MAX_CHAR_LIMIT', 4000); // Лимит на каждое текстовое поле по отдельности
 
 $client = generatClient("client"); 
 $es = generatClient("es");
@@ -22,25 +22,32 @@ foreach ($files as $file) {
     $jsonRaw = file_get_contents($fullPath);
     $productData = json_decode($jsonRaw, true);
 
-    if (!$productData || !isset($productData['content'])) {
-        continue; // Защита: пропускаем битые файлы
+    // Защита: проверяем наличие новых раздельных полей вместо 'content'
+    if (!$productData || !isset($productData['title'])) {
+        continue; 
     }
 
-    // 2. Очищаем и жестко ограничиваем длину до 4000 символов ТОЛЬКО для поля content
-    $cleanContent = cleanTextOnTheFly($productData['content']);
+    // 2. Очищаем и жестко ограничиваем длину для ОПИСАНИЯ и ХАРАКТЕРИСТИК отдельно
+    $cleanDescription   = cleanTextOnTheFly($productData['description'] ?? '');
+    $cleanSpecification = cleanTextOnTheFly($productData['specification'] ?? '');
 
-    // 3. Формируем полную текстовую строку для генерации ИИ-вектора (embedding)
-    // Важно, чтобы ИИ знал и название, и бренд, и описание товара при создании вектора
-    $textForEmbedding = "НАЗВАНИЕ: " . $productData['title'] . "\nБРЕНД: " . $productData['brand'] . "\n" . $cleanContent;
+    // 3. Формируем текстовую строку для генерации ИИ-вектора (embedding) без бренда
+    $textForEmbedding = "НАЗВАНИЕ: " . $productData['title'] . "\n";
+    if (!empty($cleanDescription)) {
+        $textForEmbedding .= "ОПИСАНИЕ:\n" . $cleanDescription . "\n";
+    }
+    if (!empty($cleanSpecification)) {
+        $textForEmbedding .= "ХАРАКТЕРИСТИКИ:\n" . $cleanSpecification;
+    }
 
-    // Добавляем в батч структурированные данные
+    // Добавляем в батч структурированные данные без поля brand
     $batch[] = [
-        'title'        => $productData['title'],
-        'brand'        => $productData['brand'],
-        'url'          => $productData['url'],
-        'content'      => $cleanContent, // Уже очищенный и урезанный текст
-        'embedding_text' => $textForEmbedding, // Это поле скормим OpenAI
-        'file'         => $file
+        'title'          => $productData['title'],
+        'url'            => $productData['url'],
+        'description'    => $cleanDescription,   // Поля теперь разделены
+        'specification'  => $cleanSpecification, // Поля теперь разделены
+        'embedding_text' => $textForEmbedding,   // Текст для OpenAI
+        'file'           => $file
     ];
 
     if (count($batch) === $batchSize) {
@@ -54,7 +61,7 @@ if (count($batch) > 0) {
     processAndSendWholeProducts($batch, $client, $es, ELASTIC_INDEX);
 }
 
-echo "\nИндексация разделенных JSON товаров (с лимитом описания в " . MAX_CHAR_LIMIT . " симв.) успешно завершена!\n";
+echo "\nИндексация разделенных JSON товаров (с лимитом полей в " . MAX_CHAR_LIMIT . " симв.) успешно завершена!\n";
 
 /**
  * Функция умной очистки текста от табов, пустых пространств + ограничение длины
@@ -108,14 +115,14 @@ function processAndSendWholeProducts($batch, $client, $es, $indexName) {
     foreach ($batch as $index => $item) {
         $bulk[] = ['index' => ['_index' => $indexName]];
         
-        // РАСКЛАДЫВАЕМ ВСЁ ПО НОВЫМ ПОЛЯМ ДЛЯ СХЕМЫ ИНДЕКСА
+        // РАСКЛАДЫВАЕМ ВСЁ ПО НОВЫМ ПОЛЯМ ДЛЯ СХЕМЫ ИНДЕКСА (БЕЗ BRAND)
         $bulk[] = [
-            'title'     => $item['title'],
-            'brand'     => $item['brand'],
-            'url'       => $item['url'],
-            'content'   => $item['content'], // Описание и характеристики отдельно
-            'embedding' => $embeddingResponse[$index]['embedding'],
-            'source'    => $item['file']
+            'title'         => $item['title'],
+            'url'           => $item['url'],
+            'description'   => $item['description'],   // В базу уходит отдельно
+            'specification' => $item['specification'], // В базу уходит отдельно
+            'embedding'     => $embeddingResponse[$index]['embedding'],
+            'source'        => $item['file']
         ];
     }
 
