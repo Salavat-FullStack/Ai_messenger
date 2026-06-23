@@ -148,6 +148,10 @@ function searchSimilar(string $question, $es, Client $client): array
         'index' => ELASTIC_INDEX,
         'body'  => [
             'size' => 8, 
+
+            'collapse' => [
+                'field' => 'title.raw' // <-- МЕНЯЕМ ЗДЕСЬ (добавили .raw)
+            ],
             
             // Традиционный полнотекстовый поиск (BM25)
             'query' => [
