@@ -37,13 +37,21 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     foreach ($docs as $d) {
         $source = $d['_source'];
         
-        // Собираем полную информацию о товаре в одну карточку
+        // Собираем полную информацию о товаре в одну структурированную карточку для ИИ
         $context .= "--- ТОВАР ИЗ КАТАЛОГА ---\n";
         $context .= "Название: " . $source['title'] . "\n";
-        $sourceBrand = isset($source['brand']) ? $source['brand'] : 'Другие';
-        $context .= "Бренд: " . $sourceBrand . "\n";
         $context .= "Ссылка: " . $source['url'] . "\n";
-        $context .= "Описание и характеристики:\n" . $source['content'] . "\n";
+        
+        // Аккуратно добавляем описание, если оно есть
+        if (!empty($source['description'])) {
+            $context .= "Описание:\n" . $source['description'] . "\n";
+        }
+        
+        // Обязательно добавляем характеристики, если они есть
+        if (!empty($source['specification'])) {
+            $context .= "Характеристики:\n" . $source['specification'] . "\n";
+        }
+        
         $context .= "-------------------------\n\n";
     }
 
