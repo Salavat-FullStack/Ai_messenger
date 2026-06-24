@@ -108,6 +108,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         Ai_load.classList.remove('display_none');
 
         renderMessage('user', formatDateView(formatDate()), "", question);
+        console.log(store_messages.slice(-4));
 
         fetch('https://chat-progress.ru/app/review.php',{
             method: "POST",
@@ -115,7 +116,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                story: store_messages,
+                story: store_messages.slice(-4),
                 request: question
             })
         })
