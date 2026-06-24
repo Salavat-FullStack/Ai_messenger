@@ -2,7 +2,7 @@
 
 require_once "functions.php";
 
-define('DATA_DIR', __DIR__ . '/../dataText/my_parsed_products');
+define('DATA_DIR', __DIR__ . '/../dataText/my_parsed_products/about');
 define('MAX_CHAR_LIMIT', 4000); // Лимит на каждое текстовое поле по отдельности
 
 $client = generatClient("client"); 
