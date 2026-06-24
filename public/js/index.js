@@ -116,11 +116,11 @@ document.addEventListener('DOMContentLoaded',()=>{
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                story: store_messages,
+                story: store_messages.slice(-4),
                 request: question
             })
         })
-        .then(response => response.json())
+        .then(response => response.text())
         .then(data => {
             console.log(data);
             console.log(data['response']);
