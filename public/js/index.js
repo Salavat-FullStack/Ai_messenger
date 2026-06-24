@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                story: store_messages.slice(-4),
+                story: store_messages,
                 request: question
             })
         })
