@@ -47,6 +47,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         exit;
     }
 
+    echo $cleanToken;
+
     $cleanToken = substr($authHeader, 7); // Отрезаем "Bearer "
 
     if (strpos($cleanToken, ':') === false) {
