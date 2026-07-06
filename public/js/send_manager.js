@@ -57,11 +57,6 @@ document.addEventListener("DOMContentLoaded",()=>{
             formData.append('selectedAssistant', window.selectedAssistant);
             formData.append('USER_DATA', JSON.stringify(USER_DATA));
 
-            console.log(window.messageUser);
-            console.log(formatDate());
-            console.log(window.selectedAssistant);
-            console.log(JSON.stringify(USER_DATA));
-
             if (file) {
                 formData.append('image', file);
             }
@@ -89,7 +84,7 @@ document.addEventListener("DOMContentLoaded",()=>{
                 credentials: "include",
                 body: formData
             })
-            .then(response => response.text())
+            .then(response => response.json())
             .then(data =>{
                 console.log(data);
 
