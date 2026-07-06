@@ -1,7 +1,7 @@
 @media (max-width: 450px) {
     .Ai_modal{
-        right: -4px;
-        margin: 10px;
+        width: 100%;
+        right: 0;
     }
     .instructions_container{
         width: 350px;
