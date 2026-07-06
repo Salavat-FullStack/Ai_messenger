@@ -148,6 +148,7 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
     }
 
     window.renderMessageManager = async function(assistant){
+        console.log(window.AiUserToken);
 
         const response = await fetch('https://chat-progress.ru/app/get_message.php',{
             method: "POST",

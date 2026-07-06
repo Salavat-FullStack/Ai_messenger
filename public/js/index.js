@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                 assistant: window.selectedAssistant
             })
         })
-        .then(response => response.text())
+        .then(response => response.json())
         .then(data => {
             console.log(data);
 
