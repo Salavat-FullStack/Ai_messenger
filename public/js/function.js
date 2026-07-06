@@ -152,7 +152,8 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
         const response = await fetch('https://chat-progress.ru/app/get_message.php',{
             method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + window.AiUserToken
             },
             credentials: "include",
             body: JSON.stringify({

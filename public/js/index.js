@@ -41,8 +41,9 @@ document.addEventListener('DOMContentLoaded',()=>{
         if (data.token) {
             localStorage.setItem('ai_chat_token', data.token);
             token = data.token;
-            window.AiUserToken = token;
         }
+
+        window.AiUserToken = token;
 
         fetch('https://chat-progress.ru/app/get_message.php',{
             method: "POST",
@@ -192,7 +193,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                     fetch('https://chat-progress.ru/app/save_message.php',{
                         method: 'POST',
                         headers: {
-                            'Authorization': 'Bearer ' + token 
+                            'Authorization': 'Bearer ' + window.AiUserToken 
                         },
                         body: formData
                     })
@@ -215,7 +216,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                         fetch('https://chat-progress.ru/app/bot_max.php',{
                             method: 'POST',
                             headers: {
-                                'Authorization': 'Bearer ' + token 
+                                'Authorization': 'Bearer ' + window.AiUserToken 
                             },
                             body: formDataMaxBot
                         })

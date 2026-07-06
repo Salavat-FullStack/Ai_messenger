@@ -29,8 +29,8 @@ $dotenv->load();
 define('COOKIE_GENERATE_KEY', $_ENV['COOKIE_GENERATE_KEY']);
 
 $tokenMax = "f9LHodD0cOLwjuOGWlt5_5r_fk-nUKWe-e3hL5-f_Mg3JcT_L9d7gt1dqg8lbDBJJxPKQx6UEHnpoqND01Iy";
-$userIdArr = [137759013, 230853692, 159563753, 160092633, 140001164];
-// $userIdArr = [137759013, 230853692];
+// $userIdArr = [137759013, 230853692, 159563753, 160092633, 140001164];
+$userIdArr = [137759013, 230853692];
 
 if($_SERVER['REQUEST_METHOD'] === "POST"){
     // $input = file_get_contents("php://input");
