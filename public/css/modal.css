@@ -119,6 +119,11 @@
     padding: 12px;
     cursor: pointer;
     display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#Ai_modal_open_btn img{
+    width: 40px;
 }
 
 #Ai_modal_open_btn:before{
