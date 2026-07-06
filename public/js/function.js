@@ -155,7 +155,7 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
         if (token) {
             authHeaders['Authorization'] = 'Bearer ' + token;
         }
-        
+
         fetch("https://chat-progress.ru/app/cookie.php",{
             method: "GET",
             headers: authHeaders
@@ -170,6 +170,8 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
             }
 
             window.AiUserToken = token;
+
+            console.log(window.AiUserToken);
         });
 
         const response = await fetch('https://chat-progress.ru/app/get_message.php',{
