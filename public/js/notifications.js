@@ -72,71 +72,117 @@ let AiArrayGlobal = {
 const open_btn = document.querySelector('.open_btn_message_notification');
 
 function startPolling(messageQuantityGlobal, type) {
+    let token = localStorage.getItem('ai_chat_token');
 
-    setInterval(async () => {
+    const authHeaders = {};
 
-        let data;
-        console.log(window.AiUserToken);
+    if (token) {
+        authHeaders['Authorization'] = 'Bearer ' + token;
+    }
 
-        if(type == "meneger"){
-            const response = await fetch('https://chat-progress.ru/app/get_message.php',{
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + window.AiUserToken
-                },
-                body: JSON.stringify({
-                    assistant: "Менеджер"
-                })
-            });
+    fetch("https://chat-progress.ru/app/cookie.php",{
+        method: "GET",
+        headers: authHeaders
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data);
 
-            data = await response.json();
-
-        }else if(type == "ai_and_meneger"){
-            // const Ai_message_storage = document.querySelector('.Ai_message_storage');
-            // Ai_message_storage.replaceChildren(); 
-            console.log(window.AiUserToken);
-
-            const response = await fetch('https://chat-progress.ru/app/get_message.php',{
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + window.AiUserToken
-                },
-                body: JSON.stringify({
-                    assistant: "ИИ ассистент"
-                })
-            });
-            // console.log(window.selectedAssistant);
-
-            data = await response.json();
+        if (data.token) {
+            localStorage.setItem('ai_chat_token', data.token);
+            token = data.token;
         }
 
-        // console.log(messageQuantityGlobal);
-        // console.log(data);
+        window.AiUserToken = token;
 
-        // console.log(messageQuantityGlobal.response.length);
-        // console.log(data.response.length);
+        console.log(window.AiUserToken);
 
-        const changes = detectChanges(
-            messageQuantityGlobal.response,
-            data.response
-        );
+        setInterval(async () => {
 
-        changes.forEach(item => {
+            let data;
+            console.log(window.AiUserToken);
 
-            if (item.type === 'new') {
-                if(item.new.managerResponse.length > 1){
-                    console.log("новое сообщение");
+            if(type == "meneger"){
+                const response = await fetch('https://chat-progress.ru/app/get_message.php',{
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + window.AiUserToken
+                    },
+                    body: JSON.stringify({
+                        assistant: "Менеджер"
+                    })
+                });
 
+                data = await response.json();
+
+            }else if(type == "ai_and_meneger"){
+                // const Ai_message_storage = document.querySelector('.Ai_message_storage');
+                // Ai_message_storage.replaceChildren(); 
+                console.log(window.AiUserToken);
+
+                const response = await fetch('https://chat-progress.ru/app/get_message.php',{
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + window.AiUserToken
+                    },
+                    body: JSON.stringify({
+                        assistant: "ИИ ассистент"
+                    })
+                });
+                // console.log(window.selectedAssistant);
+
+                data = await response.json();
+            }
+
+            // console.log(messageQuantityGlobal);
+            // console.log(data);
+
+            // console.log(messageQuantityGlobal.response.length);
+            // console.log(data.response.length);
+
+            const changes = detectChanges(
+                messageQuantityGlobal.response,
+                data.response
+            );
+
+            changes.forEach(item => {
+
+                if (item.type === 'new') {
+                    if(item.new.managerResponse.length > 1){
+                        console.log("новое сообщение");
+
+                        const Ai_message_storage = document.querySelector('.Ai_message_storage');
+                        Ai_message_storage.replaceChildren(); 
+
+                        renderMessageManager("Менеджер");
+                        renderAi();
+                        onNewMessage({
+                            text: "Новое сообщение от менеджера!"
+                        });
+                        let btn = document.querySelector('#assist_manager');
+                        if(type == "ai_and_meneger"){
+                            btn = document.querySelector('#assist_Ai');
+                        }
+                        btn.classList.add('message_notification');
+
+                        open_btn.classList.remove('display_none');
+                    }
+
+                    return;
+                }
+
+                if (item.type === 'updated') {
+                    console.log("менеджер ответил:", item.new.managerResponse);
+                    onNewMessage({
+                        text: "Новое сообщение от менеджера!"
+                    });
                     const Ai_message_storage = document.querySelector('.Ai_message_storage');
                     Ai_message_storage.replaceChildren(); 
 
                     renderMessageManager("Менеджер");
                     renderAi();
-                    onNewMessage({
-                        text: "Новое сообщение от менеджера!"
-                    });
                     let btn = document.querySelector('#assist_manager');
                     if(type == "ai_and_meneger"){
                         btn = document.querySelector('#assist_Ai');
@@ -145,33 +191,12 @@ function startPolling(messageQuantityGlobal, type) {
 
                     open_btn.classList.remove('display_none');
                 }
+            });
 
-                return;
-            }
+            messageQuantityGlobal = data;
 
-            if (item.type === 'updated') {
-                console.log("менеджер ответил:", item.new.managerResponse);
-                onNewMessage({
-                    text: "Новое сообщение от менеджера!"
-                });
-                const Ai_message_storage = document.querySelector('.Ai_message_storage');
-                Ai_message_storage.replaceChildren(); 
-
-                renderMessageManager("Менеджер");
-                renderAi();
-                let btn = document.querySelector('#assist_manager');
-                if(type == "ai_and_meneger"){
-                    btn = document.querySelector('#assist_Ai');
-                }
-                btn.classList.add('message_notification');
-
-                open_btn.classList.remove('display_none');
-            }
-        });
-
-        messageQuantityGlobal = data;
-
-    }, 60000);
+        }, 60000);
+    });
 }
 
 function detectChanges(oldArr, newArr) {
