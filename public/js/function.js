@@ -161,7 +161,7 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
             })
         });
 
-        const data = await response.json();
+        const data = await response.text();
 
         console.log(data);
 
