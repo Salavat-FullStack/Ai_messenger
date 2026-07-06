@@ -76,14 +76,15 @@ function startPolling(messageQuantityGlobal, type) {
     setInterval(async () => {
 
         let data;
+        console.log(window.AiUserToken);
 
         if(type == "meneger"){
             const response = await fetch('https://chat-progress.ru/app/get_message.php',{
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + window.AiUserToken
                 },
-                credentials: "include",
                 body: JSON.stringify({
                     assistant: "Менеджер"
                 })
@@ -94,13 +95,14 @@ function startPolling(messageQuantityGlobal, type) {
         }else if(type == "ai_and_meneger"){
             // const Ai_message_storage = document.querySelector('.Ai_message_storage');
             // Ai_message_storage.replaceChildren(); 
+            console.log(window.AiUserToken);
 
             const response = await fetch('https://chat-progress.ru/app/get_message.php',{
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + window.AiUserToken
                 },
-                credentials: "include",
                 body: JSON.stringify({
                     assistant: "ИИ ассистент"
                 })
@@ -210,12 +212,13 @@ function detectChanges(oldArr, newArr) {
 }
 
 async function renderAi(){
+    console.log(window.AiUserToken);
     const response = await fetch('https://chat-progress.ru/app/get_message.php',{
         method: "POST",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + window.AiUserToken
         },
-        credentials: "include",
         body: JSON.stringify({
             assistant: "ИИ ассистент"
         })
