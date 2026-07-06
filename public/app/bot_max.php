@@ -1,15 +1,26 @@
 <?php
 
-header("Access-Control-Allow-Origin: https://localhost.akuprof.ru");
+$allowed_origins = [
+    'https://localhost.akuprof.ru',
+    'https://akuprof.ru'
+];
+
+// Проверяем, откуда пришел запрос
+if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER['HTTP_ORIGIN'], $allowed_origins)) {
+    header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
+}
+
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
+// Если это preflight-запрос (OPTIONS), сразу отдаем 200 и выходим
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
 }
 
+// Дальше твой код (например, Content-Type для JSON и т.д.)
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');

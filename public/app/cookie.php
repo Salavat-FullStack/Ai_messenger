@@ -1,11 +1,20 @@
 <?php
+$allowed_origins = [
+    'https://localhost.akuprof.ru',
+    'https://akuprof.ru'
+];
 
-header("Access-Control-Allow-Origin: https://localhost.akuprof.ru");
+// Проверяем, откуда пришел запрос
+if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER['HTTP_ORIGIN'], $allowed_origins)) {
+    header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
+}
+
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json");
 
+// Если это preflight-запрос (OPTIONS), сразу отдаем 200 и выходим
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
