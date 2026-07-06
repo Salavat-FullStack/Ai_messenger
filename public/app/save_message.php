@@ -65,6 +65,8 @@ $input = file_get_contents('php://input');
             exit;
         }
 
+        $fileUrl = 'не передан!';
+
         if (isset($_FILES['image']) && $_FILES['image']['error'] === 0 && $_POST['selectedAssistant'] == 'Менеджер') {
             $file = $_FILES['image'];
 
