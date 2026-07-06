@@ -148,6 +148,7 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
     }
 
     window.renderMessageManager = async function(assistant){
+        let responseData;
         let token = localStorage.getItem('ai_chat_token');
 
         const authHeaders = {};
@@ -172,38 +173,39 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
             window.AiUserToken = token;
 
             console.log(window.AiUserToken);
-        });
 
-        const response = await fetch('https://chat-progress.ru/app/get_message.php',{
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.AiUserToken
-            },
-            credentials: "include",
-            body: JSON.stringify({
-                assistant: assistant
+            fetch('https://chat-progress.ru/app/get_message.php',{
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + window.AiUserToken
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    assistant: assistant
+                })
             })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+
+                const container = document.querySelector('.Ai_message_storage_manager');
+                container.innerHTML = "";
+
+                data['response'].forEach(elem => {
+                    renderMessage("user", formatDateView(elem['date']), false, elem['messageUser'], ".Ai_message_storage_manager", elem["file"]);
+
+                    if(elem['managerResponse'].length > 0){
+                        const messageStore = addTagA(elem['managerResponse']);
+
+                        renderMessage("Ai", formatDateView(elem['date']), "Менеджер akuprof", messageStore, ".Ai_message_storage_manager");
+                    }
+                });
+                responseData = data; 
+            });
         });
 
-        const data = await response.text();
-
-        console.log(data);
-
-        const container = document.querySelector('.Ai_message_storage_manager');
-        container.innerHTML = "";
-
-        data['response'].forEach(elem => {
-            renderMessage("user", formatDateView(elem['date']), false, elem['messageUser'], ".Ai_message_storage_manager", elem["file"]);
-
-            if(elem['managerResponse'].length > 0){
-                const messageStore = addTagA(elem['managerResponse']);
-
-                renderMessage("Ai", formatDateView(elem['date']), "Менеджер akuprof", messageStore, ".Ai_message_storage_manager");
-            }
-        });
-
-        return data; 
+        return responseData;
     }
 
     window.addTagA = function(message){
