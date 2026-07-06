@@ -64,14 +64,6 @@ let AiArrayGlobal = {
     const Ai_message_storage = document.querySelector('.Ai_message_storage');
     Ai_message_storage.replaceChildren(); 
 
-    AiArrayGlobal = await renderAi();
-
-    startPolling(AiArrayGlobal, "ai_and_meneger");
-})();
-
-const open_btn = document.querySelector('.open_btn_message_notification');
-
-function startPolling(messageQuantityGlobal, type) {
     let token = localStorage.getItem('ai_chat_token');
 
     const authHeaders = {};
@@ -97,6 +89,15 @@ function startPolling(messageQuantityGlobal, type) {
 
         console.log(window.AiUserToken);
 
+        AiArrayGlobal = await renderAi();
+
+        startPolling(AiArrayGlobal, "ai_and_meneger");
+    });
+})();
+
+const open_btn = document.querySelector('.open_btn_message_notification');
+
+function startPolling(messageQuantityGlobal, type) {
         setInterval(async () => {
 
             let data;
@@ -196,7 +197,6 @@ function startPolling(messageQuantityGlobal, type) {
             messageQuantityGlobal = data;
 
         }, 60000);
-    });
 }
 
 function detectChanges(oldArr, newArr) {
