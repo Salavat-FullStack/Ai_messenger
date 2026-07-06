@@ -61,38 +61,42 @@ let AiArrayGlobal = {
 };
 
 (async () => {
-    const Ai_message_storage = document.querySelector('.Ai_message_storage');
-    Ai_message_storage.replaceChildren(); 
+    try {
+        const Ai_message_storage = document.querySelector('.Ai_message_storage');
+        Ai_message_storage.replaceChildren(); 
 
-    let token = localStorage.getItem('ai_chat_token');
+        let token = localStorage.getItem('ai_chat_token') || "";
 
-    const authHeaders = {};
+        const authHeaders = {};
+        if (token) {
+            authHeaders['Authorization'] = 'Bearer ' + token;
+        }
 
-    if (token) {
-        authHeaders['Authorization'] = 'Bearer ' + token;
-    }
+        // Вместо .then() используем await для получения ответа
+        const response = await fetch("https://chat-progress.ru/app/cookie.php", {
+            method: "GET",
+            headers: authHeaders
+        });
+        
+        const data = await response.json();
+        console.log("Ответ от cookie.php:", data);
 
-    fetch("https://chat-progress.ru/app/cookie.php",{
-        method: "GET",
-        headers: authHeaders
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log(data);
-
-        if (data.token) {
+        if (data && data.token) {
             localStorage.setItem('ai_chat_token', data.token);
             token = data.token;
         }
 
         window.AiUserToken = token;
+        console.log("Установленный токен:", window.AiUserToken);
 
-        console.log(window.AiUserToken);
-
-        AiArrayGlobal = await renderAi();
+        // Теперь await здесь сработает идеально, так как мы находимся в async IIFE
+        const AiArrayGlobal = await renderAi();
 
         startPolling(AiArrayGlobal, "ai_and_meneger");
-    });
+
+    } catch (error) {
+        console.error("Произошла ошибка при инициализации чата:", error);
+    }
 })();
 
 const open_btn = document.querySelector('.open_btn_message_notification');
