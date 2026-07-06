@@ -31,21 +31,40 @@ define('COOKIE_GENERATE_KEY', $_ENV['COOKIE_GENERATE_KEY']);
 $client = generatClient('es');
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-
     $input = file_get_contents('php://input');
-
+    
     $data = json_decode($input, true);
 
     header("Content-Type: application/json");
         
-        //получение куки
-    list($userId, $token) = explode(":", $_COOKIE["ai_chat_cookie"]);
+    // 1. Получаем токен из заголовка вместо куки
+    $headers = getallheaders();
+    $authHeader = $headers['Authorization'] ?? $headers['authorization'] ?? '';
 
+    if (empty($authHeader) || strpos($authHeader, 'Bearer ') !== 0) {
+        http_response_code(401);
+        echo json_encode(["error" => "Unauthorized: Missing token"]);
+        exit;
+    }
+
+    $cleanToken = substr($authHeader, 7); // Отрезаем "Bearer "
+
+    if (strpos($cleanToken, ':') === false) {
+        http_response_code(400);
+        echo json_encode(["error" => "Bad Request: Invalid token format"]);
+        exit;
+    }
+
+    // 2. Разделяем на ID и подпись
+    list($userId, $token) = explode(":", $cleanToken);
+
+    // 3. Ваша проверка подписи HMAC
     $expected = hash_hmac('sha256', $userId, COOKIE_GENERATE_KEY);
 
     if (!hash_equals($expected, $token)) {
         http_response_code(403);
-        exit("Invalid token");
+        echo json_encode(["error" => "Invalid token"]);
+        exit;
     }
 
     $response = getMessage($client, $userId, $data['assistant']);

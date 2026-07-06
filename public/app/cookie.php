@@ -4,17 +4,15 @@ $allowed_origins = [
     'https://akuprof.ru'
 ];
 
-// Проверяем, откуда пришел запрос
 if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER['HTTP_ORIGIN'], $allowed_origins)) {
     header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
 }
 
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Headers: Content-Type, Authorization"); // Важно: Authorization разрешен
 header("Content-Type: application/json");
 
-// Если это preflight-запрос (OPTIONS), сразу отдаем 200 и выходим
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
@@ -27,49 +25,52 @@ $dotenv->load();
 
 define('COOKIE_GENERATE_KEY', $_ENV['COOKIE_GENERATE_KEY']);
 
-$cookie_name = "ai_chat_cookie";
-
-function createUserCookie($secret, $cookie_name) {
-    // 1. создаём уникальный id
+// Функция ТЕПЕРЬ НЕ СТАВИТ КУКУ, а возвращает готовую строку токена
+function generateUserToken($secret) {
+    // 1. Создаём уникальный id
     $id = bin2hex(random_bytes(16));
 
-    // 2. делаем подпись
+    // 2. Делаем подпись
     $signature = hash_hmac('sha256', $id, $secret);
 
-    // 3. соединяем в одну строку
-    $value = $id . ':' . $signature;
+    // 3. Соединяем в одну строку и возвращаем
+    return $id . ':' . $signature;
+}
 
-    // 4. сохраняем куку
-    setcookie($cookie_name, $value, [
-        'expires' => time() + (86400 * 30), // 30 дней
-        'path' => '/',
-        'httponly' => true,
-        'secure' => true, // true если HTTPS
-        'samesite' => 'None'
-    ]);
+// Пытаемся получить токен из заголовков (если фронтенд его прислал)
+$headers = getallheaders();
+$authHeader = $headers['Authorization'] ?? $headers['authorization'] ?? '';
 
+// Если заголовка нет — генерируем НОВЫЙ токен и отдаем фронтенду
+if (empty($authHeader) || strpos($authHeader, 'Bearer ') !== 0) {
+    $newToken = generateUserToken(COOKIE_GENERATE_KEY);
+    
     echo json_encode([
         "status" => "authorized",
-        "comment" => "Кука создана!"
+        "comment" => "Токен создан!",
+        "token" => $newToken // Передаем токен фронтенду для сохранения
     ]);
-
     exit;
 }
 
-if (!isset($_COOKIE[$cookie_name])) {
-    createUserCookie(COOKIE_GENERATE_KEY, $cookie_name);
+// Если заголовок пришел, валидируем его, как и раньше
+$cleanToken = substr($authHeader, 7); // Отрезаем "Bearer "
+
+if (strpos($cleanToken, ':') === false) {
+    http_response_code(400);
+    exit(json_encode(["error" => "Malformed token"]));
 }
 
-list($userId, $token) = explode(":", $_COOKIE[$cookie_name]);
-
+list($userId, $token) = explode(":", $cleanToken);
 $expected = hash_hmac('sha256', $userId, COOKIE_GENERATE_KEY);
 
 if (!hash_equals($expected, $token)) {
     http_response_code(403);
-    exit("Invalid token");
+    exit(json_encode(["error" => "Invalid token"]));
 }
 
+// Если токен валидный, просто подтверждаем статус
 echo json_encode([
     "status" => "authorized",
-    "comment" => "Кука ранее была создана!"
+    "comment" => "Токен ранее был создан и он валиден!"
 ]);

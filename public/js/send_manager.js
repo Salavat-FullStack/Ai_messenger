@@ -37,14 +37,27 @@ document.addEventListener("DOMContentLoaded",()=>{
             console.log(window.selectedAssistant);
             // console.log(window.USER_DATA);
 
+            let token = localStorage.getItem('ai_chat_token');
+
+            const authHeaders = {};
+
+            if (token) {
+                authHeaders['Authorization'] = 'Bearer ' + token;
+            }
+
             fetch("https://chat-progress.ru/app/cookie.php", {
                 method: "GET",
-                credentials: "include",
+                headers: authHeaders
             })
             .then(res => res.json())
             .then(data => {
                 console.log("login ok");
                 console.log(data);
+                if (data.token) {
+                    localStorage.setItem('ai_chat_token', data.token);
+                    token = data.token;
+                    window.AiUserToken = token;
+                }
             });
 
             const file = input.files[0];
@@ -81,7 +94,9 @@ document.addEventListener("DOMContentLoaded",()=>{
 
             fetch('https://chat-progress.ru/app/save_message.php',{
                 method: 'POST',
-                credentials: "include",
+                headers: {
+                    'Authorization': 'Bearer ' + token 
+                },
                 body: formData
             })
             .then(response => response.json())
@@ -111,7 +126,9 @@ document.addEventListener("DOMContentLoaded",()=>{
 
                 fetch('https://chat-progress.ru/app/bot_max.php',{
                     method: 'POST',
-                    credentials: "include",
+                    headers: {
+                        'Authorization': 'Bearer ' + token 
+                    },
                     body: formDataMaxBot
                 })
                 .then(response => response.json())
@@ -137,28 +154,6 @@ document.addEventListener("DOMContentLoaded",()=>{
             });
         }
     }
-
-    // SendBtn.addEventListener('click',()=>{
-
-    //     const result = AiForm();
-    //     if(!result){
-    //         sendManager();
-    //     }
-
-    // });
-
-    // Ai_request_input.addEventListener('keydown', function(event) {
-
-    //     if (event.key === 'Enter' && !event.shiftKey) {
-
-    //         event.preventDefault();
-
-    //         const result = AiForm();
-    //         if(!result){
-    //             sendManager();
-    //         }
-    //     }
-    // });
 
     function loadingGenerateManager(action){
         const Ai_message_storage = document.querySelector('.Ai_message_storage_manager');

@@ -33,18 +33,37 @@ $client = generatClient('es');
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     try{
-        $input = file_get_contents('php://input');
+$input = file_get_contents('php://input');
 
-        list($userId, $token) = explode(":", $_COOKIE["ai_chat_cookie"]);
+        // 1. Получаем токен из заголовка
+        $headers = getallheaders();
+        $authHeader = $headers['Authorization'] ?? $headers['authorization'] ?? '';
 
+        if (empty($authHeader) || strpos($authHeader, 'Bearer ') !== 0) {
+            http_response_code(401);
+            echo json_encode(["error" => "Unauthorized: Missing token"]);
+            exit;
+        }
+
+        $cleanToken = substr($authHeader, 7); // Извлекаем "id:signature"
+
+        if (strpos($cleanToken, ':') === false) {
+            http_response_code(400);
+            echo json_encode(["error" => "Bad Request: Invalid token format"]);
+            exit;
+        }
+
+        // 2. Ваша привычная деструктуризация
+        list($userId, $token) = explode(":", $cleanToken);
+
+        // 3. Ваша криптографическая проверка подписи
         $expected = hash_hmac('sha256', $userId, COOKIE_GENERATE_KEY);
 
         if (!hash_equals($expected, $token)) {
             http_response_code(403);
-            exit("Invalid token");
+            echo json_encode(["error" => "Forbidden: Invalid token signature"]);
+            exit;
         }
-
-        $fileUrl = 'не передан!';
 
         if (isset($_FILES['image']) && $_FILES['image']['error'] === 0 && $_POST['selectedAssistant'] == 'Менеджер') {
             $file = $_FILES['image'];

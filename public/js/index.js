@@ -22,20 +22,34 @@ document.addEventListener('DOMContentLoaded',()=>{
         'email' : ''
     };
 
+    let token = localStorage.getItem('ai_chat_token');
+
+    const authHeaders = {};
+
+    if (token) {
+        authHeaders['Authorization'] = 'Bearer ' + token;
+    }
+
     fetch("https://chat-progress.ru/app/cookie.php",{
         method: "GET",
-        credentials: "include",
+        headers: authHeaders
     })
     .then(res => res.json())
     .then(data => {
         console.log(data);
 
+        if (data.token) {
+            localStorage.setItem('ai_chat_token', data.token);
+            token = data.token;
+            window.AiUserToken = token;
+        }
+
         fetch('https://chat-progress.ru/app/get_message.php',{
             method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
             },
-            credentials: "include",
             body: JSON.stringify({
                 assistant: window.selectedAssistant
             })
@@ -177,7 +191,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 
                     fetch('https://chat-progress.ru/app/save_message.php',{
                         method: 'POST',
-                        credentials: "include",
+                        headers: {
+                            'Authorization': 'Bearer ' + token 
+                        },
                         body: formData
                     })
                     .then(response => response.json())
@@ -198,7 +214,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 
                         fetch('https://chat-progress.ru/app/bot_max.php',{
                             method: 'POST',
-                            credentials: "include",
+                            headers: {
+                                'Authorization': 'Bearer ' + token 
+                            },
                             body: formDataMaxBot
                         })
                         .then(response => response.json())

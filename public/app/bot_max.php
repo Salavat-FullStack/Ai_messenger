@@ -35,13 +35,37 @@ $userIdArr = [137759013, 230853692, 159563753, 160092633, 140001164];
 if($_SERVER['REQUEST_METHOD'] === "POST"){
     // $input = file_get_contents("php://input");
 
-    list($userId, $token) = explode(":", $_COOKIE["ai_chat_cookie"]);
+    $headers = getallheaders();
 
+    $authHeader = $headers['Authorization'] ?? $headers['authorization'] ?? '';
+
+    if (empty($authHeader) || strpos($authHeader, 'Bearer ') !== 0) {
+        http_response_code(401);
+        header("Content-Type: application/json");
+        echo json_encode(["error" => "Unauthorized: Missing token"]);
+        exit;
+    }
+
+    $cleanToken = substr($authHeader, 7); // Извлекаем "id:signature"
+
+    if (strpos($cleanToken, ':') === false) {
+        http_response_code(400);
+        header("Content-Type: application/json");
+        echo json_encode(["error" => "Bad Request: Invalid token format"]);
+        exit;
+    }
+
+    // 2. Разделяем токен на составляющие
+    list($userId, $token) = explode(":", $cleanToken);
+
+    // 3. Проверяем HMAC подпись
     $expected = hash_hmac('sha256', $userId, COOKIE_GENERATE_KEY);
 
     if (!hash_equals($expected, $token)) {
         http_response_code(403);
-        exit("Invalid token");
+        header("Content-Type: application/json");
+        echo json_encode(["error" => "Invalid token"]);
+        exit;
     }
 
     $name = '';
