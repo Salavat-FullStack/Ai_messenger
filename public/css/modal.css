@@ -316,7 +316,7 @@
 
 .reminder_message_ai{
     position: fixed;
-    bottom: 160px;
+    bottom: 110px;
     right: 10px;
     width: 220px;
     background-color: rgb(0 0 0 / 30%);
