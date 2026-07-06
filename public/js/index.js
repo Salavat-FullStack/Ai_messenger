@@ -38,8 +38,6 @@ document.addEventListener('DOMContentLoaded',()=>{
     .then(data => {
         console.log(data);
 
-        console.log(window.AiUserToken);
-
         if (data.token) {
             localStorage.setItem('ai_chat_token', data.token);
             token = data.token;

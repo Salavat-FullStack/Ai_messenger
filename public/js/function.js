@@ -148,7 +148,29 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
     }
 
     window.renderMessageManager = async function(assistant){
-        console.log(window.AiUserToken);
+        let token = localStorage.getItem('ai_chat_token');
+
+        const authHeaders = {};
+
+        if (token) {
+            authHeaders['Authorization'] = 'Bearer ' + token;
+        }
+        
+        fetch("https://chat-progress.ru/app/cookie.php",{
+            method: "GET",
+            headers: authHeaders
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+
+            if (data.token) {
+                localStorage.setItem('ai_chat_token', data.token);
+                token = data.token;
+            }
+
+            window.AiUserToken = token;
+        });
 
         const response = await fetch('https://chat-progress.ru/app/get_message.php',{
             method: "POST",
