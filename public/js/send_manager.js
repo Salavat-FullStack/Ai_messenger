@@ -56,101 +56,101 @@ document.addEventListener("DOMContentLoaded",()=>{
                 if (data.token) {
                     localStorage.setItem('ai_chat_token', data.token);
                     token = data.token;
-                    window.AiUserToken = token;
                 }
-            });
+                window.AiUserToken = token;
 
-            const file = input.files[0];
+                const file = input.files[0];
 
-            const formData = new FormData();
+                const formData = new FormData();
 
-            formData.append('messageUser', window.messageUser);
-            formData.append('managerResponse', '');
-            formData.append('date', formatDate());
-            formData.append('selectedAssistant', window.selectedAssistant);
-            formData.append('USER_DATA', JSON.stringify(USER_DATA));
+                formData.append('messageUser', window.messageUser);
+                formData.append('managerResponse', '');
+                formData.append('date', formatDate());
+                formData.append('selectedAssistant', window.selectedAssistant);
+                formData.append('USER_DATA', JSON.stringify(USER_DATA));
 
-            if (file) {
-                formData.append('image', file);
-            }
-
-            console.log(formData);
-            
-            const preview = document.getElementById('ai_chat_preview');
-
-            const filePreview = document.getElementById('ai_chat_file_preview');
-
-            const close = document.getElementById('close_ai_chat_preview');
-
-            preview.src = '';
-
-            preview.style.display = 'block';
-
-            filePreview.innerHTML = '';
-
-            filePreview.classList.add('display_none');
-
-            close.classList.add('display_none');
-
-            fetch('https://chat-progress.ru/app/save_message.php',{
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + token 
-                },
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data =>{
-                console.log(data);
-
-                if (data.error_file) {
-
-                    alert(data.error_file);
-
-                    return;
+                if (file) {
+                    formData.append('image', file);
                 }
 
-                const formDataMaxBot = new FormData();
+                console.log(formData);
+                
+                const preview = document.getElementById('ai_chat_preview');
 
-                formDataMaxBot.append('messageUser', window.messageUser);
-                formDataMaxBot.append('managerResponse', '');
-                formDataMaxBot.append('date', formatDateView(formatDate()));
-                formDataMaxBot.append('selectedAssistant', window.selectedAssistant);
-                formDataMaxBot.append('UserId', data['response']);
-                formDataMaxBot.append('image', file);
-                formDataMaxBot.append('USER_DATA', JSON.stringify(USER_DATA));
-                formDataMaxBot.append("url", window.location.href);
+                const filePreview = document.getElementById('ai_chat_file_preview');
 
-                console.log(file);
-                console.log(formDataMaxBot);
+                const close = document.getElementById('close_ai_chat_preview');
 
-                fetch('https://chat-progress.ru/app/bot_max.php',{
+                preview.src = '';
+
+                preview.style.display = 'block';
+
+                filePreview.innerHTML = '';
+
+                filePreview.classList.add('display_none');
+
+                close.classList.add('display_none');
+                console.log(window.AiUserToken)
+                fetch('https://chat-progress.ru/app/save_message.php',{
                     method: 'POST',
                     headers: {
-                        'Authorization': 'Bearer ' + token 
+                        'Authorization': 'Bearer ' + window.AiUserToken 
                     },
-                    body: formDataMaxBot
+                    body: formData
                 })
                 .then(response => response.json())
-                .then(data => {
+                .then(data =>{
                     console.log(data);
-                    console.log(data.status);
-                    loadingGenerateManager('delete');
-                    Ai_send_message.classList.remove('display_none');
-                    Ai_load.classList.add('display_none');
-                    input.value = '';
 
-                    renderMessageManager("Менеджер");
+                    if (data.error_file) {
+
+                        alert(data.error_file);
+
+                        return;
+                    }
+
+                    const formDataMaxBot = new FormData();
+
+                    formDataMaxBot.append('messageUser', window.messageUser);
+                    formDataMaxBot.append('managerResponse', '');
+                    formDataMaxBot.append('date', formatDateView(formatDate()));
+                    formDataMaxBot.append('selectedAssistant', window.selectedAssistant);
+                    formDataMaxBot.append('UserId', data['response']);
+                    formDataMaxBot.append('image', file);
+                    formDataMaxBot.append('USER_DATA', JSON.stringify(USER_DATA));
+                    formDataMaxBot.append("url", window.location.href);
+
+                    console.log(file);
+                    console.log(formDataMaxBot);
+
+                    fetch('https://chat-progress.ru/app/bot_max.php',{
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'Bearer ' + token 
+                        },
+                        body: formDataMaxBot
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        console.log(data.status);
+                        loadingGenerateManager('delete');
+                        Ai_send_message.classList.remove('display_none');
+                        Ai_load.classList.add('display_none');
+                        input.value = '';
+
+                        renderMessageManager("Менеджер");
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        input.value = '';
+                    });
+
                 })
-                .catch(err => {
-                    console.error(err);
+                .catch(error =>{
+                    console.error('Ошибка:', error);
                     input.value = '';
                 });
-
-            })
-            .catch(error =>{
-                console.error('Ошибка:', error);
-                input.value = '';
             });
         }
     }
