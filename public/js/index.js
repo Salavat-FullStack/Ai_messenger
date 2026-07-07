@@ -258,9 +258,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 
         const Ai_form = document.getElementById('Ai_form');
 
-        console.log(getCookie('UserDataAi'));
+        console.log(userStorage());
 
-        if(Ai_form.classList.contains('display_none') && getCookie('UserDataAi') === null){
+        if(Ai_form.classList.contains('display_none') && userStorage() === null){
             Ai_form.classList.remove('display_none');
             return;
         }
@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         if(!result){
             console.log(USER_DATA);
             Ai_form.classList.add('display_none');
-            const userData = userCookie(USER_DATA);
+            const userData = userStorage(USER_DATA);
             if(window.selectedAssistant == 'Менеджер'){
                 sendManager(userData);
             }else{
@@ -286,9 +286,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 
             const Ai_form = document.getElementById('Ai_form');
 
-            console.log(getCookie('UserDataAi'));
+            console.log(userStorage());
 
-            if(Ai_form.classList.contains('display_none') && getCookie('UserDataAi') === null){
+            if(Ai_form.classList.contains('display_none') && userStorage() === null){
                 Ai_form.classList.remove('display_none');
                 return;
             }
@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             const result = AiForm();
             if(!result){
                 console.log(USER_DATA);
-                const userData = userCookie(USER_DATA);
+                const userData = userStorage(USER_DATA);
                 Ai_form.classList.add('display_none');
                 if(window.selectedAssistant == 'Менеджер'){
                     sendManager(userData);
@@ -381,55 +381,38 @@ document.addEventListener('DOMContentLoaded',()=>{
             }
         });
     });
+function userStorage(userData = null) {
+    const storageKey = 'UserDataAi';
 
-function userCookie(userData = null) {
+    // 1. Ищем данные в localStorage
+    const savedData = localStorage.getItem(storageKey);
 
-    // ищем куку
-    const cookie = getCookie('UserDataAi');
-
-    // если кука уже есть
-    if (cookie) {
-        return JSON.parse(cookie);
+    // Если данные уже есть, парсим JSON и возвращаем объект
+    if (savedData) {
+        return JSON.parse(savedData);
     }
 
-    // если куки нет и данные не передали
+    // Если в хранилище ничего нет и новые данные не передали
     if (!userData) {
         return null;
     }
 
+    // Проверяем, есть ли хоть какие-то заполненные поля
     const hasData =
         userData.name?.trim() ||
         userData.phone?.trim() ||
         userData.email?.trim();
 
-    // если все поля пустые
+    // Если все поля пустые
     if (!hasData) {
         return null;
     }
 
-    // создаем куку на 7 дней
-    document.cookie = `
-        UserDataAi=${encodeURIComponent(JSON.stringify(userData))};
-        max-age=${60 * 60 * 24 * 7};
-        path=/
-    `.replace(/\n/g, '').trim();
+    // 2. Сохраняем данные в localStorage в виде JSON-строки
+    localStorage.setItem(storageKey, JSON.stringify(userData));
 
-    // возвращаем данные
+    // Возвращаем данные
     return userData;
 }
-
-    function getCookie(name) {
-        const cookies = document.cookie.split(';');
-
-        for (let cookie of cookies) {
-            const [key, value] = cookie.trim().split('=');
-
-            if (key === name) {
-                return decodeURIComponent(value);
-            }
-        }
-
-        return null;
-    }
 
 });
