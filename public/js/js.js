@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         </div>
 
         <div class="Ai_panel">
-            <textarea id="Ai_request_input"></textarea>
+            <textarea id="Ai_request_input" placeholder="Введите сообщение..."></textarea>
 
         <div id="ai_chat_preview_box">
             <div id="close_ai_chat_preview" class="display_none"></div>
