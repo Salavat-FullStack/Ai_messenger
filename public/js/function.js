@@ -147,65 +147,70 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
         .replace(',', '');
     }
 
-    window.renderMessageManager = async function(assistant){
-        let responseData;
+    window.renderMessageManager = async function(assistant) {
         let token = localStorage.getItem('ai_chat_token');
-
         const authHeaders = {};
 
         if (token) {
             authHeaders['Authorization'] = 'Bearer ' + token;
         }
 
-        fetch("https://chat-progress.ru/app/cookie.php",{
-            method: "GET",
-            headers: authHeaders
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
+        try {
+            // 1. Первый запрос (cookie.php)
+            const cookieResponse = await fetch("https://chat-progress.ru/app/cookie.php", {
+                method: "GET",
+                headers: authHeaders
+            });
+            const cookieData = await cookieResponse.json();
+            console.log(cookieData);
 
-            if (data.token) {
-                localStorage.setItem('ai_chat_token', data.token);
-                token = data.token;
+            if (cookieData.token) {
+                localStorage.setItem('ai_chat_token', cookieData.token);
+                token = cookieData.token;
             }
 
             window.AiUserToken = token;
-
             console.log(window.AiUserToken);
 
-            fetch('https://chat-progress.ru/app/get_message.php',{
+            // 2. Второй запрос (get_message.php)
+            const messageResponse = await fetch('https://chat-progress.ru/app/get_message.php', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + window.AiUserToken
                 },
                 credentials: "include",
-                body: JSON.stringify({
-                    assistant: assistant
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
+                body: JSON.stringify({ assistant: assistant })
+            });
+            
+            const data = await messageResponse.json();
+            console.log(data);
 
-                const container = document.querySelector('.Ai_message_storage_manager');
+            // 3. Рендеринг интерфейса
+            const container = document.querySelector('.Ai_message_storage_manager');
+            if (container) {
                 container.innerHTML = "";
+            }
 
+            if (data['response']) {
                 data['response'].forEach(elem => {
                     renderMessage("user", formatDateView(elem['date']), false, elem['messageUser'], ".Ai_message_storage_manager", elem["file"]);
 
-                    if(elem['managerResponse'].length > 0){
+                    if (elem['managerResponse'] && elem['managerResponse'].length > 0) {
                         const messageStore = addTagA(elem['managerResponse']);
-
                         renderMessage("Ai", formatDateView(elem['date']), "Менеджер akuprof", messageStore, ".Ai_message_storage_manager");
                     }
                 });
-                responseData = data; 
-            });
-        });
+            }
 
-        return responseData;
+            // Теперь данные гарантированно вернутся!
+            return data; 
+
+        } catch (error) {
+            console.error("Ошибка при получении сообщений:", error);
+            // Можно вернуть null или пробросить ошибку дальше
+            return null; 
+        }
     }
 
     window.addTagA = function(message){
