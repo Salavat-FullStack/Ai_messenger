@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded",()=>{
                     },
                     body: formData
                 })
-                .then(response => response.text())
+                .then(response => response.json())
                 .then(data =>{
                     console.log(data);
 

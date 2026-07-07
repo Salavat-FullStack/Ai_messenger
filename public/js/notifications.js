@@ -147,6 +147,7 @@ function startPolling(messageQuantityGlobal, type) {
             // console.log(messageQuantityGlobal.response.length);
             // console.log(data.response.length);
 
+            console.log(messageQuantityGlobal);
             const changes = detectChanges(
                 messageQuantityGlobal.response,
                 data.response
