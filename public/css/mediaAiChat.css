@@ -18,7 +18,6 @@
     .Ai_manager{
         width: 90%;
         justify-content: space-around;
-        gap: 15px;
     }
     .assistant_penel{
         margin-left: 0;
@@ -28,5 +27,30 @@
     }
     .assistant_penel{
         justify-content: space-around;
+    }
+
+    .Ai_modal_open_btn{
+        width: 50px;
+        height: 50px;
+    }
+    #Ai_modal_open_btn img {
+        width: 32px;
+    }
+    .reminder_message_ai {
+        width: 200px;
+        height: 105px;
+        font-size: 12px;
+        bottom: 95px;
+    }
+    .reminder_message_btn{
+        width: 23px;
+        height: 23px;
+    }
+    .reminder_message_btn img {
+        height: 13px;
+        padding-left: 1px;
+    }
+    .reminder_message_ai p{
+        line-height: 16px;
     }
 }
