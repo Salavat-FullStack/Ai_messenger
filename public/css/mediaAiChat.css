@@ -10,3 +10,23 @@
         padding: 10px;
     }
 }
+@media (max-width: 380px) {
+    .Ai_nav{
+        padding: 10px;
+        justify-content: space-around;
+    }
+    .Ai_manager{
+        width: 90%;
+        justify-content: space-around;
+        gap: 15px;
+    }
+    .assistant_penel{
+        margin-left: 0;
+    }
+    .Ai_manager_logo{
+        display: none;
+    }
+    .assistant_penel{
+        justify-content: space-around;
+    }
+}
