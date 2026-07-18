@@ -57,6 +57,7 @@ foreach ($files as $file) {
     }
 }
 
+
 if (count($batch) > 0) {
     processAndSendWholeProducts($batch, $client, $es, "documents_zvukoizol");
 }
