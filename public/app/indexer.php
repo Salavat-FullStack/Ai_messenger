@@ -51,14 +51,14 @@ foreach ($files as $file) {
     ];
 
     if (count($batch) === $batchSize) {
-        processAndSendWholeProducts($batch, $client, $es, ELASTIC_INDEX);
+        processAndSendWholeProducts($batch, $client, $es, "documents_zvukoizol");
         $batch = []; 
         usleep(500000); // Пауза 0.5 сек для лимитов OpenAI
     }
 }
 
 if (count($batch) > 0) {
-    processAndSendWholeProducts($batch, $client, $es, ELASTIC_INDEX);
+    processAndSendWholeProducts($batch, $client, $es, "documents_zvukoizol");
 }
 
 echo "\nИндексация разделенных JSON товаров (с лимитом полей в " . MAX_CHAR_LIMIT . " симв.) успешно завершена!\n";
