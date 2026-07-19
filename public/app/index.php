@@ -40,7 +40,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $question = trim($data['question']);
     $question = strip_tags($question);
 
-    $docs = searchSimilar($question, $es, $client);
+    $docs = searchSimilar($question, $es, $client, $ELASTIC_INDEX);
 
     $context = "";
     
@@ -134,7 +134,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 }
 
 
-function processBatch($batch, $client, $es){
+function processBatch($batch, $client, $es, $ELASTIC_INDEX){
     foreach($batch as $file){
         // echo($file);
         $content = file_get_contents(DATA_DIR . '/' . $file);
@@ -142,7 +142,7 @@ function processBatch($batch, $client, $es){
 
         foreach ($chunks as $chunk) {
             $es->index([
-                'index' => ELASTIC_INDEX,
+                'index' => $ELASTIC_INDEX,
                 'body' => [
                     'content'   => $chunk,
                     'embedding' => getEmbedding($chunk, $client),
@@ -152,7 +152,7 @@ function processBatch($batch, $client, $es){
         }
     }
 }
-function searchSimilar(string $question, $es, Client $client): array
+function searchSimilar(string $question, $es, Client $client, $ELASTIC_INDEX): array
 {
     // 1. Получаем ИИ-вектор от OpenAI
     $embeddingResponse = getEmbedding($question, $client);
@@ -160,7 +160,7 @@ function searchSimilar(string $question, $es, Client $client): array
 
     // 2. Выполняем гибридный поиск в Elasticsearch
     $response = $es->search([
-        'index' => ELASTIC_INDEX,
+        'index' => $ELASTIC_INDEX,
         'body'  => [
             'size' => 8, 
 

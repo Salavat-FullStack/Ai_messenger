@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
 $dotenv->load();
 
-define('ELASTIC_INDEX', 'documents');
+// define('ELASTIC_INDEX', 'documents');
 define('CHUNK_SIZE', 1000);
 define('CHUNK_OVERLAP', 200);
 define('TOP_K', 8);
@@ -15,6 +15,20 @@ define('OPENAI_API_KEY', $_ENV['OPENAI_API_KEY']);
 
 use Elastic\Elasticsearch\ClientBuilder;
 use GuzzleHttp\Client;
+
+if (isset($_SERVER['HTTP_REFERER'])) {
+    $referer = $_SERVER['HTTP_REFERER'];
+    
+    $domain = parse_url($referer, PHP_URL_HOST);
+    
+    $url = htmlspecialchars($domain);
+    
+    if($url == "akuprof.ru"){
+        $ELASTIC_INDEX = 'documents';
+    }else if($url == "zvukoizolyatsiya.com"){
+        $ELASTIC_INDEX = "documents_zvukoizol";
+    }
+}
 
 function generatClient($data){
     $client = new Client();
