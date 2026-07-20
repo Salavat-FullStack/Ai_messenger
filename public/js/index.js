@@ -61,18 +61,6 @@ document.addEventListener('DOMContentLoaded',()=>{
         .then(data => {
             console.log(data);
 
-            // data['response'].forEach(elem =>{
-            //     messageStore = addTagA(elem['messageAi']);
-
-            //     renderMessage('user', formatDateView(elem['date']), elem['user_name'], elem['messageUser']);
-            //     renderMessage('Ai', formatDateView(elem['date']), "ИИ ассистент", messageStore);
-
-            //     if(elem['managerResponse']){
-            //         renderMessage('Ai', formatDateView(elem['date']), "Менеджер akuprof", addTagA(elem['managerResponse']));
-                    
-            //     }
-            // });
-
             let lastMessage = data['response'].slice(-3);
 
             console.log(lastMessage);
@@ -91,12 +79,6 @@ document.addEventListener('DOMContentLoaded',()=>{
                     content: lastMessage[i]['messageAi']
                 });
             }
-
-            // lastMessage.forEach(element => {
-            //     console.log(element);
-
-            //     store_messages += `вопрос пользователя: "${element['messageUser']}" \n ответ асистента: "${element['messageAi']}" \n`;
-            // });
             console.log(store_messages);
 
         });

@@ -108,7 +108,7 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
             }
         }else if(messageRole == 'Ai'){
             messageContainer.classList.add('Ai_akuprof_message','Ai_message');
-            if(user == "Менеджер akuprof"){
+            if(user == "Менеджер"){
                 user_name.classList.add('Ai_meneger_response');
             }
         }
@@ -198,7 +198,7 @@ window.renderMessage = function(messageRole, date, user, question, block = '.Ai_
 
                     if (elem['managerResponse'] && elem['managerResponse'].length > 0) {
                         const messageStore = addTagA(elem['managerResponse']);
-                        renderMessage("Ai", formatDateView(elem['date']), "Менеджер akuprof", messageStore, ".Ai_message_storage_manager");
+                        renderMessage("Ai", formatDateView(elem['date']), "Менеджер", messageStore, ".Ai_message_storage_manager");
                     }
                 });
             }
