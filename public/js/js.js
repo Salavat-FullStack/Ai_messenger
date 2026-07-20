@@ -290,4 +290,12 @@ reminder_message_btn.addEventListener('click', ()=>{
     reminder_message_ai.style.display = "none";
 });
 
+const logo = document.querySelector('.Ai_manager_logo');
+console.log(logo);
+
+if(AiChatDomain == "zvukoizolyatsiya.com"){
+    console.log("zvukoizolyatsiya");
+    logo.src = "../image/icons/zvukoizolyatsiya.jpg";
+}
+
 });
