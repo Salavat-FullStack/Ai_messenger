@@ -126,6 +126,8 @@
 }
 .Ai_message_value{
     white-space: pre-wrap;
+    overflow-wrap: break-word; /* Позволяет переносить длинные слова и ссылки */
+    word-break: break-word;
 }
 
 
