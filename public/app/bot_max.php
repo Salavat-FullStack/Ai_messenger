@@ -181,7 +181,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
         $date = "<b>- Дата : </b>" . $_POST['date'];
 
-        $message = $$domain . $title . $userQuestion . $AiResponse . $name . $email. $phone . $location . $ip . $url . $documentId . $userIdText . $date;
+        $message = $domain . $title . $userQuestion . $AiResponse . $name . $email. $phone . $location . $ip . $url . $documentId . $userIdText . $date;
         // $message = $title . $userDataText . $userQuestion . $userAiQuestion . $AiResponse . $date;
     }else if($_POST['selectedAssistant'] == 'Менеджер'){
 
@@ -207,7 +207,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         $userIdText = "<b>- Id пользователя : </b>" . $userId . "\n \n";
 
 
-        $message = $$domain . $title . $userQuestion . $name . $email. $phone . $location . $ip . $url . $date . $documentId . $userIdText;
+        $message = $domain . $title . $userQuestion . $name . $email. $phone . $location . $ip . $url . $date . $documentId . $userIdText;
     }
 
     $filePath = null;
