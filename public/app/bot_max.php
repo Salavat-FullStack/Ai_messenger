@@ -150,7 +150,16 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
     $url = "<b>- Страница: </b>" . $_POST['url'] . "\n \n";
 
-    $domain = parse_url($_POST['url'], PHP_URL_HOST);
+    $rawUrl = $_POST['url'] ?? null;
+
+    // 2. Если $_POST пустой, пробуем прочитать JSON из тела запроса
+    if (!$rawUrl) {
+        $input = json_decode(file_get_contents('php://input'), true);
+        $rawUrl = $input['url'] ?? '';
+    }
+
+    // 3. Извлекаем домен
+    $domain = parse_url($rawUrl, PHP_URL_HOST);
 
     if($_POST['selectedAssistant'] == 'ИИ ассистент'){
 
