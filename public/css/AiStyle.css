@@ -265,3 +265,7 @@
 .Ai_file_btn img{
     width: 28px;
 }
+
+#Ai_modal_open_btn.no-after-bg::after {
+    background: none !important;
+}

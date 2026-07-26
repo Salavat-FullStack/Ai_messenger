@@ -304,6 +304,8 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
     Ai_modal_open_btn.style.right = "25px";
     Ai_modal_open_btn.style.background = "#333333";
 
+    Ai_modal_open_btn.classList.add('no-after-bg');
+
     document.querySelector('.Ai_nav').style.background = "#333333";
 }
 
