@@ -295,7 +295,7 @@ console.log(logo);
 
 if(AiChatDomain == "zvukoizolyatsiya.com"){
     console.log("zvukoizolyatsiya");
-    logo.src = "../image/icons/zvukoizolyatsiya.jpg";
+    logo.src = "https://chat-progress.ru/image/icons/zvukoizolyatsiya.jpg";
     
     const a = document.getElementById('userAgreementChatAi');
     a.href = "https://zvukoizolyatsiya.com/polzovatelskoe-soglashenie.html";
