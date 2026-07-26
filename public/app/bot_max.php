@@ -163,7 +163,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
     if($_POST['selectedAssistant'] == 'ИИ ассистент'){
 
-        $domain = "<b>- Сайт - </b> " . "<blockquote>" . $domain . "</blockquote>\n\n";
+        $domain = '<b>- Сайт - </b> <blockquote>' . $domain . '</blockquote>' . "\n\n";
 
         $title = "<b>- Вопрос для ИИ! 🟢 </b> \n \n";
 
@@ -185,7 +185,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         // $message = $title . $userDataText . $userQuestion . $userAiQuestion . $AiResponse . $date;
     }else if($_POST['selectedAssistant'] == 'Менеджер'){
 
-        $domain = "<b>- Сайт - </b> " . "<blockquote>" . $domain . "</blockquote>\n\n";
+        $domain = '<b>- Сайт - </b> <blockquote>' . $domain . '</blockquote>' . "\n\n";
 
         $title = "<b>- Вопрос менеджеру! 🔴 </b> \n \n";
 
