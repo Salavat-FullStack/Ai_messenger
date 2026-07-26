@@ -267,5 +267,5 @@
 }
 
 #Ai_modal_open_btn.no-after-bg::after {
-    background: none !important;
+    background: #333333;
 }
