@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     
     <div id="Ai_modal_open_btn">
         <div class="open_btn_message_notification display_none"></div>
-        <img src="https://chat-progress.ru/image/icons/chat-icon.svg" alt="open_modal">
+        <img src="https://chat-progress.ru/image/icons/Chat_open.svg" alt="open_modal">
     </div>
 
     <div class="reminder_message_ai">
