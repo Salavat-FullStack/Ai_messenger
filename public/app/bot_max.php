@@ -150,7 +150,12 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
     $url = "<b>- Страница: </b>" . $_POST['url'] . "\n \n";
 
+    $domain = parse_url($_POST['url'], PHP_URL_HOST);
+
     if($_POST['selectedAssistant'] == 'ИИ ассистент'){
+
+        $domain = "<b>- Сайт - </b> " . "<blockquote>" . $domain . "</blockquote>\n\n";
+
         $title = "<b>- Вопрос для ИИ! 🟢 </b> \n \n";
 
         // $userDataText = "<b>- Данные пользователя 🟢 </b> \n" . 
@@ -167,9 +172,11 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
         $date = "<b>- Дата : </b>" . $_POST['date'];
 
-        $message = $title . $userQuestion . $AiResponse . $name . $email. $phone . $location . $ip . $url . $documentId . $userIdText . $date;
+        $message = $$domain . $title . $userQuestion . $AiResponse . $name . $email. $phone . $location . $ip . $url . $documentId . $userIdText . $date;
         // $message = $title . $userDataText . $userQuestion . $userAiQuestion . $AiResponse . $date;
     }else if($_POST['selectedAssistant'] == 'Менеджер'){
+
+        $domain = "<b>- Сайт - </b> " . "<blockquote>" . $domain . "</blockquote>\n\n";
 
         $title = "<b>- Вопрос менеджеру! 🔴 </b> \n \n";
 
@@ -191,7 +198,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         $userIdText = "<b>- Id пользователя : </b>" . $userId . "\n \n";
 
 
-        $message = $title . $userQuestion . $name . $email. $phone . $location . $ip . $url . $date . $documentId . $userIdText;
+        $message = $$domain . $title . $userQuestion . $name . $email. $phone . $location . $ip . $url . $date . $documentId . $userIdText;
     }
 
     $filePath = null;
