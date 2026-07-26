@@ -1,7 +1,8 @@
 <?php
 $allowed_origins = [
     'https://localhost.akuprof.ru',
-    'https://akuprof.ru'
+    'https://akuprof.ru',
+    "https://zvukoizolyatsiya.com"
 ];
 
 if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER['HTTP_ORIGIN'], $allowed_origins)) {

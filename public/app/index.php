@@ -2,7 +2,8 @@
 
 $allowed_origins = [
     'https://localhost.akuprof.ru',
-    'https://akuprof.ru'
+    'https://akuprof.ru',
+    "https://zvukoizolyatsiya.com"
 ];
 
 // Проверяем, откуда пришел запрос
@@ -39,6 +40,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     $question = trim($data['question']);
     $question = strip_tags($question);
+
+    $ELASTIC_INDEX = getElasticIndex();
 
     $docs = searchSimilar($question, $es, $client, $ELASTIC_INDEX);
 

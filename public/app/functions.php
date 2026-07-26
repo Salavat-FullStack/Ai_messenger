@@ -16,18 +16,27 @@ define('OPENAI_API_KEY', $_ENV['OPENAI_API_KEY']);
 use Elastic\Elasticsearch\ClientBuilder;
 use GuzzleHttp\Client;
 
-if (isset($_SERVER['HTTP_REFERER'])) {
-    $referer = $_SERVER['HTTP_REFERER'];
-    
-    $domain = parse_url($referer, PHP_URL_HOST);
-    
-    $url = htmlspecialchars($domain);
-    
-    if($url == "akuprof.ru"){
-        $ELASTIC_INDEX = 'documents';
-    }else if($url == "zvukoizolyatsiya.com"){
-        $ELASTIC_INDEX = "documents_zvukoizol";
+function getElasticIndex(): string 
+{
+    // Значение по умолчанию на случай, если Referer не подошел
+    $defaultIndex = 'documents'; 
+
+    if (!isset($_SERVER['HTTP_REFERER'])) {
+        return $defaultIndex;
     }
+
+    $referer = $_SERVER['HTTP_REFERER'];
+    $domain = parse_url($referer, PHP_URL_HOST);
+
+    if ($domain === 'zvukoizolyatsiya.com') {
+        return 'documents_zvukoizol';
+    }
+
+    if ($domain === 'akuprof.ru' || $domain === 'localhost.akuprof.ru') {
+        return 'documents';
+    }
+
+    return $defaultIndex;
 }
 
 function generatClient($data){

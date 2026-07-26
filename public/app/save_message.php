@@ -2,7 +2,8 @@
 
 $allowed_origins = [
     'https://localhost.akuprof.ru',
-    'https://akuprof.ru'
+    'https://akuprof.ru',
+    "https://zvukoizolyatsiya.com"
 ];
 
 // Проверяем, откуда пришел запрос
