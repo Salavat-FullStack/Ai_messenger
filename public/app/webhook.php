@@ -55,7 +55,7 @@ file_put_contents('log.txt', $line, FILE_APPEND);
 
 // если пришло сообщение, вызываем функцию из bot_max.php
 if (!empty($json['message']) && !empty($json['message']['link'])) {
-    $userIdArr = [137759013, 230853692, 159563753, 160092633, 140001164, 153979238, 175971694];
+    $userIdArr = [137759013, 230853692, 159563753, 160092633, 140001164, 153979238, 175971694,181208074];
     $userId = $json['message']['sender']['user_id'];
 
     $text = $json['message']['link']['message']['text'];
