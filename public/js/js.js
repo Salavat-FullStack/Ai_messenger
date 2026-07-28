@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     
     <div id="Ai_modal_open_btn">
         <div class="open_btn_message_notification display_none"></div>
-        <img src="https://chat-progress.ru/image/icons/icon_support.svg" alt="open_modal">
+        <img id="chat_ai_logo_btn" src="https://chat-progress.ru/image/icons/chat-icon.svg" alt="open_modal">
     </div>
 
     <div class="reminder_message_ai">
@@ -305,6 +305,10 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
     Ai_modal_open_btn.style.background = "#333333";
 
     Ai_modal_open_btn.classList.add('no-after-bg');
+
+    const chat_ai_logo_btn = document.getElementById("chat_ai_logo_btn");
+
+    chat_ai_logo_btn.src = "https://chat-progress.ru/image/icons/icon_support.svg";
 
     document.querySelector('.Ai_nav').style.background = "#333333";
 }
