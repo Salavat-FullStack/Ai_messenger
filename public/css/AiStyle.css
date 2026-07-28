@@ -274,10 +274,11 @@
 
 
 .Ai_modal_open_btn_zvukoizolyatsiya{
-    background: rgb(51, 51, 51);
-    width: 40px;
-    height: 40px;
+    background: rgb(51, 51, 51) !important;
+    width: 40px !important;
+    height: 40px !important;
+    bottom: 50px !important;
 }
 .chat_ai_logo_btn_zvukoizolyatsiya{
-    width: 30px;
+    width: 30px !important;
 }
