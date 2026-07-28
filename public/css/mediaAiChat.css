@@ -30,11 +30,12 @@
     }
 
     #Ai_modal_open_btn{
-        width: 50px;
-        height: 50px;
+        width: 50px !important;
+        height: 50px !important;
+        bottom: 30px !important;
     }
     #Ai_modal_open_btn img {
-        width: 32px;
+        width: 32px !important;
     }
     .reminder_message_ai {
         width: 200px;
