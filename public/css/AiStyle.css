@@ -271,3 +271,13 @@
 #Ai_modal_open_btn.no-after-bg::after {
     background: #333333;
 }
+
+
+.Ai_modal_open_btn_zvukoizolyatsiya{
+    background: rgb(51, 51, 51);
+    width: 40px;
+    height: 40px;
+}
+.chat_ai_logo_btn_zvukoizolyatsiya{
+    width: 30px;
+}

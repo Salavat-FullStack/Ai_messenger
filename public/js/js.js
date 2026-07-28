@@ -301,12 +301,13 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
     a.href = "https://zvukoizolyatsiya.com/polzovatelskoe-soglashenie.html";
 
     const Ai_modal_open_btn = document.getElementById("Ai_modal_open_btn");
-    Ai_modal_open_btn.style.right = "25px";
-    Ai_modal_open_btn.style.background = "#333333";
+    Ai_modal_open_btn.classList.add('Ai_modal_open_btn_zvukoizolyatsiya');
 
     Ai_modal_open_btn.classList.add('no-after-bg');
 
     const chat_ai_logo_btn = document.getElementById("chat_ai_logo_btn");
+
+    chat_ai_logo_btn.classList.add("chat_ai_logo_btn_zvukoizolyatsiya");
 
     chat_ai_logo_btn.src = "https://chat-progress.ru/image/icons/icon_support.svg";
 
