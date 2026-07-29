@@ -271,3 +271,6 @@
 #Ai_modal_open_btn.no-after-bg::after {
     background: #333333;
 }
+.reminder_message_ai.hide-after::after {
+    display: none !important;
+}

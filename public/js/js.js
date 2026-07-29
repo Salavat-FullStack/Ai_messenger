@@ -320,6 +320,10 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
 
     chat_ai_logo_btn.src = "https://chat-progress.ru/image/icons/icon_support.svg";
 
+    const reminder = document.querySelector('.reminder_message_ai');
+
+    reminder.classList.add('hide-after');
+
     document.querySelector('.Ai_nav').style.background = "#333333";
 }
 
