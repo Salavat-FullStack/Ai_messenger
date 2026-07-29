@@ -307,7 +307,7 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
         width: 40px;
         height: 40px;
         bottom: 50px;
-        right: 28px;
+        right: 30px;
     `;
 
     Ai_modal_open_btn.classList.add('no-after-bg');
