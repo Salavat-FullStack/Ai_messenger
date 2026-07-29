@@ -322,6 +322,10 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
 
     const reminder = document.querySelector('.reminder_message_ai');
 
+    reminder.style.cssText += `
+        bottom: 105px;
+    `;
+
     reminder.classList.add('hide-after');
 
     document.querySelector('.Ai_nav').style.background = "#333333";
