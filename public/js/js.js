@@ -343,7 +343,7 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
     const a = document.getElementById('userAgreementChatAi');
     a.href = "https://izomaxx.ru/agreement.html";
 
-    chat_ai_logo_btn.src = "https://chat-progress.ru/image/icons/icon_izomaxx.svg";
+    chat_ai_logo_btn.src = "https://chat-progress.ru/image/icons/izomaxx_logo_chat.svg";
 
     document.querySelector('.Ai_nav').style.background = "rgb(94 94 94)";
 }
