@@ -346,6 +346,10 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
     chat_ai_logo_btn.src = "https://chat-progress.ru/image/icons/izomaxx_logo_chat.svg";
 
     document.querySelector('.Ai_nav').style.background = "rgb(94 94 94)";
+
+    Ai_modal_open_btn.style.cssText += `
+        background: rgb(94 94 94);
+    `;
 }
 
 });
