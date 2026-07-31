@@ -329,6 +329,8 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
     reminder.classList.add('hide-after');
 
     document.querySelector('.Ai_nav').style.background = "#333333";
+}else if(AiChatDomain == "izomaxx.ru"){
+    console.log("izomaxx.ru");
 }
 
 });

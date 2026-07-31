@@ -36,6 +36,10 @@ function getElasticIndex(): string
         return 'documents';
     }
 
+    if($domain == 'izomaxx.ru'){
+        return 'documents_izomaxx';
+    }
+
     return $defaultIndex;
 }
 
