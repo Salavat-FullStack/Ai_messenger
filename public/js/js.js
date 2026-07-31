@@ -344,6 +344,8 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
     a.href = "https://izomaxx.ru/agreement.html";
 
     chat_ai_logo_btn.src = "https://chat-progress.ru/image/icons/icon_izomaxx.svg";
+
+    document.querySelector('.Ai_nav').style.background = "rgb(94 94 94)";
 }
 
 });
