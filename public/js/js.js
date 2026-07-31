@@ -347,9 +347,7 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
 
     document.querySelector('.Ai_nav').style.background = "rgb(94 94 94)";
 
-    Ai_modal_open_btn.style.cssText += `
-        background: rgb(94 94 94);
-    `;
+    Ai_modal_open_btn.classList.add('no-after-bg_izomaxx');
 }
 
 });
