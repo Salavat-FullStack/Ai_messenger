@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW 2026 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="40px" height="40px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 40 40"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil0 {fill:#FF7E00}
+   ]]>
+  </style>
+ </defs>
+ <g id="Слой_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <rect class="fil0" x="0.067" y="17.619" width="9.629" height="14.332"/>
+  <rect class="fil0" x="0.057" y="15.243" width="9.638" height="1.174"/>
+  <rect class="fil0" x="0.057" y="12.839" width="9.638" height="1.183"/>
+  <rect class="fil0" x="0.067" y="10.463" width="9.638" height="1.193"/>
+  <path class="fil0" d="M0.067 8.058l9.628 0c0,0 0.01,0 0.01,0l-0.01 1.193c0.01,0 0,0.009 0,0.009l-9.628 0c-0.01,0 -0.01,-0.009 -0.01,-0.009l0 -1.193c0,0 0,0 0.01,0z"/>
+  <polygon class="fil0" points="10.907,16.426 27.769,24.823 27.759,23.592 10.907,15.243 "/>
+  <rect class="fil0" transform="matrix(1.096 0.604485 0.00110516 1.73458 10.9024 17.6156)" width="14.28" height="0.58"/>
+  <polygon class="fil0" points="10.907,17.619 28.173,26.218 28.164,31.903 10.907,31.922 "/>
+  <polygon class="fil0" points="10.907,14.012 27.769,22.428 27.759,21.188 10.907,12.829 "/>
+  <polygon class="fil0" points="10.898,11.626 27.759,20.024 28,18.908 10.898,10.453 "/>
+  <polygon class="fil0" points="10.907,9.212 27.769,17.619 27.759,16.378 10.907,8.029 "/>
+  <polygon class="fil0" points="27.73,17.6 39.802,17.619 39.802,8.058 25.278,15.224 "/>
+  <polygon class="fil0" points="27.769,17.003 27.663,31.903 39.85,31.894 39.802,17.147 "/>
+ </g>
+</svg>

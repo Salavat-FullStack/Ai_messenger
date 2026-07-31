@@ -293,6 +293,9 @@ reminder_message_btn.addEventListener('click', ()=>{
 const logo = document.querySelector('.Ai_manager_logo');
 console.log(logo);
 
+const Ai_modal_open_btn = document.getElementById("Ai_modal_open_btn");
+const chat_ai_logo_btn = document.getElementById("chat_ai_logo_btn");
+
 if(AiChatDomain == "zvukoizolyatsiya.com"){
     console.log("zvukoizolyatsiya");
     logo.src = "https://chat-progress.ru/image/icons/zvukpizol_logo.svg";
@@ -300,7 +303,6 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
     const a = document.getElementById('userAgreementChatAi');
     a.href = "https://zvukoizolyatsiya.com/polzovatelskoe-soglashenie.html";
 
-    const Ai_modal_open_btn = document.getElementById("Ai_modal_open_btn");
 
     Ai_modal_open_btn.style.cssText += `
         background: rgb(51, 51, 51);
@@ -312,7 +314,6 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
 
     Ai_modal_open_btn.classList.add('no-after-bg');
 
-    const chat_ai_logo_btn = document.getElementById("chat_ai_logo_btn");
 
     chat_ai_logo_btn.style.cssText += `
         width: 30px;
@@ -331,6 +332,13 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
     document.querySelector('.Ai_nav').style.background = "#333333";
 }else if(AiChatDomain == "izomaxx.ru"){
     console.log("izomaxx.ru");
+
+    logo.src = "https://chat-progress.ru/image/icons/icon_izomaxx.svg";
+
+    const a = document.getElementById('userAgreementChatAi');
+    a.href = "https://izomaxx.ru/agreement.html";
+
+    chat_ai_logo_btn.src = "https://chat-progress.ru/image/icons/icon_izomaxx.svg";
 }
 
 });
