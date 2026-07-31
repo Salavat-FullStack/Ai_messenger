@@ -293,11 +293,14 @@ reminder_message_btn.addEventListener('click', ()=>{
 const logo = document.querySelector('.Ai_manager_logo');
 console.log(logo);
 
-const Ai_modal_open_btn = document.getElementById("Ai_modal_open_btn");
-const chat_ai_logo_btn = document.getElementById("chat_ai_logo_btn");
+
 
 if(AiChatDomain == "zvukoizolyatsiya.com"){
     console.log("zvukoizolyatsiya");
+
+    const Ai_modal_open_btn = document.getElementById("Ai_modal_open_btn");
+    const chat_ai_logo_btn = document.getElementById("chat_ai_logo_btn");
+
     logo.src = "https://chat-progress.ru/image/icons/zvukpizol_logo.svg";
     
     const a = document.getElementById('userAgreementChatAi');
@@ -332,6 +335,8 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
     document.querySelector('.Ai_nav').style.background = "#333333";
 }else if(AiChatDomain == "izomaxx.ru"){
     console.log("izomaxx.ru");
+    const Ai_modal_open_btn = document.getElementById("Ai_modal_open_btn");
+    const chat_ai_logo_btn = document.getElementById("chat_ai_logo_btn");
 
     logo.src = "https://chat-progress.ru/image/icons/icon_izomaxx.svg";
 
