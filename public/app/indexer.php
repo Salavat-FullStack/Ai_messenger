@@ -2,7 +2,7 @@
 
 require_once "functions.php";
 
-define('DATA_DIR', __DIR__ . '/../dataText/my_parsed_products_dop');
+define('DATA_DIR', __DIR__ . '/../dataText/my_parsed_products_izomaxx');
 define('MAX_CHAR_LIMIT', 4000); // Лимит на каждое текстовое поле по отдельности
 
 $client = generatClient("client"); 
@@ -51,7 +51,7 @@ foreach ($files as $file) {
     ];
 
     if (count($batch) === $batchSize) {
-        processAndSendWholeProducts($batch, $client, $es, "documents");
+        processAndSendWholeProducts($batch, $client, $es, "documents_izomaxx");
         $batch = []; 
         usleep(500000); // Пауза 0.5 сек для лимитов OpenAI
     }
@@ -59,7 +59,7 @@ foreach ($files as $file) {
 
 
 if (count($batch) > 0) {
-    processAndSendWholeProducts($batch, $client, $es, "documents");
+    processAndSendWholeProducts($batch, $client, $es, "documents_izomaxx");
 }
 
 echo "\nИндексация разделенных JSON товаров (с лимитом полей в " . MAX_CHAR_LIMIT . " симв.) успешно завершена!\n";
