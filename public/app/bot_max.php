@@ -167,7 +167,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
         $domain = '<b>- Сайт - </b> <b>' . $domain . '</b>' . "\n\n";
 
-        $title = "<b>- Вопрос для ИИ! 🟢 </b> \n \n";
+        $title = "<b>- Вопрос для ИИ! 🟢 </b> \n";
 
         // $userDataText = "<b>- Данные пользователя 🟢 </b> \n" . 
         //             "<b>Имя : </b>" . $userData['name'] . "\n" .
@@ -189,7 +189,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
 
         $domain = '<b>- Сайт - </b> <b>' . $domain . '</b>' . "\n\n";
 
-        $title = "<b>- Вопрос менеджеру! 🔴 </b> \n \n";
+        $title = "<b>- Вопрос менеджеру! 🔴 </b> \n";
 
         // $userDataText = "<b>- Данные пользователя </b> \n" . 
         //             "<b>Имя : </b>" . $userData['name'] . "\n" .
