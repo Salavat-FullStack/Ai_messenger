@@ -40,6 +40,10 @@ function getElasticIndex(): string
         return 'documents_izomaxx';
     }
 
+    if($domain == 'stroytovary.com'){
+        return 'documents_stroytovary';
+    }
+
     return $defaultIndex;
 }
 

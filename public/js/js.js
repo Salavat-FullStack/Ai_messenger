@@ -348,6 +348,12 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
     document.querySelector('.Ai_nav').style.background = "rgb(94 94 94)";
 
     Ai_modal_open_btn.classList.add('no-after-bg_izomaxx');
+}else if(AiChatDomain == "stroytovary.com"){
+    const Ai_modal_open_btn = document.getElementById("Ai_modal_open_btn");
+    const chat_ai_logo_btn = document.getElementById("chat_ai_logo_btn");
+
+    const a = document.getElementById('userAgreementChatAi');
+    a.href = "https://stroytovary.com/terms.html";
 }
 
 });

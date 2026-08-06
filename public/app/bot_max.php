@@ -4,7 +4,8 @@ $allowed_origins = [
     'https://localhost.akuprof.ru',
     'https://akuprof.ru',
     "https://zvukoizolyatsiya.com",
-    "https://izomaxx.ru"
+    "https://izomaxx.ru",
+    "https://stroytovary.com"
 ];
 
 // Проверяем, откуда пришел запрос
@@ -173,7 +174,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         //             "<b>Фамилия : </b>" . $userData['surname'] . "\n" .
         //             "<b>Email : </b>" . $userData['email'] . "\n \n" ;
 
-        $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $_POST['messageUser'] . "\n \n";
+        $userQuestion = $_POST['messageUser'] . "\n \n";
         $AiResponse = "<b>- Ответ ИИ : \n </b>" . $_POST['messageAi'] . "\n \n";
 
         $documentId = "<b>- Id документа : </b>" . $_POST['UserId'] . "\n \n";
@@ -198,7 +199,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST"){
         $userQuestion = "";
 
         if(!empty($_POST['messageUser'])){
-            $userQuestion = "<b>- Вопрос пользователя : </b> \n" . $_POST['messageUser'] . "\n \n";
+            $userQuestion = $_POST['messageUser'] . "\n \n";
         }
 
         $date = "<b>- Дата : </b>" . $_POST['date'] . "\n \n";
