@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
     <div class="reminder_message_ai">
         <div class="reminder_message_btn"><img src="https://chat-progress.ru/image/icons/close_icon_black.png" alt="close"></div>
-        <p>Здравствуйте, задайте пожалуйста вопрос. Обычно мы отвечаем в течении пары минут (за исключением выходных и ночных часов)</p>
+        <p>Здравствуйте, задайте пожалуйста вопрос. Обычно мы отвечаем в течение пары минут (за исключением выходных и ночных часов)</p>
     </div>
 
     <div class="Ai_modal">
