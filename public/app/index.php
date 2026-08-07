@@ -81,6 +81,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     }else if($ELASTIC_INDEX == "documents_izomaxx"){
         $companyName = "izomaxx.ru";
         $companyNumber = "+7(977) 393-90-30 или +7(495) 923-68-53";
+    }else if($ELASTIC_INDEX == "documents_stroytovary"){
+        $companyName = "stroytovary.com";
+        $companyNumber = "+7 (901) 524-87-22";
     }
 
     $store_messages = $data['story'];
