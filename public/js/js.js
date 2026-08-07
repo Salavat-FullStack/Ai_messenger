@@ -363,6 +363,8 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
     document.querySelector('.Ai_nav').style.background = "#164449";
 
     Ai_modal_open_btn.classList.add('no-after-bg_stroytovary');
+
+    document.querySelector('.instructions_nav').style.background = "#164449";
 }
 
 });
