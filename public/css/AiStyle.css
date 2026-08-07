@@ -278,3 +278,8 @@
 .reminder_message_ai.hide-after::after {
     display: none !important;
 }
+
+
+#Ai_modal_open_btn.no-after-bg_stroytovary::after {
+    background: #1e1e1e;
+}
