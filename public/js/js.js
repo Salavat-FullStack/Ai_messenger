@@ -355,9 +355,12 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
     const a = document.getElementById('userAgreementChatAi');
     a.href = "https://stroytovary.com/terms.html";
 
-    logo.src = "https://chat-progress.ru/image/icons/stroytovary_icon.svg";
+    logo.src = "https://chat-progress.ru/image/icons/stroytovary_icon.png";
 
     chat_ai_logo_btn.src = "https://chat-progress.ru/image/icons/stroytovary_btn.svg";
+
+    
+    document.querySelector('.Ai_nav').style.background = "#164449";
 
     Ai_modal_open_btn.classList.add('no-after-bg_stroytovary');
 }
