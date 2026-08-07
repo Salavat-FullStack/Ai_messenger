@@ -333,6 +333,8 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
     reminder.classList.add('hide-after');
 
     document.querySelector('.Ai_nav').style.background = "#333333";
+
+    document.querySelector('.instructions_nav').style.background = "#333333";
 }else if(AiChatDomain == "izomaxx.ru"){
     console.log("izomaxx.ru");
     const Ai_modal_open_btn = document.getElementById("Ai_modal_open_btn");
@@ -348,6 +350,8 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
     document.querySelector('.Ai_nav').style.background = "rgb(94 94 94)";
 
     Ai_modal_open_btn.classList.add('no-after-bg_izomaxx');
+
+    document.querySelector('.instructions_nav').style.background = "rgb(94 94 94)";
 }else if(AiChatDomain == "stroytovary.com"){
     const Ai_modal_open_btn = document.getElementById("Ai_modal_open_btn");
     const chat_ai_logo_btn = document.getElementById("chat_ai_logo_btn");
