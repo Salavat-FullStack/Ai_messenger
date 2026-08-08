@@ -1,14 +1,4 @@
 document.addEventListener('DOMContentLoaded',()=>{
-    let CompenyNumber = "+7 (495) 970 82 03";
-
-    if(AiChatDomain == "zvukoizolyatsiya.com"){
-        CompenyNumber = "+7 (985) 760-31-94 или +7 (495) 760-31-94";
-    }else if(AiChatDomain == "izomaxx.ru"){
-        CompenyNumber = "+7(977) 393-90-30 или +7(495) 923-68-53";
-    }else if(AiChatDomain == "stroytovary.com"){
-        CompenyNumber = "+7 (901) 524-87-22";
-    }
-
     document.body.insertAdjacentHTML('beforeend', `
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -128,7 +118,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             <div class="instructions_block assist_Ai_instruc" id="instructions_Ai">
                 <h2>ИИ ассистент</h2>
                 <p>ИИ-ассистент — это искусственный интеллект, который в любое время готов ответить на любой ваш вопрос, связанный с деятельностью итернет-магазина и не только, порекомендовать подходящие товары и помочь с выбором. Ассистент работает быстро, доступен 24/7 и помогает сэкономить ваше время.</p>
-                <p> * ИИ-ассистент — не знает о наличии товара. Если вам нужно уточнить наличие, пожалуйста, обратитесь к менеджерам, по номеру ${CompenyNumber}</p>
+                <p id="Ai_company_number_p"> * ИИ-ассистент — не знает о наличии товара. Если вам нужно уточнить наличие, пожалуйста, обратитесь к менеджерам, по номеру +7 (495) 970 82 03</p>
                 <p> * Если вас не устраивает ответ ИИ-ассистента или вы хотите обратиться напрямую к менеджеру, выберите в панели чата опцию «Менеджер» и отправьте сообщение. Ваш вопрос будет отправлен и рассмотрен менеджерами в ближайшее время.</p>
                 </div>
 
@@ -345,6 +335,8 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
     document.querySelector('.Ai_nav').style.background = "#333333";
 
     document.querySelector('.instructions_nav').style.background = "#333333";
+
+    document.getElementById('Ai_company_number_p').textContent = "* ИИ-ассистент — не знает о наличии товара. Если вам нужно уточнить наличие, пожалуйста, обратитесь к менеджерам, по номеру +7 (985) 760-31-94 или +7 (495) 760-31-94";
 }else if(AiChatDomain == "izomaxx.ru"){
     console.log("izomaxx.ru");
     const Ai_modal_open_btn = document.getElementById("Ai_modal_open_btn");
@@ -362,6 +354,8 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
     Ai_modal_open_btn.classList.add('no-after-bg_izomaxx');
 
     document.querySelector('.instructions_nav').style.background = "rgb(94 94 94)";
+
+    document.getElementById('Ai_company_number_p').textContent = "* ИИ-ассистент — не знает о наличии товара. Если вам нужно уточнить наличие, пожалуйста, обратитесь к менеджерам, по номеру +7(977) 393-90-30 или +7(495) 923-68-53";
 }else if(AiChatDomain == "stroytovary.com"){
     const Ai_modal_open_btn = document.getElementById("Ai_modal_open_btn");
     const chat_ai_logo_btn = document.getElementById("chat_ai_logo_btn");
@@ -379,6 +373,7 @@ if(AiChatDomain == "zvukoizolyatsiya.com"){
     Ai_modal_open_btn.classList.add('no-after-bg_stroytovary');
 
     document.querySelector('.instructions_nav').style.background = "#164449";
-}
 
+    document.getElementById('Ai_company_number_p').textContent = "* ИИ-ассистент — не знает о наличии товара. Если вам нужно уточнить наличие, пожалуйста, обратитесь к менеджерам, по номеру +7 (901) 524-87-22";
+}
 });
