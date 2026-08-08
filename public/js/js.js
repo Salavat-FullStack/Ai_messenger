@@ -295,7 +295,7 @@ console.log(logo);
 
 
 
-if(AiChatDomain == "zvukoizolyatsiya.com"){
+if(AiChatDomain && AiChatDomain == "zvukoizolyatsiya.com"){
     console.log("zvukoizolyatsiya");
 
     const Ai_modal_open_btn = document.getElementById("Ai_modal_open_btn");
