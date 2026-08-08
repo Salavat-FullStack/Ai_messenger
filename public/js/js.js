@@ -294,86 +294,88 @@ const logo = document.querySelector('.Ai_manager_logo');
 console.log(logo);
 
 
+if(typeof AiChatDomain !== "undefined"){
+    if(AiChatDomain == "zvukoizolyatsiya.com"){
+        console.log("zvukoizolyatsiya");
 
-if(typeof AiChatDomain !== "undefined" && AiChatDomain == "zvukoizolyatsiya.com"){
-    console.log("zvukoizolyatsiya");
+        const Ai_modal_open_btn = document.getElementById("Ai_modal_open_btn");
+        const chat_ai_logo_btn = document.getElementById("chat_ai_logo_btn");
 
-    const Ai_modal_open_btn = document.getElementById("Ai_modal_open_btn");
-    const chat_ai_logo_btn = document.getElementById("chat_ai_logo_btn");
-
-    logo.src = "https://chat-progress.ru/image/icons/zvukpizol_logo.svg";
-    
-    const a = document.getElementById('userAgreementChatAi');
-    a.href = "https://zvukoizolyatsiya.com/polzovatelskoe-soglashenie.html";
-
-
-    Ai_modal_open_btn.style.cssText += `
-        background: rgb(51, 51, 51);
-        width: 40px;
-        height: 40px;
-        bottom: 50px;
-        right: 30px;
-    `;
-
-    Ai_modal_open_btn.classList.add('no-after-bg');
+        logo.src = "https://chat-progress.ru/image/icons/zvukpizol_logo.svg";
+        
+        const a = document.getElementById('userAgreementChatAi');
+        a.href = "https://zvukoizolyatsiya.com/polzovatelskoe-soglashenie.html";
 
 
-    chat_ai_logo_btn.style.cssText += `
-        width: 30px;
-    `;
+        Ai_modal_open_btn.style.cssText += `
+            background: rgb(51, 51, 51);
+            width: 40px;
+            height: 40px;
+            bottom: 50px;
+            right: 30px;
+        `;
 
-    chat_ai_logo_btn.src = "https://chat-progress.ru/image/icons/icon_support.svg";
+        Ai_modal_open_btn.classList.add('no-after-bg');
 
-    const reminder = document.querySelector('.reminder_message_ai');
 
-    reminder.style.cssText += `
-        bottom: 105px;
-    `;
+        chat_ai_logo_btn.style.cssText += `
+            width: 30px;
+        `;
 
-    reminder.classList.add('hide-after');
+        chat_ai_logo_btn.src = "https://chat-progress.ru/image/icons/icon_support.svg";
 
-    document.querySelector('.Ai_nav').style.background = "#333333";
+        const reminder = document.querySelector('.reminder_message_ai');
 
-    document.querySelector('.instructions_nav').style.background = "#333333";
+        reminder.style.cssText += `
+            bottom: 105px;
+        `;
 
-    document.getElementById('Ai_company_number_p').textContent = "* ИИ-ассистент — не знает о наличии товара. Если вам нужно уточнить наличие, пожалуйста, обратитесь к менеджерам, по номеру +7 (985) 760-31-94 или +7 (495) 760-31-94";
-}else if(AiChatDomain == "izomaxx.ru"){
-    console.log("izomaxx.ru");
-    const Ai_modal_open_btn = document.getElementById("Ai_modal_open_btn");
-    const chat_ai_logo_btn = document.getElementById("chat_ai_logo_btn");
+        reminder.classList.add('hide-after');
 
-    logo.src = "https://chat-progress.ru/image/icons/icon_izomaxx.svg";
+        document.querySelector('.Ai_nav').style.background = "#333333";
 
-    const a = document.getElementById('userAgreementChatAi');
-    a.href = "https://izomaxx.ru/agreement.html";
+        document.querySelector('.instructions_nav').style.background = "#333333";
 
-    chat_ai_logo_btn.src = "https://chat-progress.ru/image/icons/izomaxx_logo_chat.svg";
+        document.getElementById('Ai_company_number_p').textContent = "* ИИ-ассистент — не знает о наличии товара. Если вам нужно уточнить наличие, пожалуйста, обратитесь к менеджерам, по номеру +7 (985) 760-31-94 или +7 (495) 760-31-94";
+    }else if(AiChatDomain == "izomaxx.ru"){
+        console.log("izomaxx.ru");
+        const Ai_modal_open_btn = document.getElementById("Ai_modal_open_btn");
+        const chat_ai_logo_btn = document.getElementById("chat_ai_logo_btn");
 
-    document.querySelector('.Ai_nav').style.background = "rgb(94 94 94)";
+        logo.src = "https://chat-progress.ru/image/icons/icon_izomaxx.svg";
 
-    Ai_modal_open_btn.classList.add('no-after-bg_izomaxx');
+        const a = document.getElementById('userAgreementChatAi');
+        a.href = "https://izomaxx.ru/agreement.html";
 
-    document.querySelector('.instructions_nav').style.background = "rgb(94 94 94)";
+        chat_ai_logo_btn.src = "https://chat-progress.ru/image/icons/izomaxx_logo_chat.svg";
 
-    document.getElementById('Ai_company_number_p').textContent = "* ИИ-ассистент — не знает о наличии товара. Если вам нужно уточнить наличие, пожалуйста, обратитесь к менеджерам, по номеру +7(977) 393-90-30 или +7(495) 923-68-53";
-}else if(AiChatDomain == "stroytovary.com"){
-    const Ai_modal_open_btn = document.getElementById("Ai_modal_open_btn");
-    const chat_ai_logo_btn = document.getElementById("chat_ai_logo_btn");
+        document.querySelector('.Ai_nav').style.background = "rgb(94 94 94)";
 
-    const a = document.getElementById('userAgreementChatAi');
-    a.href = "https://stroytovary.com/terms.html";
+        Ai_modal_open_btn.classList.add('no-after-bg_izomaxx');
 
-    logo.src = "https://chat-progress.ru/image/icons/stroytovary_icon.png";
+        document.querySelector('.instructions_nav').style.background = "rgb(94 94 94)";
 
-    chat_ai_logo_btn.src = "https://chat-progress.ru/image/icons/stroytovary_btn.svg";
+        document.getElementById('Ai_company_number_p').textContent = "* ИИ-ассистент — не знает о наличии товара. Если вам нужно уточнить наличие, пожалуйста, обратитесь к менеджерам, по номеру +7(977) 393-90-30 или +7(495) 923-68-53";
+    }else if(AiChatDomain == "stroytovary.com"){
+        const Ai_modal_open_btn = document.getElementById("Ai_modal_open_btn");
+        const chat_ai_logo_btn = document.getElementById("chat_ai_logo_btn");
 
-    
-    document.querySelector('.Ai_nav').style.background = "#164449";
+        const a = document.getElementById('userAgreementChatAi');
+        a.href = "https://stroytovary.com/terms.html";
 
-    Ai_modal_open_btn.classList.add('no-after-bg_stroytovary');
+        logo.src = "https://chat-progress.ru/image/icons/stroytovary_icon.png";
 
-    document.querySelector('.instructions_nav').style.background = "#164449";
+        chat_ai_logo_btn.src = "https://chat-progress.ru/image/icons/stroytovary_btn.svg";
 
-    document.getElementById('Ai_company_number_p').textContent = "* ИИ-ассистент — не знает о наличии товара. Если вам нужно уточнить наличие, пожалуйста, обратитесь к менеджерам, по номеру +7 (901) 524-87-22";
+        
+        document.querySelector('.Ai_nav').style.background = "#164449";
+
+        Ai_modal_open_btn.classList.add('no-after-bg_stroytovary');
+
+        document.querySelector('.instructions_nav').style.background = "#164449";
+
+        document.getElementById('Ai_company_number_p').textContent = "* ИИ-ассистент — не знает о наличии товара. Если вам нужно уточнить наличие, пожалуйста, обратитесь к менеджерам, по номеру +7 (901) 524-87-22";
+    }
 }
+
 });
