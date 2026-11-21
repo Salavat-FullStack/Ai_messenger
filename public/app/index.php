@@ -214,32 +214,28 @@ function searchSimilar(string $question, $es, Client $client, $ELASTIC_INDEX): a
     return $response['hits']['hits'];
 }
 // searchSimilar - преобразование запроса клиента в embedding и поиск в elastic наиболее подходящих 3 чанков 
-
 function askGPT(array $prompt, Client $client)
 {
+    try {
+        $response = $client->post('https://gigachat.devices.sberbank.ru/api/v1/chat/completions', [
+            'verify' => $_ENV['GIGACHAT_CERT'],
+            'headers' => [
+                'Authorization' => 'Bearer ' . getGigaToken($client),
+                'Content-Type'  => 'application/json',
+            ],
+            'json' => [
+                'model'       => 'GigaChat-2-Pro',
+                'temperature' => 0.3,
+                'messages'    => $prompt,
+            ],
+        ]);
 
-$response = $client->post(
-    'https://api.openai.com/v1/chat/completions', // Правильный эндпоинт OpenAI
-    [
-        'headers' => [
-            'Authorization' => 'Bearer ' . OPENAI_API_KEY,
-            'Content-Type'  => 'application/json',
-        ],
-        'json' => [
-            'model' => 'gpt-5-nano', // Или 'gpt-4o' в зависимости от твоих задач
-            'messages' => $prompt
-        ]
-    ]
-);
+        $data = json_decode($response->getBody()->getContents(), true);
 
-    $responseBody = $response->getBody()->getContents();
+        return $data['choices'][0]['message']['content'] ?? 'Не удалось получить ответ.';
 
-    // 2. Декодируем JSON-строку в ассоциативный массив PHP
-    $data = json_decode($responseBody, true);
-
-    // echo "<pre>";
-    // echo($data['output'][1]['content'][0]['text']);
-    // echo "</pre>";
-
-    return $data['choices'][0]['message']['content'];
+    } catch (\GuzzleHttp\Exception\GuzzleException $e) {
+        error_log('GigaChat error: ' . $e->getMessage());
+        return 'Сейчас не получается ответить, попробуйте позже.';
+    }
 }

@@ -11,7 +11,7 @@ define('CHUNK_OVERLAP', 200);
 define('TOP_K', 8);
 
 define('ELASTIC_HOST', $_ENV['ELASTIC_HOST']);
-define('OPENAI_API_KEY', $_ENV['OPENAI_API_KEY']);
+define('GIGACHAT_AUTH_KEY', $_ENV['GIGACHAT_AUTH_KEY']);
 
 use Elastic\Elasticsearch\ClientBuilder;
 use GuzzleHttp\Client;
@@ -61,25 +61,21 @@ function generatClient($data){
     }
 }
 
-function getEmbedding($text, Client $client) : array
+function getEmbedding($text, Client $client): array
 {
-
-    $response = $client->post(
-        'https://api.openai.com/v1/embeddings',
-        [
-            'headers' => [
-                'Authorization' => 'Bearer ' . OPENAI_API_KEY,
-                'Content-Type' => 'application/json',
-            ],
-            'json' => [
-                'model' => 'text-embedding-3-small',
-                'input' => $text,
-            ],
-        ]
-    );
+    $response = $client->post('https://gigachat.devices.sberbank.ru/api/v1/embeddings', [
+        'verify' => $_ENV['GIGACHAT_CERT'],
+        'headers' => [
+            'Authorization' => 'Bearer ' . getGigaToken($client),
+            'Content-Type'  => 'application/json',
+        ],
+        'json' => [
+            'model' => 'Embeddings',
+            'input' => is_array($text) ? $text : [$text],
+        ],
+    ]);
 
     $data = json_decode($response->getBody(), true);
-
     return $data['data'];
 }
 
@@ -95,4 +91,37 @@ function splitText(string $text): array
     }
 
     return $chunks;
+}
+
+
+function getGigaToken(Client $client): string
+{
+    $cacheFile = sys_get_temp_dir() . '/gigachat_token.json';
+
+    if (file_exists($cacheFile)) {
+        $cache = json_decode(file_get_contents($cacheFile), true);
+        // expires_at в миллисекундах, берём запас в 60 секунд
+        if (!empty($cache['access_token']) && $cache['expires_at'] / 1000 > time() + 60) {
+            return $cache['access_token'];
+        }
+    }
+
+    $response = $client->post('https://ngw.devices.sberbank.ru:9443/api/v2/oauth', [
+        'verify' => $_ENV['GIGACHAT_CERT'],
+        'headers' => [
+            'Authorization' => 'Basic ' . $_ENV['GIGACHAT_AUTH_KEY'],
+            'RqUID'         => sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+                mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+                mt_rand(0, 0x0fff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000,
+                mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)),
+            'Content-Type'  => 'application/x-www-form-urlencoded',
+            'Accept'        => 'application/json',
+        ],
+        'form_params' => ['scope' => 'GIGACHAT_API_PERS'],
+    ]);
+
+    $data = json_decode($response->getBody(), true);
+    file_put_contents($cacheFile, json_encode($data));
+
+    return $data['access_token'];
 }

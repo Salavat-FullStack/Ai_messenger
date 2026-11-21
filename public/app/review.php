@@ -73,13 +73,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 function reviewGpt(Client $client, $prompt, $story, $request) {
     try {
-        $response = $client->post('https://api.openai.com/v1/chat/completions', [
+        $response = $client->post('https://gigachat.devices.sberbank.ru/api/v1/chat/completions', [
+            'verify' => $_ENV['GIGACHAT_CERT'],
             'headers' => [
                 'Content-Type'  => 'application/json',
-                'Authorization' => 'Bearer ' . OPENAI_API_KEY,
+                'Authorization' => 'Bearer ' . getGigaToken($client),
             ],
             'json' => [
-                'model' => 'gpt-5-nano',
+                'model' => 'GigaChat-2',
+                'temperature' => 0.1,
                 'messages' => [
                     [
                         'role' => 'system',
@@ -94,12 +96,11 @@ function reviewGpt(Client $client, $prompt, $story, $request) {
         ]);
 
         $data = json_decode($response->getBody(), true);
-        return $data['choices'][0]['message']['content'] ?? '';
+        return $data['choices'][0]['message']['content'] ?? $request;
 
-    } catch (\GuzzleHttp\Exception\ClientException $e) {
-        echo '<pre>';
-        echo $e->getResponse()->getBody()->getContents();
-        echo '</pre>';
-        die();
+    } catch (\GuzzleHttp\Exception\GuzzleException $e) {
+        // не ломаем фронт: при ошибке просто возвращаем исходный вопрос
+        error_log('GigaChat error: ' . $e->getMessage());
+        return $request;
     }
 }
