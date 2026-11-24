@@ -63,14 +63,13 @@ function generatClient($data){
 
 function getEmbedding($text, Client $client): array
 {
-    $response = $client->post('https://gigachat.devices.sberbank.ru/api/v1/embeddings', [
-        'verify' => $_ENV['GIGACHAT_CERT'],
+    $response = $client->post($_ENV['AI_API_URL'] . '/embeddings', [
         'headers' => [
-            'Authorization' => 'Bearer ' . getGigaToken($client),
+            'Authorization' => 'Bearer ' . $_ENV['AI_API_KEY'],
             'Content-Type'  => 'application/json',
         ],
         'json' => [
-            'model' => 'Embeddings',
+            'model' => 'openai/text-embedding-3-small',
             'input' => is_array($text) ? $text : [$text],
         ],
     ]);

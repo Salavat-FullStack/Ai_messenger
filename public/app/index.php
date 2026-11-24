@@ -217,16 +217,15 @@ function searchSimilar(string $question, $es, Client $client, $ELASTIC_INDEX): a
 function askGPT(array $prompt, Client $client)
 {
     try {
-        $response = $client->post('https://gigachat.devices.sberbank.ru/api/v1/chat/completions', [
-            'verify' => $_ENV['GIGACHAT_CERT'],
+        $response = $client->post($_ENV['AI_API_URL'] . '/chat/completions', [
             'headers' => [
-                'Authorization' => 'Bearer ' . getGigaToken($client),
+                'Authorization' => 'Bearer ' . $_ENV['AI_API_KEY'],
                 'Content-Type'  => 'application/json',
             ],
             'json' => [
-                'model'       => 'GigaChat-2-Pro',
-                'temperature' => 0.3,
-                'messages'    => $prompt,
+                'model' => 'openai/gpt-6-luna',
+                'reasoning_effort' => 'low',
+                'messages' => $prompt,
             ],
         ]);
 
